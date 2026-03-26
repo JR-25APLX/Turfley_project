@@ -1,7 +1,7 @@
 <mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.Login"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    <Page id="page1" title="{i18n>title}">
         <customHeader>
             <Bar>
                 <contentLeft>
@@ -16,140 +16,82 @@
             </Bar>
         </customHeader>
 
-        <content>
-
-                <!-- FlexBox: Centers the card in the middle of screen -->
-                    <FlexBox
-                        direction="Column"
-                        justifyContent="Center"
-                        alignItems="Center"
-                        fitContainer="true"
-                        class="sapUiSmallMarginTop">
-
-                        <!-- ========================================== -->
-                        <!-- VBox: The white rounded login card          -->
-                        <!-- ========================================== -->
+ 
+            <FlexBox
+                width="100%"
+                height="100%"
+                alignItems="Center"
+                justifyContent="Center">
+ 
+                <Panel
+                    width="350px"
+                    class="sapUiResponsiveMargin"
+                    backgroundDesign="Translucent">
+ 
+                    <content>
+ 
                         <VBox
-                            width="380px"
-                            class="sapUiMediumMargin sapUiTinyMarginBottom"
-                            alignItems="Center">
+                            alignItems="Center"
+                            justifyContent="Center"
+                            class="sapUiMediumMargin">
+ 
+                           
+                            <Image
+                                src="../Images/image.png"
+                                width="200px"
+                                class="sapUiSmallMarginBottom"/>
 
-                            <!-- Panel acts as the white card with shadow -->
-                            <Panel
-                                width="100%"
-                                class="sapUiContentPadding">
-
-                                <!-- ================================== -->
-                                <!-- LOGO SECTION: Image + Brand name   -->
-                                <!-- ================================== -->
-                                <VBox
-                                    alignItems="Center"
-                                    class="sapUiSmallMarginBottom">
-
-                                    <!-- Logo image (green pin icon) -->
-                                    <Image
-                                        src="../Images/image.png"
-                                        width="100px"
-                                        height="75px"
-                                        decorative="false"
-                                        alt="Turfley Logo" />
-
-
-                                </VBox>
-                                <!-- End logo section -->
-
-                                <!-- ================================== -->
-                                <!-- "Login" main heading               -->
-                                <!-- ================================== -->
-                                <VBox alignItems="Center" class="sapUiSmallMarginBottom">
-                                    <Title
-                                        text="Login"
-                                        titleStyle="H3" />
-                                </VBox>
-
-                                <!-- ================================== -->
-                                <!-- EMAIL FIELD                        -->
-                                <!-- ================================== -->
-
-                                <!-- Label above email input -->
-                                <Label
-                                    text="Enter your email to get started"
-                                    required="true"
-                                    labelFor="emailInput"
-                                    class="sapUiTinyMarginBottom" />
-
-                                <!-- Email text input box -->
+                            <Title
+                                text="Login"
+                                titleStyle="H3"
+                                class="sapUiSmallMarginBottom" />
+ 
+                        
+ 
+                           
+                            <VBox width="100%">
+ 
+                                <Label text="Enter your email to get started"/>
                                 <Input
-                                    id="emailInput"
-                                    placeholder="Enter Email"
-                                    type="Email"
-                                    width="100%"
-                                    value="{loginModel>/email}"
-                                    liveChange=".onEmailChange"
-                                    class="sapUiSmallMarginBottom" />
-
-                                <!-- ================================== -->
-                                <!-- PASSWORD FIELD                     -->
-                                <!-- ================================== -->
-
-                                <!-- Label above password input -->
-                                <Label
-                                    text="Enter your Password"
-                                    required="true"
-                                    labelFor="passwordInput"
-                                    class="sapUiTinyMarginBottom" />
-
-                                <!-- Password input box (hides characters) -->
+                                     placeholder="Enter email"
+                                     class="sapUiSmallMarginBottom"/>
+ 
+                                <Label text="Enter your Password"/>
                                 <Input
-                                    id="passwordInput"
-                                    placeholder="Set Password"
                                     type="Password"
-                                    width="100%"
-                                    value="{loginModel>/password}"
-                                    liveChange=".onPasswordChange"
-                                    class="sapUiSmallMarginBottom" />
-
-                                <!-- ================================== -->
-                                <!-- LOGIN BUTTON                       -->
-                                <!-- ================================== -->
+                                    placeholder="Enter your password"
+                                    class="sapUiSmallMarginBottom"/>
+ 
+                               
                                 <Button
-                                    id="loginButton"
                                     text="Login"
+                                    press="onLogin"
                                     type="Emphasized"
                                     width="100%"
-                                    press=".onLoginPress"
-                                    class="sapUiSmallMarginTop sapUiSmallMarginBottom" />
-
-                                <!-- ================================== -->
-                                <!-- "Are you a New User? Click Here"   -->
-                                <!-- ================================== -->
-                                <HBox
-                                    justifyContent="Center"
-                                    class="sapUiTinyMarginTop">
-
-                                    <!-- Plain text part -->
-                                    <Text
-                                        text="Are you a New User?  "
-                                        class="sapUiSmallMarginEnd" />
-
-                                    <!-- Clickable blue link -->
-                                    <Link
-                                        text="Click Here"
-                                        press=".onRegisterPress"
-                                        emphasized="true" />
-
-                                </HBox>
-                                <!-- End new user row -->
-
-                            </Panel>
-                            <!-- End white card Panel -->
-
+                                    />
+ 
+                            </VBox>
+ 
                         </VBox>
-                        <!-- End outer VBox -->
+                       <HBox
+                            justifyContent="Center"
+                            alignItems="Center"
+                            class="sapUiSmallMarginBottom">
+ 
+                            <Text text="Are you a New User?"/>
+                            <Link text="Click Here" press="onSignup"/>
+                    </HBox>
+                    </content>
+                </Panel>
+ 
+            </FlexBox>
+ 
 
-                    </FlexBox>
-                    <!-- End centering FlexBox -->
-
-                </content>  
+ 
+       
     </Page>
 </mvc:View>
+ 
+
+
+

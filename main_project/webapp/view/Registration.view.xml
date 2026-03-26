@@ -1,0 +1,106 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page2" title="{i18n>title}">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                        <Title
+                                text="TURFLEY"
+                                titleStyle="H3" />
+                </contentLeft>
+                <contentRight>
+                        
+                
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+            <FlexBox
+            width="100%"
+            height="100%"
+            alignItems="Center"
+            justifyContent="Center">
+
+            <Panel
+                width="400px"
+        
+                class="sapUiResponsiveMargin"
+                backgroundDesign="Translucent">
+
+                <content>
+                    <VBox
+                        alignItems="Center"
+                        justifyContent="Center"
+                        class="sapUiSmallMargin">
+
+                        <Image
+                            src="../Images/image.png"
+                            width="150px"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <Title
+                            text="Register"
+                            titleStyle="H3"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <Text
+                            text="Create an account for Quick Turf Booking"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <VBox width="100%">
+
+                            <Label text="Enter your Full Name"/>
+                            <Input
+                                placeholder="Enter Name"
+                                class="sapUiSmallMarginBottom"/>
+
+                            <Label text="Enter your Email"/>
+                            <Input
+                                placeholder="Enter your Email"
+                                class="sapUiSmallMarginBottom"/>
+
+                            <Label text="Enter your Password"/>
+                            <Input
+                                type="Password"
+                                placeholder="password"
+                                class="sapUiSmallMarginBottom"/>
+
+                            <Label text="Confirm your Password"/>
+                            <Input
+                                type="Password"
+                                placeholder="password"
+                                class="sapUiSmallMarginBottom"/>
+
+                            <Label text="Enter your Phone Number"/>
+                            <Input
+                                placeholder="phone Number"
+                                class="sapUiSmallMarginBottom"/>
+
+                            <Button
+                                text="Register"
+                                press="onRegister"
+                                type="Emphasized"
+                                width="100%"/>
+
+                        </VBox>
+                    </VBox>
+                </content>
+            </Panel>
+        </FlexBox>
+
+
+       
+
+ 
+
+ 
+
+ 
+       
+    </Page>
+</mvc:View>
+ 
+
+
+
