@@ -1,4 +1,4 @@
-<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.Login"
+<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.Registration"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page id="page2" title="{i18n>title}">
@@ -51,29 +51,29 @@
                         <VBox width="100%">
 
                             <Label text="Enter your Full Name"/>
-                            <Input
+                            <Input id="i3"
                                 placeholder="Enter Name"
                                 class="sapUiSmallMarginBottom"/>
 
                             <Label text="Enter your Email"/>
-                            <Input
+                            <Input id="i4"
                                 placeholder="Enter your Email"
                                 class="sapUiSmallMarginBottom"/>
 
                             <Label text="Enter your Password"/>
-                            <Input
+                            <Input id="i5"
                                 type="Password"
                                 placeholder="password"
                                 class="sapUiSmallMarginBottom"/>
 
                             <Label text="Confirm your Password"/>
-                            <Input
+                            <Input id="i6"
                                 type="Password"
                                 placeholder="password"
                                 class="sapUiSmallMarginBottom"/>
 
                             <Label text="Enter your Phone Number"/>
-                            <Input
+                            <Input id="i7"
                                 placeholder="phone Number"
                                 class="sapUiSmallMarginBottom"/>
 
