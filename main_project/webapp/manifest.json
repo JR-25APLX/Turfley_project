@@ -44,7 +44,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.120.0",
       "libs": {
@@ -95,10 +95,21 @@
           "target": [
             "TargetHome"
           ]
+        },
+        {
+          "name": "RouteReg",
+          "pattern": "Register",
+          "target": [
+            "TargetReg"
+          ]
         }
       ],
       "targets": {
         "TargetHome": {
+          "id": "Login",
+          "name": "Login"
+        },
+        "TargetReg": {
           "id": "Registration",
           "name": "Registration"
         }
