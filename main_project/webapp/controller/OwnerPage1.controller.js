@@ -13,7 +13,8 @@ sap.ui.define([
             var oEditSection = this.getView().byId("edit"); // Finding Edit Section by ID and Storing it in by OEditSection
             var oAddSection = this.getView().byId("add"); // Finding Add Section by ID and Storing it in by OAddSection
 
-            var turfId = this.getView().byId(""
+            var turfId = this.getView().byId("i8").getValue();
+            
 
             if (skey === "Edit"){
                 oEditSection.setVisible(true);
