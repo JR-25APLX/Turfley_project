@@ -51,12 +51,12 @@
                            
                             <VBox width="100%">
  
-                                <Label text="Enter your email to get started"/>
+                                <Label text="Enter your email to get started" required="true"/>
                                 <Input id= "i1"
                                      placeholder="Enter email"
                                      class="sapUiSmallMarginBottom"/>
  
-                                <Label text="Enter your Password"/>
+                                <Label text="Enter your Password" required="true"/>
                                 <Input id="i2"
                                     type="Password"
                                     placeholder="Enter your password"

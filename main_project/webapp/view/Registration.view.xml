@@ -50,23 +50,23 @@
 
                         <VBox width="100%">
 
-                            <Label text="Enter your Full Name"/>
+                            <Label text="Enter your Full Name" required="true"/>
                             <Input id="i3"
                                 placeholder="Enter Name"
                                 class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Enter your Email"/>
+                            <Label text="Enter your Email" required="true"/>
                             <Input id="i4"
                                 placeholder="Enter your Email"
                                 class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Enter your Password"/>
+                            <Label text="Enter your Password" required="true"/>
                             <Input id="i5"
                                 type="Password"
                                 placeholder="password"
                                 class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Confirm your Password"/>
+                            <Label text="Confirm your Password" required="true"/>
                             <Input id="i6"
                                 type="Password"
                                 placeholder="password"
