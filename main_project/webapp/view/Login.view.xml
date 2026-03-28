@@ -1,97 +1,57 @@
-<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.Login"
+<mvc:View controllerName="com.applexus.mainproject.controller.Login"
+    xmlns:core="sap.ui.core" 
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page id="page1" title="{i18n>title}">
         <customHeader>
             <Bar>
                 <contentLeft>
-                        <Title
-                                text="TURFLEY"
-                                titleStyle="H3" />
+                    <Title text="TURFLEY"
+                           titleStyle="H3" />
                 </contentLeft>
-                <contentRight>
-                        
-                
-                </contentRight>
             </Bar>
         </customHeader>
-
- 
-            <FlexBox
-                width="100%"
-                height="100%"
-                alignItems="Center"
-                justifyContent="Center">
- 
-                <Panel
-                    width="350px"
-                    class="sapUiResponsiveMargin"
-                    backgroundDesign="Translucent">
- 
-                    <content>
- 
-                        <VBox
-                            alignItems="Center"
-                            justifyContent="Center"
-                            class="sapUiMediumMargin">
- 
-                           
-                            <Image
-                                src="../Images/image.png"
-                                width="200px"
-                                class="sapUiSmallMarginBottom"/>
-
-                            <Title
-                                text="Login"
-                                titleStyle="H3"
-                                class="sapUiSmallMarginBottom" />
- 
-                        
- 
-                           
-                            <VBox width="100%">
- 
-                                <Label text="Enter your email to get started"/>
-                                <Input id= "i1"
-                                     placeholder="Enter email"
-                                     class="sapUiSmallMarginBottom"/>
- 
-                                <Label text="Enter your Password"/>
-                                <Input id="i2"
-                                    type="Password"
-                                    placeholder="Enter your password"
-                                    class="sapUiSmallMarginBottom"/>
- 
-                               
-                                <Button
-                                    text="Login"
+        <FlexBox width="100%"
+                 height="100%"
+                 alignItems="Center"
+                 justifyContent="Center">
+            <Panel width="350px"
+                   class="sapUiResponsiveMargin"
+                   backgroundDesign="Translucent">
+                <content>
+                    <VBox alignItems="Center"
+                          justifyContent="Center"
+                          class="sapUiMediumMargin">
+                        <Image src="../Images/image.png"
+                               width="200px"
+                               class="sapUiSmallMarginBottom"/>
+                        <Title text="Login"
+                               titleStyle="H3"
+                               class="sapUiSmallMarginBottom" />
+                        <VBox width="100%">
+                            <Label text="Enter your email to get started"/>
+                            <Input id= "i1"
+                                   placeholder="Enter email"
+                                   class="sapUiSmallMarginBottom"/>
+                            <Label text="Enter your password"/>
+                            <Input id="i2"
+                                   type="Password"
+                                   placeholder="Enter password"
+                                   class="sapUiSmallMarginBottom"/>
+                            <Button text="Login"
                                     press="onLogin"
                                     type="Emphasized"
-                                    width="100%"
-                                    />
- 
-                            </VBox>
- 
+                                    width="100%" />
                         </VBox>
-                       <HBox
-                            justifyContent="Center"
-                            alignItems="Center"
-                            class="sapUiSmallMarginBottom">
- 
-                            <Text text="Are you a New User?"/>
-                            <Link text="Click Here" press="onSignup"/>
+                    </VBox>
+                    <HBox justifyContent="Center"
+                          alignItems="Center"
+                          class="sapUiSmallMarginBottom">
+                        <Text text="Are you a New User?"/>
+                        <Link text="Click Here" press="onSignup"/>
                     </HBox>
-                    </content>
-                </Panel>
- 
-            </FlexBox>
- 
-
- 
-       
+                </content>
+            </Panel>
+        </FlexBox> 
     </Page>
 </mvc:View>
- 
-
-
-

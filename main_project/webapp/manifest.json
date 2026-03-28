@@ -90,10 +90,10 @@
       },
       "routes": [
         {
-          "name": "RouteHome",
+          "name": "RouteLogin",
           "pattern": ":?query:",
           "target": [
-            "TargetHome"
+            "TargetLogin"
           ]
         },
         {
@@ -105,7 +105,7 @@
         }
       ],
       "targets": {
-        "TargetHome": {
+        "TargetLogin": {
           "id": "Login",
           "name": "Login"
         },
