@@ -13,7 +13,7 @@ sap.ui.define([
 
         }, 
         onTabSelect:function(oEvent){
-            debugger;
+            
             var sKey = oEvent.getParameter("key"); 
             var oTable = this.getView().byId("myBookings");
             var OBinding = oTable.getBinding("items");// connection b/w table and data
