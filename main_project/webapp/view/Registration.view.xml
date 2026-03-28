@@ -73,7 +73,7 @@
                                 class="sapUiSmallMarginBottom"/>
 
                             <Label text="Enter your Phone Number"/>
-                            <Input id="i7"
+                            <Input id="i7" 
                                 placeholder="phone Number"
                                 class="sapUiSmallMarginBottom"/>
 
