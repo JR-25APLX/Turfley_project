@@ -99,8 +99,8 @@
       ],
       "targets": {
         "TargetHome": {
-          "id": "Registration",
-          "name": "Registration"
+          "id": "UserMyBookings",
+          "name": "UserMyBookings"
         }
       }
     },

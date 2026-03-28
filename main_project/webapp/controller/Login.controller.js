@@ -9,9 +9,10 @@ sap.ui.define([
         },
         onLogin: function()
         {
-            debugger; 
+         
             var userId = this.getView().byId("i1").getValue();
             var password = this.getView().byId("i2").getValue(); 
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             userId = userId.trim();
             password = password.trim();
@@ -20,10 +21,16 @@ sap.ui.define([
                 MessageToast.show("Please Enter both UserID and Password");
                 return; 
             }
+
+            if (!emailPattern.test(userId)) {
+            sap.m.MessageToast.show("Please enter a valid email address");
+
             
-            if (!userId.endsWith("gmail.com")){
-                MessageToast.show("Please Enter a Valid Mail Id")
-            }           
+            // if (!userId.endsWith("gmail.com")){
+            //     MessageToast.show("Please Enter a Valid Mail Id")
+            // }
+            
+        
 
         }
     });
