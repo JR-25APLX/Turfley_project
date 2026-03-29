@@ -2,135 +2,50 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-
-    <Page  backgroundDesign="List">
-
-    <customHeader>
+    <Page backgroundDesign="List">
+        <customHeader>
             <Toolbar height="60px">
-            
-            <!-- To display TURFLEY on the Left Side -->
-                <Title text="TURFLEY" level="H1" titleStyle="H2" />    
-
-            <!-- This will push Logo to the Right Side -->
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
                 <ToolbarSpacer />
-
-            <!-- Logo of Turfley  -->
                 <Image
-                src="../Images/justlogo.png"
-                width="70px"
-                height="70px"
-                decorative="true" />
+                    src="../Images/justlogo.png"
+                    width="70px"
+                    height="70px"
+                    decorative="true" />
             </Toolbar>
-    </customHeader>
-
+        </customHeader>
         <content>
-
             <VBox class="sapUiMediumMargin">
-
-                <!-- Title Row -->
-                
-                <HBox justifyContent="SpaceBetween" alignItems="Center"
-                      class="sapUiSmallMarginBottom">
-              
-
-                    <Title text="LIST OF TURFS" level="H2"/>
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
+                    <Title text="LIST OF TURFS" level="H2" />
                     <Button
                         text="My Bookings"
                         type="Emphasized"
                         icon="sap-icon://menu2"
-                        press="onMyBookings"/>
+                        press="onMyBookings" />
                 </HBox>
-
-                <!-- Search + Filter Row -->
-                
                 <HBox alignItems="Center" class="sapUiSmallMarginBottom">
-
                     <SearchField
                         id="searchField"
                         placeholder="Search"
                         width="1000px"
                         liveChange="onSearch"
-                        class="sapUiSmallMarginEnd"/>
-
-                    
-
-                     <MenuButton
+                        class="sapUiSmallMarginEnd" />
+                    <MenuButton
                         text="Filter"
                         icon="sap-icon://filter"
-                        buttonMode="Regular" > 
-                       
-
+                        buttonMode="Regular">
                         <menu>
                             <Menu itemSelected="onFilterSelect">
                                 <items>
-                                    <MenuItem key="location" text="Location"/>
-                                    <MenuItem key="turfType" text="Turf Type"/>
+                                    <MenuItem key="location" text="Location" />
+                                    <MenuItem key="turfType" text="Turf Type" />
                                 </items>
                             </Menu>
                         </menu>
                     </MenuButton>
-              
                 </HBox>
-                
-
-                <!-- Turf Table  -->
-                <Table
-                    id="turfTable"
-                    items="{SampleData>/Turfs}"
-                    alternateRowColors="true"
-                    backgroundDesign="Solid"
-                >
-
-                    <columns>
-                        <Column width="35%">
-                            <Text text="Turf Name"/>
-                        </Column>
-                        <Column width="35%">
-                            <Text text="Location"/>
-                        </Column>
-                        <Column width="10%" hAlign="Center">
-                            <Text text=""/>
-                        </Column>
-                        <Column width="15%" hAlign="Center">
-                            <Text text=""/>
-                        </Column>
-                    </columns>
-
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <!-- Turf Name - Bold -->
-                                <ObjectIdentifier
-                                    title="{SampleData>Name}"/>
-
-                                <!-- Location - Light grey -->
-                                <Text
-                                    text="{SampleData>Location}"
-                                    class="sapUiSmallMarginBegin"/>
-
-                                <!-- Map Pin Icon -->
-                                <core:Icon
-                                    src="sap-icon://map"
-                                    size="1.2rem"
-                                    color="#6264A7"
-                                    press="onMapPress"
-                                    class="sapUiSmallMarginBegin"/>
-
-                                <!-- Book Button -->
-                                <Button
-                                    text="Book"
-                                    type="Emphasized"
-                                    width="6rem"
-                                    press="onBook"/>
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-
-                </Table>
-               
             </VBox>
-
         </content>
     </Page>
-
 </mvc:View>

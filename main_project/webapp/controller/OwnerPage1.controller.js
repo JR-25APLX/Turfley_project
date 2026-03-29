@@ -8,10 +8,10 @@ sap.ui.define([
         }, 
         onTabSelect: function(oEvent){
              
-            var skey = oEvent.getParameter("key"); // Capturing Icon Clicked By the User, which will get stores in sKey
+            var skey = oEvent.getParameter("key");
 
-            var oEditSection = this.getView().byId("edit"); // Finding Edit Section by ID and Storing it in by OEditSection
-            var oAddSection = this.getView().byId("add"); // Finding Add Section by ID and Storing it in by OAddSection
+            var oEditSection = this.getView().byId("edit"); 
+            var oAddSection = this.getView().byId("add"); 
 
             var turfId = this.getView().byId("i8").getValue();
             

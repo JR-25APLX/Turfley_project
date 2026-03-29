@@ -9,11 +9,7 @@ sap.ui.define([
         onInit() {
 
             var oModel = new sap.ui.model.json.JSONModel();
-
-            // load JSON file from sampledata folder
             oModel.loadData("../SampleData/turf.json");
-
-            // set the model to the view
             this.getView().setModel(oModel, "SampleData");
         }, 
         onSearch: function(oControlEvent)

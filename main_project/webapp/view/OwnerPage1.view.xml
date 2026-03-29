@@ -5,8 +5,6 @@
     <Page id="page4" title="{i18n>title}">
     <customHeader>
             <Toolbar height="60px">
-           
-            <!-- To display TURFLEY on the Left Side -->
                 <Title text="TURFLEY" level="H1" titleStyle="H2" />    
  
             <!-- This will push Logo to the Right Side -->
@@ -38,12 +36,12 @@
 
                 <VBox>
                     <Label text="Turf Name"/>
-                    <Input Value=" " id="i8"/>
+                    <Input value=" " id="i8"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Turf Location"/>
-                    <Input Value=" " id="i9" />
+                    <Input value=" " id="i9" />
                 </VBox>
 
                 <VBox>
@@ -57,12 +55,12 @@
 
                 <VBox>
                     <Label text="Turf ID"/>
-                    <Input Value=" " id="i11"/>
+                    <Input value=" " id="i11"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Turf Location URL"/>
-                    <Input Value=" " id="i12"/>
+                    <Input value=" " id="i12"/>
                 </VBox>
 
             </g:Grid>
@@ -71,12 +69,12 @@
 
                 <VBox>
                     <Label text="Owner ID"/>
-                    <Input Value=" " id="i13"/>
+                    <Input value=" " id="i13"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Turf Type"/>
-                    <Input Value=" " id="i14"/>
+                    <Input value=" " id="i14"/>
                 </VBox>
 
             </g:Grid>
@@ -91,12 +89,12 @@
 
                 <VBox>
                     <Label text="Enter Turf ID"/>
-                    <Input Value=" " id="i15"/>
+                    <Input value=" " id="i15"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Enter Turf Location"/>
-                    <Input Value=" " id="i16" />
+                    <Input value=" " id="i16" />
                 </VBox>
 
                 <VBox>
@@ -110,17 +108,17 @@
 
                 <VBox>
                     <Label text="Enter Turf Name"/>
-                    <Input Value=" " id="i18"/>
+                    <Input value=" " id="i18"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Enter Turf Location URL"/>
-                    <Input Value=" " id="i19" />
+                    <Input value=" " id="i19" />
                 </VBox>
 
                 <VBox>
                     <Label text="Enter Currency Key"/>
-                    <Input Value=" " id="i20" />
+                    <Input value=" " id="i20" />
                 </VBox>
             </g:Grid>
 
@@ -128,12 +126,12 @@
 
                 <VBox>
                     <Label text="Enter Turf Price"/>
-                    <Input Value=" " id="i21"/>
+                    <Input value=" " id="i21"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Enter your Owner Id"/>
-                    <Input Value=" " id="i22" />
+                    <Input value=" " id="i22" />
                 </VBox>
 
             </g:Grid>

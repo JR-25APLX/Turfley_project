@@ -44,7 +44,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.120.0",
       "libs": {
@@ -93,7 +93,21 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetHome"
+            "TargetBooking"
+          ]
+        },
+        {
+          "name": "RouteReg",
+          "pattern": "Registration",
+          "target": [
+            "TargetReg"
+          ]
+        },
+        {
+          "name": "RouteUser1",
+          "pattern": "User_dashboard",
+          "target": [
+            "TargetUser1"
           ]
         },
         {
@@ -101,6 +115,27 @@
           "pattern": "Slots",
           "target": [
             "TargetSlot"
+          ]
+        },
+        {
+          "name": "RouteBooking",
+          "pattern": "Booking",
+          "target": [
+            "TargetBooking"
+          ]
+        },
+        {
+          "name": "RoutePay",
+          "pattern": "Payment",
+          "target": [
+            "TargetPay"
+          ]
+        },
+        {
+          "name": "RouteOwn1",
+          "pattern": "Owner_dashboard",
+          "target": [
+            "TargetOwn1"
           ]
         }
       ],
@@ -113,11 +148,23 @@
           "id": "Registration",
           "name": "Registration"
         },
+        "TargetUser1": {
+          "id": "UserHome",
+          "name": "UserHome"
+        },
         "TargetSlot": {
           "id": "Slots",
           "name": "Slots"
         },
-        "TargetOwn": {
+        "TargetBooking": {
+          "id": "Booking",
+          "name": "Booking"
+        },
+        "TargetPay": {
+          "id": "Payment",
+          "name": "Payment"
+        },
+        "TargetOwn1": {
           "id": "OwnerPage1",
           "name": "OwnerPage1"
         }

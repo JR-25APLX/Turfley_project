@@ -32,7 +32,6 @@ sap.ui.define([
          
             var userId = this.getView().byId("i1").getValue();
             var password = this.getView().byId("i2").getValue(); 
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             userId = userId.trim().toLowerCase();
             password = password.trim();
@@ -57,10 +56,10 @@ sap.ui.define([
                         that.getOwnerComponent().getRouter().navTo("RouteReg");
                     } 
                     else if(data.Role === "O"){
-                        that.getOwnerComponent().getRouter().navTo("RouteReg");
+                        that.getOwnerComponent().getRouter().navTo("RouteOwn1");
                     }
                     else if(data.Role === "U"){
-                        that.getOwnerComponent().getRouter().navTo("RouteSlot");
+                        that.getOwnerComponent().getRouter().navTo("RouteUser1");
                     }
                 },
                 error: function(oError) {
@@ -74,18 +73,5 @@ sap.ui.define([
                 }
             });
         },
-
-
-            if (!emailPattern.test(userId)) {
-            sap.m.MessageToast.show("Please enter a valid email address");
-
-            
-            // if (!userId.endsWith("gmail.com")){
-            //     MessageToast.show("Please Enter a Valid Mail Id")
-            // }
-            
-        
-
-        }
     });
 });

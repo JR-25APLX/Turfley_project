@@ -1,0 +1,156 @@
+<mvc:View controllerName="com.applexus.mainproject.controller.Booking"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page enableScrolling="true" backgroundDesign="List">
+
+        <customHeader>
+            <Toolbar height="60px">
+                <Title text="TURFLEY" level="H1" titleStyle="H2"/>
+                <ToolbarSpacer/>
+                <Image
+                    src="../Images/justlogo.png"
+                    width="50px"
+                    height="70px"
+                    decorative="true"/>
+            </Toolbar>
+        </customHeader>
+
+        <content>
+            <FlexBox
+                width="100%"
+                alignItems="Center"
+                justifyContent="Center"
+                class="sapUiMediumMargin">
+
+                <Panel
+                    width="600px"
+                    backgroundDesign="Solid"
+                    class="sapUiResponsiveMargin">
+
+                    <content>
+                        <VBox class="sapUiMediumMargin">
+
+                            <!-- Title -->
+                            <Title
+                                text="Booking Summary"
+                                titleStyle="H2"
+                                class="sapUiSmallMarginBottom"/>
+                            <Text
+                                text="Review your booking details"
+                                class="sapUiSmallMarginBottom"/>
+
+                            <!-- Summary Table -->
+                            <Table
+                                showSeparators="All"
+                                backgroundDesign="Solid"
+                                class="sapUiSmallMarginBottom">
+
+                                <columns>
+                                    <Column width="40%">
+                                        <Text text=""/>
+                                    </Column>
+                                    <Column width="60%">
+                                        <Text text=""/>
+                                    </Column>
+                                </columns>
+
+                                <items>
+
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="Customer Name"/>
+                                            <Input value="{/booking/CustomerName}" editable="false" width="100%"/>
+                                        </cells>
+                                    </ColumnListItem>
+
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="Turf Name"/>
+                                            <Input value="{/booking/TurfName}" editable="false" width="100%"/>
+                                        </cells>
+                                    </ColumnListItem>
+
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="Turf Type"/>
+                                            <Input value="{/booking/TurfType}" editable="false" width="100%"/>
+                                        </cells>
+                                    </ColumnListItem>
+
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="Booking Id"/>
+                                            <Input value="{/booking/BookingId}" editable="false" width="100%"/>
+                                        </cells>
+                                    </ColumnListItem>
+
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="Date"/>
+                                            <Input value="{/booking/Date}" editable="false" width="100%"/>
+                                        </cells>
+                                    </ColumnListItem>
+
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="Time Slots"/>
+                                            <VBox>
+                                                <Input value="2:00 PM TO 3:00 PM" editable="false" width="100%"/>
+                                                <Input value="3:00 PM TO 4:00 PM" editable="false" width="100%"/>
+                                            </VBox>
+                                        </cells>
+                                    </ColumnListItem>
+
+                                </items>
+                            </Table>
+
+                            <!-- Separator -->
+                            <core:HTML content="&lt;hr/&gt;" class="sapUiSmallMarginBottom"/>
+
+                            <!-- Total Amount Row -->
+                            <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
+                                <Title text="TOTAL AMOUNT" titleStyle="H4"/>
+                                <Panel
+                                    width="200px"
+                                    expandable="true"
+                                    expanded="false"
+                                    headerText="Rs. 2000/-"
+                                    backgroundDesign="Solid">
+                                    <content>
+                                        <VBox class="sapUiTinyMargin">
+                                            <HBox justifyContent="SpaceBetween">
+                                                <Text text="2 x Rs. 900/-"/>
+                                                <Text text="Rs. 1800/-"/>
+                                            </HBox>
+                                            <HBox justifyContent="SpaceBetween">
+                                                <Text text="Platform Fee"/>
+                                                <Text text="Rs. 200/-"/>
+                                            </HBox>
+                                            <HBox justifyContent="SpaceBetween">
+                                                <Text text="Total"/>
+                                                <Text text="Rs. 2000/-"/>
+                                            </HBox>
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                            </HBox>
+
+                            <!-- Separator -->
+                            <core:HTML content="&lt;hr/&gt;" class="sapUiSmallMarginBottom"/>
+
+                            <!-- Make Payment Button -->
+                            <Button
+                                text="Make Payment"
+                                press="onMakePayment"
+                                type="Emphasized"
+                                width="100%"/>
+
+                        </VBox>
+                    </content>
+                </Panel>
+            </FlexBox>
+        </content>
+    </Page>
+</mvc:View>
