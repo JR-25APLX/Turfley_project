@@ -93,7 +93,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetBooking"
+            "TargetLogin"
           ]
         },
         {
