@@ -1,0 +1,108 @@
+<mvc:View controllerName="com.applexus.mainproject.controller.UserMyBookings"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page  backgroundDesign="List">
+
+    <customHeader>
+            <Toolbar height="60px">
+            
+            <!-- To display TURFLEY on the Left Side -->
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />    
+
+            <!-- This will push Logo to the Right Side -->
+                <ToolbarSpacer />
+
+            <!-- Logo of Turfley  -->
+                <Image
+                src="../Images/justlogo.png"
+                width="70px"
+                height="70px"
+                decorative="true" />
+            </Toolbar>
+    </customHeader>
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+            <Title  text="My BOOKINGS" level="H1"/> 
+
+            <IconTabBar class="sapUiSmallMarginTop" select="onTabSelect" >
+                <items>
+                    <IconTabFilter text="Active Bookings" key= "Active"></IconTabFilter>
+                    <IconTabFilter text="Past Bookings" key="Past"></IconTabFilter>                                
+                </items>          
+            </IconTabBar>
+
+            <Table items="{SampleData>/Bookings}" id="myBookings">
+                 <columns>
+                    <Column>
+                       <Text text="Booking ID"></Text>                  
+                    </Column>
+
+                    <Column >
+                       <Text text="Turf Name"></Text>                  
+                    </Column>
+
+                    <Column >
+                       <Text text="Location"></Text>                  
+                    </Column>
+
+                    <Column >
+                       <Text text="Booking Date"></Text>                  
+                    </Column>
+
+                    <Column >
+                       <Text text="Booking Slots"></Text>                  
+                    </Column>
+
+                    <Column >
+                       <Text text="Amount Paid"></Text>                  
+                    </Column>
+
+                    <Column >
+                       <Text text="Actions"></Text>                  
+                    </Column>                 
+                 </columns>   
+
+                 <items>
+                    <ColumnListItem >
+                        <cells>
+                            <Text text="{SampleData>BookingID}"/>
+                            <Text text="{SampleData>TurfName}"/>
+                            <Link text="{SampleData>Location}"/>
+                            <Text text="{SampleData>BookingDate}"/>
+                            <Text text="{SampleData>BookingSlots}"/>
+                            <Text text="{SampleData>AmountPaid}"/>
+                            <Button text="Cancel" type="Emphasized" press="onCancel"  enabled="{= ${SampleData>Status} === 'Active' }" ></Button>
+                        </cells>
+                    
+                    
+                    </ColumnListItem>                                 
+                 </items>  
+            
+            </Table>
+
+           
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            </VBox>
+        </content>
+
+
+
+
+
+
+    </Page>
+
+</mvc:View>

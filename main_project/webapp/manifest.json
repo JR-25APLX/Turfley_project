@@ -44,7 +44,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": false,
+    "flexEnabled": true,
     "dependencies": {
       "minUI5Version": "1.120.0",
       "libs": {
@@ -90,17 +90,10 @@
       },
       "routes": [
         {
-          "name": "RouteLogin",
+          "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetLogin"
-          ]
-        },
-        {
-          "name": "RouteReg",
-          "pattern": "Register",
-          "target": [
-            "TargetReg"
+            "TargetHome"
           ]
         },
         {
@@ -123,6 +116,10 @@
         "TargetSlot": {
           "id": "Slots",
           "name": "Slots"
+        },
+        "TargetOwn": {
+          "id": "OwnerPage1",
+          "name": "OwnerPage1"
         }
       }
     },

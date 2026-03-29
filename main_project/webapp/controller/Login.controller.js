@@ -29,8 +29,10 @@ sap.ui.define([
             var oJson = this.getView().getModel();
             var oDataModel = this.getOwnerComponent().getModel();
             var that = this;
+         
             var userId = this.getView().byId("i1").getValue();
             var password = this.getView().byId("i2").getValue(); 
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             userId = userId.trim().toLowerCase();
             password = password.trim();
@@ -73,5 +75,17 @@ sap.ui.define([
             });
         },
 
+
+            if (!emailPattern.test(userId)) {
+            sap.m.MessageToast.show("Please enter a valid email address");
+
+            
+            // if (!userId.endsWith("gmail.com")){
+            //     MessageToast.show("Please Enter a Valid Mail Id")
+            // }
+            
+        
+
+        }
     });
 });

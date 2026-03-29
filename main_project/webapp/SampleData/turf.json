@@ -1,0 +1,42 @@
+{
+  "Turfs": [
+    {
+      "TurfId": "T001",
+      "Name": "Greenfield Turf",
+      "Location": "Khazakottam, Trivandrum",
+      "LocationUrl": "https://maps.google.com/?q=Khazakottam,Trivandrum",
+      "TurfType": "F" 
+      
+    },
+    {
+      "TurfId": "T002",
+      "Name": "Riverside Arena",
+      "Location": "Manvila, Trivandrum",
+      "LocationUrl": "https://maps.google.com/?q=Manvila,Trivandrum",
+      "TurfType": "B"
+      
+    },
+    {
+      "TurfId": "T003",
+      "Name": "Maple Sports Ground",
+      "Location": "Infor Park, Kochi",
+      "LocationUrl": "https://maps.google.com/?q=Infor+Park,Kochi",
+      "TurfType": "C"
+    },
+    {
+      "TurfId": "T004",
+      "Name": "Sunset Field",
+      "Location": "Kulathoor Junction, Kollam",
+      "LocationUrl": "https://maps.google.com/?q=Kulathoor+Junction,Kollam",
+      "TurfType": "F"
+    },
+    {
+      "TurfId": "T005",
+      "Name": "Eastwood Turf",
+      "Location": "Varkala",
+      "LocationUrl": "https://maps.google.com/?q=Varkala",
+      "TurfType": "B"
+
+    }
+  ]
+}
