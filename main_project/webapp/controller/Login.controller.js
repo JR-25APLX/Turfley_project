@@ -51,14 +51,14 @@ sap.ui.define([
             oDataModel.create("/LoginSet", oPayload, {
                 success: function(data) {
                     MessageToast.show("Status: " + data.Message);
-                    if(data.Role === "Admin") {
+                    if(data.Role === "A") {
                         that.getOwnerComponent().getRouter().navTo("RouteReg");
                     } 
-                    else if(data.Role === "Owner"){
+                    else if(data.Role === "O"){
                         that.getOwnerComponent().getRouter().navTo("RouteReg");
                     }
-                    else if(data.Role === "User"){
-                        that.getOwnerComponent().getRouter().navTo("RouteReg");
+                    else if(data.Role === "U"){
+                        that.getOwnerComponent().getRouter().navTo("RouteSlot");
                     }
                 },
                 error: function(oError) {

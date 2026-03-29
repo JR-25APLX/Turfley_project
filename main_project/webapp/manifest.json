@@ -102,6 +102,13 @@
           "target": [
             "TargetReg"
           ]
+        },
+        {
+          "name": "RouteSlot",
+          "pattern": "Slots",
+          "target": [
+            "TargetSlot"
+          ]
         }
       ],
       "targets": {
@@ -112,6 +119,10 @@
         "TargetReg": {
           "id": "Registration",
           "name": "Registration"
+        },
+        "TargetSlot": {
+          "id": "Slots",
+          "name": "Slots"
         }
       }
     },

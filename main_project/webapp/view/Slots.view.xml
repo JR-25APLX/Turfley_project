@@ -1,0 +1,113 @@
+<mvc:View controllerName="com.applexus.mainproject.controller.Slots"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout">
+
+    <Page id="pageBooking" title="{i18n>title}" enableScrolling="true">
+        <customHeader>
+            <Toolbar height="60px">
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />    
+                <ToolbarSpacer />
+                <Image src="../Images/justlogo.png"
+                       width="70px"
+                       height="70px"
+                       decorative="true" />
+            </Toolbar>
+        </customHeader>
+ 
+        <ScrollContainer
+    height="100%"
+    width="100%"
+    vertical="true">
+        <FlexBox
+            width="100%"
+            height="100%"
+            alignItems="Center"
+            justifyContent="Center">
+
+            <Panel
+                width="750px"
+                class="sapUiResponsiveMargin"
+                backgroundDesign="Translucent">
+
+                <content>
+                    <VBox
+                        alignItems="Start"
+                        class="sapUiMediumMargin">
+                        <Label text="Turf Name" class="sapUiSmallMarginBottom"/>
+                        <Input
+                            value="{/turf/Name}"
+                            editable="false"
+                            width="100%"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <!-- Location -->
+                        <Label text="Location" class="sapUiSmallMarginBottom"/>
+                        <Input
+                            value="{/turf/Location}"
+                            editable="false"
+                            width="100%"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <!-- Date -->
+                        <Label text="Date" class="sapUiSmallMarginBottom"/>
+                        <DatePicker
+                            id="datePickerId"
+                            placeholder="Select your Date"
+                            displayFormat="dd/MM/yyyy"
+                            width="100%"
+                            change="onDateChange"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <!-- Legend -->
+                        <HBox class="sapUiSmallMarginBottom">
+                            <Button text="Available" type="Accept" enabled="false" class="sapUiTinyMargin"/>
+                            <Button text="Booked"    type="Reject" enabled="false" class="sapUiTinyMargin"/>
+                        </HBox>
+
+                        <!-- Slots Grid -->
+                        <Panel
+                            width="100%"
+                            backgroundDesign="Solid"
+                            class="sapUiSmallMarginBottom">
+                            <content>
+                                <l:Grid
+                                    defaultSpan="L4 M6 S6"
+                                    class="sapUiSmallMargin">
+                                    <l:content>
+
+                                        <Button text="9 - 10 AM"  press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+                                        <Button text="10 - 11 AM" press="onSlotPress" type="Reject" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="B"/></customData></Button>
+                                        <Button text="11 - 12 PM" press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+                                        <Button text="12 - 01 PM" press="onSlotPress" type="Reject" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="B"/></customData></Button>
+                                        <Button text="1 - 2 PM"   press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+                                        <Button text="2 - 3 PM"   press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+                                        <Button text="3 - 4 PM"   press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+                                        <Button text="4 - 5 PM"   press="onSlotPress" type="Reject" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="B"/></customData></Button>
+                                        <Button text="5 - 6 PM"   press="onSlotPress" type="Reject" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="B"/></customData></Button>
+                                        <Button text="6 - 7 PM"   press="onSlotPress" type="Reject" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="B"/></customData></Button>
+                                        <Button text="7 - 8 PM"   press="onSlotPress" type="Reject" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="B"/></customData></Button>
+                                        <Button text="8 - 9 PM"   press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+                                        <Button text="9 - 10 PM"  press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+                                        <Button text="10 - 11 PM" press="onSlotPress" type="Accept" width="100%" class="sapUiTinyMargin"><customData><core:CustomData key="status" value="A"/></customData></Button>
+
+                                    </l:content>
+                                </l:Grid>
+                            </content>
+                        </Panel>
+
+                        <!-- Book Now -->
+                        <Button
+                            text="BOOK NOW"
+                            press="onBookNow"
+                            type="Emphasized"
+                            width="100%"/>
+
+                    </VBox>
+                </content>
+            </Panel>
+        </FlexBox>
+        </ScrollContainer>
+    </Page>
+</mvc:View>
