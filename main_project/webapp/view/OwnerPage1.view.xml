@@ -36,12 +36,12 @@
 
                 <VBox>
                     <Label text="Turf Name"/>
-                    <Input value=" " id="i8"/>
+                    <Input value=" " id="turfNameInput"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Turf Location"/>
-                    <Input value=" " id="i9" />
+                    <Input value=" " id="turfLocationInput" />
                 </VBox>
 
                 <VBox>
@@ -85,21 +85,22 @@
             </VBox>
 
             <VBox id="add" visible="false">
+
             <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
 
                 <VBox>
                     <Label text="Enter Turf ID"/>
-                    <Input value=" " id="i15"/>
+                    <Input value="{turfModel>/Id}" id="i15"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Enter Turf Location"/>
-                    <Input value=" " id="i16" />
+                    <Input value="{turfModel>/Location}" id="i16" />
                 </VBox>
 
                 <VBox>
                     <Label text="Enter Turf Type"/>
-                    <Input value="" id="i17"/>
+                    <Input value="{turfModel>/Type}" id="i17"/>
                 </VBox>
 
             </g:Grid>
@@ -108,17 +109,17 @@
 
                 <VBox>
                     <Label text="Enter Turf Name"/>
-                    <Input value=" " id="i18"/>
+                    <Input value="{turfModel>/Name}" id="i18"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Enter Turf Location URL"/>
-                    <Input value=" " id="i19" />
+                    <Input value="{turfModel>/Locationurl}" id="i19" />
                 </VBox>
 
                 <VBox>
                     <Label text="Enter Currency Key"/>
-                    <Input value=" " id="i20" />
+                    <Input value="{turfModel>/Cuky}" enabled="false" id="i20" />
                 </VBox>
             </g:Grid>
 
@@ -126,12 +127,12 @@
 
                 <VBox>
                     <Label text="Enter Turf Price"/>
-                    <Input value=" " id="i21"/>
+                    <Input value="{turfModel>/Price}" id="i21"/>
                 </VBox>
 
                 <VBox>
                     <Label text="Enter your Owner Id"/>
-                    <Input value=" " id="i22" />
+                    <Input value="{turfModel>/Owner}" id="i22" />
                 </VBox>
 
             </g:Grid>
