@@ -2,6 +2,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
+
     <Page backgroundDesign="List">
         <customHeader>
             <Toolbar height="60px">
@@ -9,11 +10,12 @@
                 <ToolbarSpacer />
                 <Image
                     src="../Images/justlogo.png"
-                    width="70px"
-                    height="70px"
+                    width="80px"
+                    height="75px"
                     decorative="true" />
             </Toolbar>
         </customHeader>
+
         <content>
             <VBox class="sapUiMediumMargin">
                 <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
@@ -24,19 +26,23 @@
                         icon="sap-icon://menu2"
                         press="onMyBookings" />
                 </HBox>
-                <HBox alignItems="Center" class="sapUiSmallMarginBottom">
-                    <SearchField
-                        id="searchField"
-                        placeholder="Search"
-                        width="1000px"
-                        liveChange="onSearch"
-                        class="sapUiSmallMarginEnd" />
+                <HBox alignItems="Center" width="100%" class="sapUiSmallMarginBottom">
+                    <SearchField id="s1"
+                                 placeholder="Search"
+                                 search="onSearch"
+                                 liveChange="onSearch"
+                                 class="sapUiSmallMarginEnd"
+                                 width="100%">
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </SearchField>
                     <MenuButton
                         text="Filter"
                         icon="sap-icon://filter"
                         buttonMode="Regular">
                         <menu>
-                            <Menu itemSelected="onFilterSelect">
+                            <Menu itemSelected="onFilter">
                                 <items>
                                     <MenuItem key="location" text="Location" />
                                     <MenuItem key="turfType" text="Turf Type" />
@@ -45,6 +51,52 @@
                         </menu>
                     </MenuButton>
                 </HBox>
+                <Table id="t1"
+                       items="{
+                            path: '/TurfSet',
+                            parameters: {
+                                operationMode: 'Client'
+                            }
+                        }"
+                       showSeparators="Inner">
+                    <columns>
+                        <Column width="auto" >
+                            <Text text="Turf Name" />
+                        </Column>
+                        <Column width="auto" hAlign="Left">
+                            <Text text="Location" />
+                        </Column>
+                        <Column width="4rem" hAlign="Left" />
+                        <Column width="auto" hAlign="Center">
+                            <Text text="Turf Type" />
+                        </Column>
+                        <Column width="8rem" hAlign="Center" />
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{Name}" />
+                                <Text text="{Location}" />
+                                <Button icon="sap-icon://map"
+                                        type="Transparent"
+                                        tooltip="View on Map"
+                                        press="onMap" />
+                                <Text text="{= ${Type} === 'F' ? 'Football' :
+                                               ${Type} === 'C' ? 'Cricket'  :
+                                               ${Type} === 'B' ? 'Badminton' : '' }" />
+                                <Button text="Book"
+                                        type="Emphasized"
+                                        press="onBookTurf" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                    <noData>
+                        <IllustratedMessage
+                            illustrationType="sapIllus-NoData"
+                            title="No Turfs Found" />
+                    </noData>
+                </Table>
             </VBox>
         </content>
     </Page>

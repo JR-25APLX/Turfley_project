@@ -93,7 +93,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetLogin"
+            "TargetUser1"
           ]
         },
         {
@@ -132,6 +132,13 @@
           ]
         },
         {
+          "name": "RouteMyBook",
+          "pattern": "MyBookings",
+          "target": [
+            "TargetMyBook"
+          ]
+        },
+        {
           "name": "RouteOwn1",
           "pattern": "Owner_dashboard",
           "target": [
@@ -163,6 +170,10 @@
         "TargetPay": {
           "id": "Payment",
           "name": "Payment"
+        },
+        "TargetMyBook": {
+          "id": "UserMyBookings",
+          "name": "UserMyBookings"
         },
         "TargetOwn1": {
           "id": "OwnerPage1",
