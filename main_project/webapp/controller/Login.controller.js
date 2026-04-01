@@ -36,7 +36,6 @@ sap.ui.define([
                 MessageToast.show("Enter both UserID and Password");
                 return;
             }
-           
             var emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org|net|co\.in)$/;
                 if (!emailRegex.test(UserId)) {
                     MessageToast.show("Please Enter a Valid Email Id");
@@ -47,11 +46,9 @@ sap.ui.define([
             var oPayload = oJson.getProperty("/user");
             oDataModel.create("/LoginSet", oPayload, {
                 success: function(data) {
- 
- 
                     MessageToast.show("Status: " + data.Message);
                     if(data.Role === "A") {
-                        that.getOwnerComponent().getRouter().navTo("RouteReg");
+                        that.getOwnerComponent().getRouter().navTo("RouteAdminDash");
                     }
                     else if(data.Role === "O"){
                
@@ -60,7 +57,7 @@ sap.ui.define([
                         that.getOwnerComponent().getRouter().navTo("RouteOwnDash");
                     }
                     else if(data.Role === "U"){
-                        that.getOwnerComponent().getRouter().navTo("RouteUser1");
+                        that.getOwnerComponent().getRouter().navTo("RouteUserDash");
                     }
                 },
                 error: function(oError) {

@@ -1,0 +1,23 @@
+{
+  "locations": [
+    { "title": "Thiruvananthapuram" },
+    { "title": "Kollam" },
+    { "title": "Pathanamthitta" },
+    { "title": "Alappuzha" },
+    { "title": "Kottayam" },
+    { "title": "Idukki" },
+    { "title": "Ernakulam" },
+    { "title": "Thrissur" },
+    { "title": "Palakkad" },
+    { "title": "Malappuram" },
+    { "title": "Kozhikode" },
+    { "title": "Wayanad" },
+    { "title": "Kannur" },
+    { "title": "Kasaragod" }
+  ],
+  "turfTypes": [
+    { "title": "Football",  "code": "F" },
+    { "title": "Cricket",   "code": "C" },
+    { "title": "Badminton", "code": "B" }
+  ]
+}

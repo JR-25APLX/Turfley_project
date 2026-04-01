@@ -5,7 +5,6 @@ sap.ui.define([
     "sap/m/MessageBox"
 ], (Controller, JSONModel, MessageToast, MessageBox) => {
     "use strict";
-
     return Controller.extend("com.applexus.mainproject.controller.UserBooking", {
         onInit() {
             var oJson = new JSONModel();
@@ -25,7 +24,6 @@ sap.ui.define([
             });
             this.getView().setModel(oJson);
         },
-
         onMakePayment: function() {
             this.getOwnerComponent().getRouter().navTo("RoutePay");
             

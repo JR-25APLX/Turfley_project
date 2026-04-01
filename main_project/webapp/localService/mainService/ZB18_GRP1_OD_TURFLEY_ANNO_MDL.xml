@@ -25,6 +25,10 @@
         <edmx:Include Namespace="ZB18_GRP1_OD_TURFLEY_SRV" Alias="SAP"/>
     </edmx:Reference>
     <edmx:DataServices>
-        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+        <Schema Namespace="zb18_grp1_od_turfley_anno_mdl.v1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERType/p_ownerid">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+        </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

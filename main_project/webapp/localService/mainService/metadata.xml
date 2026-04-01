@@ -47,6 +47,7 @@
                     <PropertyRef Name="Id"/>
                 </Key>
                 <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Turf ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Turf status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Turf name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Location" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Turf location" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Locationurl" Type="Edm.String" Nullable="false" MaxLength="255" sap:unicode="false" sap:label="Location url" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
@@ -54,6 +55,19 @@
                 <Property Name="Owner" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Price" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Cuky" sap:label="Basic price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Cuky" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency Key" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityType Name="User" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserId"/>
+                </Key>
+                <Property Name="UserId" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Password" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Password" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Role" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Role" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Phone" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Phone" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="User status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Upiid" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="UPI ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="257" sap:unicode="false" sap:label="MESSAGE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
             <EntityType Name="Login" sap:content-version="1">
                 <Key>
@@ -105,18 +119,41 @@
                 <Property Name="Slotprice" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Cuky" sap:label="Slot price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Cuky" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency Key" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
             </EntityType>
-            <EntityType Name="User" sap:content-version="1">
+            <EntityType Name="ZIB18_GRP1_BOOKING_HEADERType" sap:label="Booking Header Root Entity" sap:content-version="1">
                 <Key>
-                    <PropertyRef Name="UserId"/>
+                    <PropertyRef Name="Booking_id"/>
                 </Key>
-                <Property Name="UserId" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Password" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Password" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Role" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Role" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Phone" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Phone" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="User status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Upiid" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="UPI ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="257" sap:unicode="false" sap:label="MESSAGE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Booking_id" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Book ID"/>
+                <Property Name="User_id" Type="Edm.String" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="Turf_id" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Turf ID"/>
+                <Property Name="Booking_date" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Book Date"/>
+                <Property Name="Commission" Type="Edm.Decimal" Precision="11" Scale="3" sap:unit="Cky" sap:label="Commission Amount" sap:quickinfo="Comission Amount"/>
+                <Property Name="Cky" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
+                <Property Name="Booking_status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Booking status"/>
+            </EntityType>
+            <EntityType Name="ZIB18_GRP1_OWNERType" sap:label="CDS View for Displaying Owner Turfs" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="p_ownerid"/>
+                    <PropertyRef Name="Turf_Id"/>
+                </Key>
+                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Owner id"/>
+                <Property Name="Turf_Id" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Turf ID"/>
+                <Property Name="Turf_Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf name" sap:quickinfo="Name of the turf"/>
+                <Property Name="Turf_Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Turf location" sap:quickinfo="Location of the turf"/>
+                <Property Name="Location_Url" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Location url"/>
+                <Property Name="Turf_Type" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Type of the turf"/>
+                <Property Name="Turf_Price" Type="Edm.Decimal" Precision="11" Scale="3" sap:unit="Currency_Key" sap:label="Basic price" sap:quickinfo="Basic price of the turf"/>
+                <Property Name="Currency_Key" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
+                <Property Name="Commission_percentage" Type="Edm.Decimal" Precision="5" Scale="3" sap:unit="Currency_Key" sap:label="Commission percent" sap:quickinfo="Commission percentage of admin"/>
+                <Property Name="Turf_Status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Turf status" sap:quickinfo="Status of the turf"/>
+                <NavigationProperty Name="Parameters" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.assoc_7DF72F6343326A5839AEE8A6A63E6EE2" FromRole="ToRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2" ToRole="FromRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ZIB18_GRP1_OWNERParameters" sap:semantics="parameters" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="p_ownerid"/>
+                </Key>
+                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="20" sap:parameter="mandatory" sap:label="Owner id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="Set" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.assoc_7DF72F6343326A5839AEE8A6A63E6EE2" FromRole="FromRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2" ToRole="ToRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_TURFType" sap:label="Turf Header Details" sap:content-version="1">
                 <Key>
@@ -128,8 +165,39 @@
                 <Property Name="LocationUrl" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Location url"/>
                 <Property Name="TurfType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Type of the turf"/>
                 <Property Name="Status_code" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Turf status" sap:quickinfo="Status of the turf"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="8"/>
+            </EntityType>
+            <EntityType Name="ZIB18_GRP1_TURF_SLOTType" sap:label="Turf And Slot Association" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Turf_Id"/>
+                </Key>
+                <Property Name="Turf_Id" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Turf ID"/>
+                <Property Name="Turf_Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf name" sap:quickinfo="Name of the turf"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Turf location" sap:quickinfo="Location of the turf"/>
+                <Property Name="LocationUrl" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Location url"/>
+                <Property Name="Turf_Type" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Type of the turf"/>
+                <Property Name="Owner" Type="Edm.String" MaxLength="20" sap:label="Owner id"/>
+                <Property Name="Price" Type="Edm.Decimal" Precision="11" Scale="3" sap:unit="Currency_Key" sap:label="Basic price" sap:quickinfo="Basic price of the turf"/>
+                <Property Name="Currency_Key" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
+                <Property Name="Commision_Percent" Type="Edm.Decimal" Precision="5" Scale="3" sap:unit="Currency_Key" sap:label="Commission percent" sap:quickinfo="Commission percentage of admin"/>
+                <Property Name="Status_code" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Turf status" sap:quickinfo="Status of the turf"/>
                 <Property Name="Status" Type="Edm.String" MaxLength="6"/>
             </EntityType>
+            <EntityType Name="ZIB18_GRP1_USERType" sap:label="User Details" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="UserId"/>
+                </Key>
+                <Property Name="UserId" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="Role" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Role"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Name"/>
+                <Property Name="Phone" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="Phone" sap:quickinfo="Phone Number"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="User status"/>
+                <Property Name="Upiid" Type="Edm.String" MaxLength="20" sap:label="UPI ID"/>
+            </EntityType>
+            <Association Name="assoc_7DF72F6343326A5839AEE8A6A63E6EE2" sap:content-version="1">
+                <End Type="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERParameters" Multiplicity="1" Role="FromRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
+                <End Type="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERType" Multiplicity="*" Role="ToRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
+            </Association>
             <Association Name="Booking_header_item" sap:content-version="1">
                 <End Type="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Header" Multiplicity="*" Role="FromRole_Booking_header_item"/>
                 <End Type="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Item" Multiplicity="*" Role="ToRole_Booking_header_item"/>
@@ -143,22 +211,67 @@
                 </ReferentialConstraint>
             </Association>
             <EntityContainer Name="ZB18_GRP1_OD_TURFLEY_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZIB18_GRP1_BOOKING_HEADER" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_BOOKING_HEADERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZIB18_GRP1_OWNERSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ZIB18_GRP1_OWNER" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERParameters" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
                 <EntitySet Name="ZIB18_GRP1_TURF" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_TURFType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZIB18_GRP1_TURF_SLOT" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_TURF_SLOTType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZIB18_GRP1_USER" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <EntitySet Name="SlotSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.Slot" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="TurfSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.Turf" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="UserSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.User" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="LoginSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.Login" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="RegistrationSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.Registration" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="Booking_HeaderSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Header" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="Booking_ItemSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Item" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
-                <EntitySet Name="UserSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.User" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <AssociationSet Name="Booking_header_itemSet" Association="ZB18_GRP1_OD_TURFLEY_SRV.Booking_header_item" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="Booking_HeaderSet" Role="FromRole_Booking_header_item"/>
                     <End EntitySet="Booking_ItemSet" Role="ToRole_Booking_header_item"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_7DF72F6343326A5839AEE8A6A63E6EE2" Association="ZB18_GRP1_OD_TURFLEY_SRV.assoc_7DF72F6343326A5839AEE8A6A63E6EE2" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZIB18_GRP1_OWNER" Role="FromRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
+                    <End EntitySet="ZIB18_GRP1_OWNERSet" Role="ToRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
                 </AssociationSet>
             </EntityContainer>
             <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZB18_GRP1_OD_TURFLEY_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
                 <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZB18_GRP1_OD_TURFLEY_SRV_Entities/ZIB18_GRP1_OWNER" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>p_ownerid</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="Parameters"/>
+                                    <PropertyValue Property="FilterRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Filterable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>p_ownerid</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
             </Annotations>
             <atom:link rel="self" href="/sap/opu/odata/sap/ZB18_GRP1_OD_TURFLEY_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
             <atom:link rel="latest-version" href="/sap/opu/odata/sap/ZB18_GRP1_OD_TURFLEY_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
