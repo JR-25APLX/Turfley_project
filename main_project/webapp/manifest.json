@@ -102,7 +102,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetLogin"
+            "TargetAdmin"
           ]
         },
         {
@@ -149,23 +149,30 @@
         },
         {
           "name": "RouteOwn1",
-          "pattern": "Owner_dashboard",
+          "pattern": "Owner_Edit",
           "target": [
             "TargetOwn1"
           ]
         },
         {
-          "name": "RouteAdminUm",
-          "pattern": "User_Management",
+          "name": "RouteOwnDash",
+          "pattern": "Owner_dashboard",
           "target": [
-            "TargetAdminUm"
+            "TargetOwnDash"
           ]
         },
         {
-          "name": "RouteAdminDash",
-          "pattern": "Admin_Dashboard",
+          "name": "RouteOAddTurf",
+          "pattern": "Owner_AddTurf",
           "target": [
-            "TargetAdminDash"
+            "TargetOAddTurf"
+          ]
+        },
+        {
+          "name": "RouteAdmin",
+          "pattern": "Admin",
+          "target": [
+            "TargetAdmin"
           ]
         }
       ],
@@ -202,13 +209,17 @@
           "id": "OwnerPage1",
           "name": "OwnerPage1"
         },
-        "TargetAdminUm": {
-          "id": "AdminUm",
-          "name": "AdminUm"
+        "TargetOwnDash": {
+          "id": "OwnerDash",
+          "name": "OwnerDash"
         },
-        "TargetAdminDash": {
-          "id": "AdminDash",
-          "name": "AdminDash"
+        "TargetOAddTurf": {
+          "id": "OAddTurf",
+          "name": "OAddTurf"
+        },
+        "TargetAdmin": {
+          "id": "Admin",
+          "name": "Admin"
         }
       }
     },
