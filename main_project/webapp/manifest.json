@@ -102,7 +102,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetAdminBm"
+            "TargetLogin"
           ]
         },
         {
@@ -113,17 +113,17 @@
           ]
         },
         {
-          "name": "RouteUser1",
-          "pattern": "User_dashboard",
+          "name": "RouteUserDash",
+          "pattern": "Turfs",
           "target": [
-            "TargetUser1"
+            "TargetUserDash"
           ]
         },
         {
-          "name": "RouteSlot",
-          "pattern": "Slots",
+          "name": "RouteBook",
+          "pattern": "Slot_Selection",
           "target": [
-            "TargetSlot"
+            "TargetSlotBook"
           ]
         },
         {
@@ -141,38 +141,66 @@
           ]
         },
         {
-          "name": "RouteMyBook",
-          "pattern": "MyBookings",
+          "name": "RouteUserBooking",
+          "pattern": "My_Bookings",
           "target": [
-            "TargetMyBook"
-          ]
-        },
-        {
-          "name": "RouteOwn1",
-          "pattern": "Owner_Edit",
-          "target": [
-            "TargetOwn1"
+            "TargetUserBooking"
           ]
         },
         {
           "name": "RouteOwnDash",
-          "pattern": "Owner_dashboard",
+          "pattern": "Owner_Dashboard",
           "target": [
             "TargetOwnDash"
           ]
         },
         {
-          "name": "RouteOAddTurf",
-          "pattern": "Owner_AddTurf",
+          "name": "RouteOwnAddTurf",
+          "pattern": "Add_Turf",
           "target": [
-            "TargetOAddTurf"
+            "TargetOwnAddTurf"
           ]
         },
         {
-          "name": "RouteAdmin",
-          "pattern": "Admin",
+          "name": "RouteOwnEditTurf",
+          "pattern": "Edit_Turf",
           "target": [
-            "TargetAdmin"
+            "TargetOwnEditTurf"
+          ]
+        },
+        {
+          "name": "RouteOwnTurfBooking",
+          "pattern": "Turf_Bookings",
+          "target": [
+            "TargetOwnTurfBooking"
+          ]
+        },
+        {
+          "name": "RouteAdminDash",
+          "pattern": "Admin_Dashboard",
+          "target": [
+            "TargetAdminDash"
+          ]
+        },
+        {
+          "name": "RouteAdminUm",
+          "pattern": "Admin_User_Management",
+          "target": [
+            "TargetAdminUm"
+          ]
+        },
+        {
+          "name": "RouteAdminBm",
+          "pattern": "Admin_Booking_Management",
+          "target": [
+            "TargetAdminBm"
+          ]
+        },
+        {
+          "name": "RouteAdminTm",
+          "pattern": "Admin_Turf_Management",
+          "target": [
+            "TargetAdminTm"
           ]
         }
       ],
@@ -185,49 +213,57 @@
           "id": "Registration",
           "name": "Registration"
         },
-        "TargetUser1": {
+        "TargetUserDash": {
           "id": "UserHome",
           "name": "UserHome"
         },
-        "TargetSlot": {
-          "id": "Slots",
-          "name": "Slots"
+        "TargetSlotBook": {
+          "id": "UserSlotSelection",
+          "name": "UserSlotSelection"
         },
         "TargetBooking": {
-          "id": "Booking",
-          "name": "Booking"
+          "id": "UserBooking",
+          "name": "UserBooking"
         },
         "TargetPay": {
-          "id": "Payment",
-          "name": "Payment"
+          "id": "UserPayment",
+          "name": "UserPayment"
         },
-        "TargetMyBook": {
+        "TargetUserBooking": {
           "id": "UserMyBookings",
           "name": "UserMyBookings"
-        },
-        "TargetOwn1": {
-          "id": "OwnerPage1",
-          "name": "OwnerPage1"
         },
         "TargetOwnDash": {
           "id": "OwnerDash",
           "name": "OwnerDash"
         },
-        "TargetOAddTurf": {
-          "id": "OAddTurf",
-          "name": "OAddTurf"
+        "TargetOwnAddTurf": {
+          "id": "OwnerAddTurf",
+          "name": "OwnerAddTurf"
         },
-        "TargetAdmin": {
-          "id": "Admin",
-          "name": "Admin"
+        "TargetOwnEditTurf": {
+          "id": "",
+          "name": ""
+        },
+        "TargetOwnTurfBooking": {
+          "id": "",
+          "name": ""
         },
         "TargetAdminDash": {
           "id": "AdminDash",
           "name": "AdminDash"
         },
+        "TargetAdminUm": {
+          "id": "AdminUm",
+          "name": "AdminUm"
+        },
         "TargetAdminBm": {
           "id": "AdminBm",
           "name": "AdminBm"
+        },
+        "TargetAdminTm": {
+          "id": "AdminTm",
+          "name": "AdminTm"
         }
       }
     },
