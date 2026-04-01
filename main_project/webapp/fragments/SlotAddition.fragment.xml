@@ -1,0 +1,91 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid">
+
+    <Dialog
+        id="addSlotDialog"
+        title="Add Time Slots"
+        contentWidth="660px"
+        resizable="true"
+        draggable="true"
+        state="None">
+
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="Add Time Slots" level="H2"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        type="Transparent"
+                        press="onCancelSlots"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop">
+
+                <MessageStrip
+                    text="Select the 1-hour slots to activate for this turf. Selected slots will be highlighted in blue."
+                    type="Information"
+                    showIcon="true"
+                    showCloseButton="false"
+                    class="sapUiSmallMarginBottom"/>
+
+
+                <Toolbar class="sapUiTinyMarginBottom">
+                    <Label text="Selected:" design="Bold"/>
+                    <Text text="{slotModel>/selectedCount} slot(s)" class="sapUiTinyMarginBegin"/>
+                    <ToolbarSpacer/>
+                    <Button
+                        text="Select All"
+                        type="Transparent"
+                        icon="sap-icon://multiselect-all"
+                        press="onSelectAllSlots"/>
+                    <Button
+                        text="Clear All"
+                        type="Transparent"
+                        icon="sap-icon://multiselect-none"
+                        press="onClearAllSlots"/>
+                </Toolbar>
+
+                <grid:CSSGrid
+                    id="slotCSSGrid"
+                    gridTemplateColumns="repeat(4, 1fr)"
+                    gridGap="0.5rem"
+                    class="sapUiSmallMarginBottom"
+                    items="{slotModel>/slots}">
+                    <ToggleButton
+                        id="slotToggleBtn"
+                        text="{slotModel>label}"
+                        pressed="{slotModel>selected}"
+                        width="100%"
+                        tooltip="Slot: {slotModel>startTime} - {slotModel>endTime}"
+                        press="onSlotToggle"
+                        class="turfSlotBtn"/>
+                </grid:CSSGrid>
+
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button
+                text="Confirm &amp; Save"
+                icon="sap-icon://save"
+                type="Emphasized"
+                press="onConfirmSlots"/>
+        </beginButton>
+        <endButton>
+            <Button
+                text="Cancel"
+                icon="sap-icon://decline"
+                type="Transparent"
+                press="onCancelSlots"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>
