@@ -53,7 +53,7 @@
                 </HBox>
                 <Table id="t1"
                        items="{
-                            path: '/TurfSet',
+                            path: '/ZB18_04_VBAK_SRV_01',
                             parameters: {
                                 operationMode: 'Client'
                             }
