@@ -1,0 +1,116 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.OAddTurf"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:g="sap.ui.layout">
+    <Page id="page5" title="{i18n>title}">
+
+    <customHeader>
+            <Toolbar height="60px">
+           
+            <!-- To display TURFLEY on the Left Side -->
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />    
+ 
+            <!-- This will push Logo to the Right Side -->
+                <ToolbarSpacer />
+ 
+            <!-- Logo of Turfley  -->
+                <Image
+                src="../Images/justlogo.png"
+                width="70px"
+                height="70px"
+                decorative="true" />
+            </Toolbar>
+
+    </customHeader>
+    <content>
+        <VBox class="sapUiMediumMargin" >
+
+            <Title text="ADD YOUR NEW TURF HERE" level="H1" titleStyle="H3"/> 
+
+            <VBox>
+
+            <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+
+                <VBox>
+                    <Label text="Enter Turf Name"/>
+                    <Input value="{turfModel>/Name}" />
+                </VBox>
+
+                <VBox>
+                    <Label text="Enter Turf Location"/>
+                    <Input value="{turfModel>/Location}"  />
+                </VBox>
+
+                <VBox>
+                    <Label text="Enter Turf Type"/>
+                    <Input value="{turfModel>/Type}"/>
+                </VBox>
+
+            </g:Grid>
+
+            <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+
+                <VBox>
+                    <Label text="Enter Turf Location URL"/>
+                    <Input value="{turfModel>/Locationurl}" />
+                </VBox>
+
+                <VBox>
+                    <Label text="Enter Currency Key"/>
+                    <Input value="{turfModel>/Cuky}" enabled="false" />
+                </VBox>
+            </g:Grid>
+
+            <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+
+                <VBox>
+                    <Label text="Enter Turf Price"/>
+                    <Input value="{turfModel>/Price}" />
+                </VBox>
+
+                <VBox>
+                    <Label text="Enter your Owner Id"/>
+                    <Input value="{turfModel>/Owner}"/>
+                </VBox>
+                
+                
+
+            </g:Grid>
+
+            <HBox justifyContent="Center" class="sapUiSmallMarginTop">
+                <Button text="Add + " type="Emphasized" press="onAdd"/>
+            </HBox>
+
+            <Button  type="Emphasized" text="Add Slots" icon="sap-icon://add" press="onAddSlots" ></Button>
+
+            
+
+            </VBox>       
+        </VBox>      
+    </content>    
+
+    
+  
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ 
+
+ 
+ 
+       
+    </Page>
+</mvc:View>
+ 
+
+
+

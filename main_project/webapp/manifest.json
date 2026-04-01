@@ -20,9 +20,18 @@
         "uri": "/sap/opu/odata/sap/ZB18_GRP1_OD_TURFLEY_SRV/",
         "type": "OData",
         "settings": {
-          "annotations": [],
+          "annotations": [
+            "ZB18_GRP1_OD_TURFLEY_ANNO_MDL"
+          ],
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "2.0"
+        }
+      },
+      "ZB18_GRP1_OD_TURFLEY_ANNO_MDL": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZB18_GRP1_OD_TURFLEY_ANNO_MDL',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/ZB18_GRP1_OD_TURFLEY_ANNO_MDL.xml"
         }
       }
     }
@@ -93,7 +102,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetLogin" 
+            "TargetOwnDash"
           ]
         },
         {
@@ -133,9 +142,30 @@
         },
         {
           "name": "RouteOwn1",
-          "pattern": "Owner_dashboard",
+          "pattern": "Owner_Edit",
           "target": [
             "TargetOwn1"
+          ]
+        },
+        {
+          "name": "RouteOwnDash",
+          "pattern": "Owner_dashboard",
+          "target": [
+            "TargetOwnDash"
+          ]
+        },
+        {
+          "name": "RouteOAddTurf",
+          "pattern": "Owner_AddTurf",
+          "target": [
+            "TargetOAddTurf"
+          ]
+        },
+        {
+          "name": "RouteAdmin",
+          "pattern": "Admin",
+          "target": [
+            "TargetAdmin"
           ]
         }
       ],
@@ -167,6 +197,18 @@
         "TargetOwn1": {
           "id": "OwnerPage1",
           "name": "OwnerPage1"
+        },
+        "TargetOwnDash": {
+          "id": "OwnerDash",
+          "name": "OwnerDash"
+        },
+        "TargetOAddTurf": {
+          "id": "OAddTurf",
+          "name": "OAddTurf"
+        },
+        "TargetAdmin": {
+          "id": "Admin",
+          "name": "Admin"
         }
       }
     },

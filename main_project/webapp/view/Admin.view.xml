@@ -1,0 +1,151 @@
+<mvc:View
+    controllerName="com.applexus.mainproject.controller.Admin"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:g="sap.ui.layout">
+
+    <Page id="page6" title="{i18n>title}">
+
+        <!-- Header -->
+        <customHeader>
+            <Toolbar height="60px">
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <ToolbarSpacer />
+                <Image
+                    src="../Images/justlogo.png"
+                    width="70px"
+                    height="70px"
+                    decorative="true" />
+            </Toolbar>
+        </customHeader>
+
+        <!-- Content -->
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+                <Title text="TURF MANAGEMENT" level="H2" />
+
+                
+                <IconTabBar class="sapUiSmallMarginTop" select="onTabSelect">
+                    <items>
+
+                        <!-- ADD TURF TAB -->
+                        <IconTabFilter text="Add New Turf Here" key="Add">
+                            <VBox class="sapUiSmallMarginTop">
+
+                                <!-- Row 1 -->
+                                <g:Grid defaultSpan="L4 M6 S12">
+                                    <VBox>
+                                        <Label text="Enter Turf Name"/>
+                                        <Input value="" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Enter Turf Location"/>
+                                        <Input value="" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Enter Turf Type"/>
+                                        <Input value="" />
+                                    </VBox>
+                                </g:Grid>
+
+                                <!-- Row 2 -->
+                                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                                    <VBox>
+                                        <Label text="Enter Turf Location URL"/>
+                                        <Input value="" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Currency"/>
+                                        <Input value="INR" editable="false" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Enter Commission (%)"/>
+                                        <Input value="" type="Number" />
+                                    </VBox>
+                                </g:Grid>
+
+                                <!-- Row 3 -->
+                                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                                    <VBox>
+                                        <Label text="Enter Turf Price"/>
+                                        <Input value="" type="Number" />
+                                    </VBox>
+                                    <VBox>
+                                        <Label text="Enter Owner ID"/>
+                                        <Input value="" />
+                                    </VBox>
+                                </g:Grid>
+
+                                <HBox justifyContent="Center">
+                                    <Button text="Add" icon="sap-icon://add" type="Emphasized"/>
+                                </HBox>
+
+                            </VBox>
+                        </IconTabFilter>
+
+                        <!-- EDIT TURF TAB -->
+                        <IconTabFilter text="Edit Turf Here" key="Edit">
+                            <Table
+                                id="turfEditTable"
+                                items="{
+                                    path: '/ZIB18_GRP1_TURF_SLOT',
+                                    filters: [{
+                                        path: 'Status',
+                                        operator: 'EQ',
+                                        value1: 'A'
+                                    }]
+                                }">
+
+                                <columns>
+                                    <Column><Title text="Turf ID"/></Column>
+                                    <Column><Title text="Turf Name"/></Column>
+                                    <Column><Title text="Turf Location"/></Column>
+                                    <Column><Title text="Turf Type"/></Column>
+                                    <Column><Title text="Turf Owner ID"/></Column>
+                                    <Column><Title text="Price"/></Column>
+                                    <Column><Title text="Edit"/></Column>
+                                    <Column><Title text="Disable"/></Column>
+                                </columns>
+
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{Turf_Id}"/>
+                                            <Text text="{Turf_Name}"/>
+                                            <Text text="{Location}"/>
+                                            <Text text="{Turf_Type}"/>
+                                            <Text text="{Owner}"/>
+                                            <Text text="{Price}"/>
+                                            <Button icon="sap-icon://edit"/>
+
+                                         
+                                            <Switch
+                                                type="AcceptReject"
+                                                state="{= ${Status} === 'A' }"
+                                                customTextOn="ACTIVE"
+                                                customTextOff="DISABLED"
+                                                change="onStatusChange"/>
+
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+
+                            </Table>
+                        </IconTabFilter>
+
+                        <!-- APPROVALS TAB -->
+                        <IconTabFilter text="Approvals" key="Approvals">
+                            <VBox class="sapUiMediumMargin">
+                                <Text text="Approval section will go here." />
+                            </VBox>
+                        </IconTabFilter>
+
+                    </items>
+                </IconTabBar>
+
+            </VBox>
+        </content>
+
+    </Page>
+</mvc:View>
