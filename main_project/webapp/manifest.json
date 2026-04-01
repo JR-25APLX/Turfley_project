@@ -102,7 +102,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetAdmin"
+            "TargetAdminBm"
           ]
         },
         {
@@ -220,6 +220,14 @@
         "TargetAdmin": {
           "id": "Admin",
           "name": "Admin"
+        },
+        "TargetAdminDash": {
+          "id": "AdminDash",
+          "name": "AdminDash"
+        },
+        "TargetAdminBm": {
+          "id": "AdminBm",
+          "name": "AdminBm"
         }
       }
     },

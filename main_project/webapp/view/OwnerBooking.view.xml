@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="com.applexus.mainproject.controller.AdminBm"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:g="sap.ui.layout">
+    <Page id="ownerbooking" enableScrolling="true" showHeader="false">
+
+    
+    </Page>
+</mvc:View>

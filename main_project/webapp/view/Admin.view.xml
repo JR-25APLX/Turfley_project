@@ -6,7 +6,6 @@
 
     <Page id="page6" title="{i18n>title}">
 
-        <!-- Header -->
         <customHeader>
             <Toolbar height="60px">
                 <Title text="TURFLEY" level="H1" titleStyle="H2" />
@@ -19,17 +18,15 @@
             </Toolbar>
         </customHeader>
 
-        <!-- Content -->
         <content>
             <VBox class="sapUiMediumMargin">
 
                 <Title text="TURF MANAGEMENT" level="H2" />
 
-                
                 <IconTabBar class="sapUiSmallMarginTop" select="onTabSelect">
                     <items>
 
-                        <!-- ADD TURF TAB -->
+                        <!-- ADD NEW TURF TAB -->
                         <IconTabFilter text="Add New Turf Here" key="Add">
                             <VBox class="sapUiSmallMarginTop">
 
@@ -75,9 +72,18 @@
                                         <Label text="Enter Owner ID"/>
                                         <Input value="" />
                                     </VBox>
+                                    <VBox>
+                                        <Label text="Add Slots"/>
+                                        <Button
+                                            text="Add Slot"
+                                            icon="sap-icon://date-time"
+                                            type="Ghost"
+                                            press="onAddSlot" 
+                                            width="150px"/>
+                                    </VBox>
                                 </g:Grid>
 
-                                <HBox justifyContent="Center">
+                                <HBox justifyContent="Center" class="sapUiSmallMarginTop">
                                     <Button text="Add" icon="sap-icon://add" type="Emphasized"/>
                                 </HBox>
 
@@ -90,7 +96,6 @@
                                 id="turfEditTable"
                                 items="{
                                     path: '/ZIB18_GRP1_TURF_SLOT'
-
                                 }">
 
                                 <columns>
@@ -113,15 +118,12 @@
                                             <Text text="{Turf_Type}"/>
                                             <Text text="{Owner}"/>
                                             <Text text="{Price}"/>
-                                            <Button icon="sap-icon://edit"/>
-<Switch
-    type="AcceptReject"
-    state="{= ${Status} === 'A' }"
-    enabled="{= ${Status} !== ''}"
-    change="onStatusChange"/>
-                                         
-
-
+                                            <Button icon="sap-icon://edit" press="onEditTurf"/>
+                                            <Switch
+                                                type="AcceptReject"
+                                                state="{= ${Status} === 'A' }"
+                                                enabled="{= ${Status} !== ''}"
+                                                change="onStatusChange"/>
                                         </cells>
                                     </ColumnListItem>
                                 </items>

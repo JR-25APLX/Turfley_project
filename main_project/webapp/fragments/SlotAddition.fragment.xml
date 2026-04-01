@@ -35,10 +35,10 @@
                     showCloseButton="false"
                     class="sapUiSmallMarginBottom"/>
 
-
                 <Toolbar class="sapUiTinyMarginBottom">
                     <Label text="Selected:" design="Bold"/>
-                    <Text text="{slotModel>/selectedCount} slot(s)" class="sapUiTinyMarginBegin"/>
+                    <Text text="{slotModel>/selectedCount}" class="sapUiTinyMarginBegin"/>
+                    <Text text=" slot(s)" />
                     <ToolbarSpacer/>
                     <Button
                         text="Select All"
@@ -59,7 +59,6 @@
                     class="sapUiSmallMarginBottom"
                     items="{slotModel>/slots}">
                     <ToggleButton
-                        id="slotToggleBtn"
                         text="{slotModel>label}"
                         pressed="{slotModel>selected}"
                         width="100%"
