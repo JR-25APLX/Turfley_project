@@ -6,9 +6,8 @@ sap.ui.define([
 ], function(Controller, JSONModel, MessageBox, MessageToast) {
     "use strict";
 
-    return Controller.extend("com.applexus.mainproject.controller.OAddTurf", {
+    return Controller.extend("com.applexus.mainproject.controller.OwnerAddTurf", {
 
-        // onInit — runs when page loads
     
         onInit: function() {
 

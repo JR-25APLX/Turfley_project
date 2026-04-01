@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (Controller, MessageBox, MessageToast) {
     "use strict";
 
-    return Controller.extend("com.applexus.mainproject.controller.AdminBm", {
+    return Controller.extend("com.applexus.mainproject.controller.OwnerBooking", {
 
         onInit: function () {}
     });

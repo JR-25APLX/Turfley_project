@@ -6,7 +6,7 @@ sap.ui.define([
 ], (Controller, JSONModel, MessageToast, MessageBox) => {
     "use strict";
 
-    return Controller.extend("com.applexus.mainproject.controller.Booking", {
+    return Controller.extend("com.applexus.mainproject.controller.UserBooking", {
         onInit() {
             var oJson = new JSONModel();
             oJson.setData({

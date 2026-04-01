@@ -1,6 +1,6 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-], (Controller, JSONModel) => {
+], (Controller) => {
     "use strict";
 
     return Controller.extend("com.applexus.mainproject.controller.OwnerDash", {
@@ -9,7 +9,7 @@ sap.ui.define([
         }, 
         onAdd: function()
         {
-            this.getOwnerComponent().getRouter().navTo("RouteOAddTurf")
+            this.getOwnerComponent().getRouter().navTo("OwnerAddTurf")
         }
     });
 });

@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.applexus.mainproject.controller.Payment"
+<mvc:View controllerName="com.applexus.mainproject.controller.UserPayment"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">

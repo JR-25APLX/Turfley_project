@@ -1,4 +1,4 @@
-<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.OAddTurf"
+<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.OwnerAddTurf"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:g="sap.ui.layout">

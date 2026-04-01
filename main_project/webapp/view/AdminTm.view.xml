@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.applexus.mainproject.controller.Admin"
+    controllerName="com.applexus.mainproject.controller.AdminTm"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:g="sap.ui.layout">

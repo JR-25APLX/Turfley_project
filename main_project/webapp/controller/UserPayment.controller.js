@@ -6,7 +6,7 @@ sap.ui.define([
 ], (Controller, JSONModel, MessageToast, MessageBox) => {
     "use strict";
 
-    return Controller.extend("com.applexus.mainproject.controller.Payment", {
+    return Controller.extend("com.applexus.mainproject.controller.UserPayment", {
 
         onInit() {
             var oJson = new JSONModel();

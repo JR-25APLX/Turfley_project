@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (Controller, MessageBox, MessageToast) {
     "use strict";
 
-    return Controller.extend("com.applexus.mainproject.controller.Bookings", {
+    return Controller.extend("com.applexus.mainproject.controller.AdminBm", {
 
         onInit: function () {
             var oModel = this.getOwnerComponent().getModel();

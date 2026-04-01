@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.applexus.mainproject.controller.AdminBm"
+    controllerName="com.applexus.mainproject.controller.OwnerBooking"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:g="sap.ui.layout">
