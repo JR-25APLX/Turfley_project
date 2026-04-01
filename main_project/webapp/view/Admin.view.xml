@@ -89,12 +89,8 @@
                             <Table
                                 id="turfEditTable"
                                 items="{
-                                    path: '/ZIB18_GRP1_TURF_SLOT',
-                                    filters: [{
-                                        path: 'Status',
-                                        operator: 'EQ',
-                                        value1: 'A'
-                                    }]
+                                    path: '/ZIB18_GRP1_TURF_SLOT'
+
                                 }">
 
                                 <columns>
@@ -118,14 +114,13 @@
                                             <Text text="{Owner}"/>
                                             <Text text="{Price}"/>
                                             <Button icon="sap-icon://edit"/>
-
+<Switch
+    type="AcceptReject"
+    state="{= ${Status} === 'A' }"
+    enabled="{= ${Status} !== ''}"
+    change="onStatusChange"/>
                                          
-                                            <Switch
-                                                type="AcceptReject"
-                                                state="{= ${Status} === 'A' }"
-                                                customTextOn="ACTIVE"
-                                                customTextOff="DISABLED"
-                                                change="onStatusChange"/>
+
 
                                         </cells>
                                     </ColumnListItem>
