@@ -102,7 +102,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetOwnDash"
+            "TargetAdmin"
           ]
         },
         {
@@ -138,6 +138,13 @@
           "pattern": "Payment",
           "target": [
             "TargetPay"
+          ]
+        },
+        {
+          "name": "RouteMyBook",
+          "pattern": "MyBookings",
+          "target": [
+            "TargetMyBook"
           ]
         },
         {
@@ -193,6 +200,10 @@
         "TargetPay": {
           "id": "Payment",
           "name": "Payment"
+        },
+        "TargetMyBook": {
+          "id": "UserMyBookings",
+          "name": "UserMyBookings"
         },
         "TargetOwn1": {
           "id": "OwnerPage1",

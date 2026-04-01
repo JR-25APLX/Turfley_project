@@ -50,7 +50,6 @@
                             width="100%"
                             class="sapUiSmallMarginBottom"/>
 
-                        <!-- Date -->
                         <Label text="Date" class="sapUiSmallMarginBottom"/>
                         <DatePicker
                             id="datePickerId"
@@ -60,13 +59,11 @@
                             change="onDateChange"
                             class="sapUiSmallMarginBottom"/>
 
-                        <!-- Legend -->
                         <HBox class="sapUiSmallMarginBottom">
                             <Button text="Available" type="Accept" enabled="false" class="sapUiTinyMargin"/>
                             <Button text="Booked"    type="Reject" enabled="false" class="sapUiTinyMargin"/>
                         </HBox>
 
-                        <!-- Slots Grid -->
                         <Panel
                             width="100%"
                             backgroundDesign="Solid"
@@ -97,7 +94,6 @@
                             </content>
                         </Panel>
 
-                        <!-- Book Now -->
                         <Button
                             text="BOOK NOW"
                             press="onBookNow"

@@ -32,7 +32,6 @@
                     <content>
                         <VBox class="sapUiMediumMargin">
 
-                            <!-- Title -->
                             <Title
                                 text="Booking Summary"
                                 titleStyle="H2"
@@ -41,7 +40,6 @@
                                 text="Review your booking details"
                                 class="sapUiSmallMarginBottom"/>
 
-                            <!-- Summary Table -->
                             <Table
                                 showSeparators="All"
                                 backgroundDesign="Solid"
@@ -106,10 +104,8 @@
                                 </items>
                             </Table>
 
-                            <!-- Separator -->
                             <core:HTML content="&lt;hr/&gt;" class="sapUiSmallMarginBottom"/>
 
-                            <!-- Total Amount Row -->
                             <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
                                 <Title text="TOTAL AMOUNT" titleStyle="H4"/>
                                 <Panel

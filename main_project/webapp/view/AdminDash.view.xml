@@ -1,0 +1,127 @@
+<mvc:View controllerName="com.applexus.mainproject.controller.AdminDash"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+    <Page id="adminDash">
+
+        <!-- Custom Header -->
+        <customHeader>
+            <Toolbar height="60px">
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <ToolbarSpacer />
+                <Image
+                    src="../Images/justlogo.png"
+                    width="70px"
+                    height="70px"
+                    decorative="true" />
+            </Toolbar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- Welcome -->
+                <Title text="Welcome, Admin" level="H2"/>
+
+                <!-- Tiles Section -->
+                <HBox justifyContent="SpaceBetween" renderType="Bare" class="tileContainer">
+
+                    <GenericTile class="customTile" header="Active Users">
+                        <TileContent>
+                            <NumericContent value="{/activeUsers}" />
+                        </TileContent>
+                    </GenericTile>
+
+                    <GenericTile class="customTile" header="Blocked Users">
+                        <TileContent>
+                            <NumericContent value="{/blockedUsers}" />
+                        </TileContent>
+                    </GenericTile>
+
+                    <GenericTile class="customTile" header="Owners">
+                        <TileContent>
+                            <NumericContent value="{/owners}" />
+                        </TileContent>
+                    </GenericTile>
+
+                    <GenericTile class="customTile" header="Number of Turfs">
+                        <TileContent>
+                            <NumericContent value="{/turfs}" />
+                        </TileContent>
+                    </GenericTile>
+
+                </HBox>
+
+                <!-- Charts Section -->
+                <HBox class="sapUiMediumMarginTop" justifyContent="SpaceBetween">
+
+                    <!-- Turf Status -->
+                    <VBox width="45%" class="chartBox">
+                        <Title text="Turf Active Status" level="H3"/>
+
+                        <viz:VizFrame id="idStatusChart" 
+                                      vizType="donut" 
+                                      width="90%" 
+                                      height="280px">
+
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset data="{/turfStatus}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="Status" value="{type}" />
+                                    </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="Count" value="{count}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+
+                            <viz:feeds>
+                                <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
+                                <viz.feeds:FeedItem uid="color" type="Dimension" values="Status"/>
+                            </viz:feeds>
+
+                        </viz:VizFrame>
+                    </VBox>
+
+                    <!-- Turf Types -->
+                    <VBox width="48%" class="chartBox">
+                        <Title text="Turf Type Ratio" level="H3"/>
+
+                        <viz:VizFrame id="idTypeChart" vizType="donut" height="300px">
+
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset data="{/turfTypes}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="Type" value="{type}" />
+                                    </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="Count" value="{count}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+
+                            <viz:feeds>
+                                <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
+                                <viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>
+                            </viz:feeds>
+
+                        </viz:VizFrame>
+                    </VBox>
+
+                </HBox>
+
+                <!-- Buttons -->
+<HBox class="sapUiLargeMarginTop" justifyContent="SpaceAround">
+
+    <Button text="TURF MANAGEMENT" class="bigButton" type="Emphasized"/>
+    <Button text="BOOKINGS" class="bigButton" type="Emphasized"/>
+    <Button text="USER MANAGEMENT" class="bigButton" type="Emphasized"/>
+
+</HBox>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
