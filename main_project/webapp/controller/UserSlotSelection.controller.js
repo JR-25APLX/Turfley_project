@@ -3,82 +3,209 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/m/MessageBox"
-], (Controller, JSONModel, MessageToast, MessageBox) => {
+], function (Controller, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     return Controller.extend("com.applexus.mainproject.controller.UserSlotSelection", {
-        onInit() {
-            var oJson = new JSONModel();
-            oJson.setData({
-                turf: {
-                    TurfId   : "T001",
-                    Name     : "Green Field Turf",
-                    Location : "Khazakottam"
-                },
-                slots: [
-                    { SlotId: "S001", Time: "9 - 10 AM",   Status: "A" },
-                    { SlotId: "S002", Time: "10 - 11 AM",  Status: "B" },
-                    { SlotId: "S003", Time: "11 - 12 PM",  Status: "A" },
-                    { SlotId: "S004", Time: "12 - 01 PM",  Status: "B" },
-                    { SlotId: "S005", Time: "1 - 2 PM",    Status: "A" },
-                    { SlotId: "S006", Time: "2 - 3 PM",    Status: "A" },
-                    { SlotId: "S007", Time: "3 - 4 PM",    Status: "A" },
-                    { SlotId: "S008", Time: "4 - 5 PM",    Status: "B" },
-                    { SlotId: "S009", Time: "5 - 6 PM",    Status: "B" },
-                    { SlotId: "S010", Time: "6 - 7 PM",    Status: "B" },
-                    { SlotId: "S011", Time: "7 - 8 PM",    Status: "B" },
-                    { SlotId: "S012", Time: "8 - 9 PM",    Status: "A" },
-                    { SlotId: "S013", Time: "9 - 10 PM",   Status: "A" },
-                    { SlotId: "S014", Time: "10 - 11 PM",  Status: "A" }
-                ],
-                selectedDate: ""
+
+        onInit: function () {
+            this.getOwnerComponent().getRouter().getRoute("RouteSlotSelect")
+                                    .attachPatternMatched(this._onObjectMatched, this);
+
+            this.getView().byId("datePicker").setMinDate(new Date());
+        },
+
+        _onObjectMatched: function (oEvent) {
+            var oArgs = oEvent.getParameter("arguments");
+
+            var oViewModel = new JSONModel({
+                turfId       : oArgs.turfId,
+                turfName     : decodeURIComponent(oArgs.turfName),
+                turfLocation : decodeURIComponent(oArgs.turfLocation),
+                selectedDate : "",
+                selectedSlots: [],
+                totalPrice   : 0,
+                basePrice    : 0
             });
-            this.getView().setModel(oJson);
+            this.getView().setModel(oViewModel, "viewModel");
+            this._resetAllButtons();
         },
 
-        onDateChange: function(oEvent) {
-            var sDate = oEvent.getParameter("value");
-            if (!sDate) return;
+        onDateChange: function (oEvent) {
+            var oDP    = oEvent.getSource();
+            var sValue = oDP.getValue(); 
 
-            var oJson = this.getView().getModel();
-            oJson.setProperty("/selectedDate", sDate);
-            MessageToast.show("Fetching slots for: " + sDate);
+            if (!sValue || !oDP.isValidValue()) {
+                MessageToast.show("Please select a valid date");
+                return;
+            }
 
-            // Backend call will go here later
-            // For now slots load from JSON automatically
+           
+            var aParts = sValue.split("/");             
+            var sISO   = aParts[2] + "-" + aParts[1] + "-" + aParts[0]; 
+
+            var oVM = this.getView().getModel("viewModel");
+            oVM.setProperty("/selectedDate",   sISO);
+            oVM.setProperty("/selectedSlots",  []);
+            oVM.setProperty("/totalPrice",     0);
+
+            this._loadSlots(oVM.getProperty("/turfId"), sISO);
         },
 
-        onSlotPress: function(oEvent) {
-            var oButton  = oEvent.getSource();
-            var sStatus  = oButton.data("status");
-            var sTime    = oButton.getText();
-            var oJson    = this.getView().getModel();
-            var sDate    = oJson.getProperty("/selectedDate");
+        _loadSlots: function (sTurfId, sISO) {
+            var oModel = this.getOwnerComponent().getModel();
+
+            var sPath = "/ZIB18_GRP1_SLOT_AVAILABILITY"
+                      + "(p_turf_id='" + sTurfId + "'"
+                      + ",p_book_date=datetime'" + sISO + "T00%3A00%3A00'"
+                      + ")/Set";
+
+            var oView = this.getView();
+            oView.setBusy(true);
+
+            oModel.read(sPath, {
+                success: function (oData) {
+                    oView.setBusy(false);
+                    this._applySlotColors(oData.results);
+                }.bind(this),
+                error: function (oError) {
+                    oView.setBusy(false);
+                    var sMsg = oError.responseText
+                        ? JSON.parse(oError.responseText).error.message.value
+                        : "Failed to load slots.";
+                    MessageBox.error(sMsg);
+                }
+            });
+        },
+
+        _applySlotColors: function (aSlots) {
+            this._resetAllButtons();
+
+            if (!aSlots || aSlots.length === 0) {
+                MessageToast.show("No slots defined for this turf.");
+                return;
+            }
+
+            var oSlotMap = {};
+            aSlots.forEach(function (oSlot) {
+                var iHour = Math.floor(oSlot.Start_Time.ms / 3600000);
+                oSlotMap[iHour] = oSlot;
+            });
+
+            var oVM = this.getView().getModel("viewModel");
+            if (aSlots[0] && aSlots[0].Base_price) {
+                oVM.setProperty("/basePrice", parseFloat(aSlots[0].Base_price));
+            }
+            var oGrid    = this.getView().byId("slotGrid");
+            var aButtons = oGrid.getContent();
+
+            aButtons.forEach(function (oBtn) {
+                var iStartHour = parseInt(oBtn.data("startHour"), 10);
+                var oSlot      = oSlotMap[iStartHour];
+
+                if (!oSlot) {
+                    oBtn.setType("Default");
+                    oBtn.setEnabled(false);
+                    oBtn.data("status", "");
+                    oBtn.data("slotId", "");
+                    return;
+                }
+
+                oBtn.setEnabled(true);
+                oBtn.data("slotId", oSlot.Slot_Id);
+
+                if (oSlot.Availability_status === "Booked") {
+                    oBtn.setType("Reject");    // Red
+                    oBtn.data("status", "B");
+                } else {
+                    oBtn.setType("Accept");    // Green
+                    oBtn.data("status", "A");
+                }
+            });
+        },
+
+        _resetAllButtons: function () {
+            var oGrid = this.getView().byId("slotGrid");
+            if (!oGrid) return;
+
+            oGrid.getContent().forEach(function (oBtn) {
+                oBtn.setType("Default");
+                oBtn.setEnabled(false);
+                oBtn.data("status", "");
+                oBtn.data("slotId", "");
+                oBtn.removeStyleClass("selectedSlot");
+            });
+        },
+
+        onSlotPress: function (oEvent) {
+            var oBtn    = oEvent.getSource();
+            var sStatus = oBtn.data("status");
+            var sSlotId = oBtn.data("slotId");
+            var sText   = oBtn.getText();
+
+            var oVM   = this.getView().getModel("viewModel");
+            var sDate = oVM.getProperty("/selectedDate");
 
             if (!sDate) {
-                MessageToast.show("Please Select a Date First");
+                MessageToast.show("Please select a date first");
                 return;
             }
 
             if (sStatus === "B") {
-                MessageToast.show(sTime + " is Already Booked!");
+                MessageToast.show("This slot is already booked");
                 return;
             }
 
-            MessageToast.show(sTime + " Selected!");
+            var aSelected = oVM.getProperty("/selectedSlots");
+            var iIndex    = aSelected.findIndex(function (s) {
+                return s.slotId === sSlotId;
+            });
+
+            if (iIndex > -1) {
+                
+                aSelected.splice(iIndex, 1);
+                oBtn.setType("Accept");
+                oBtn.removeStyleClass("selectedSlot");
+            } else {
+                
+                aSelected.push({ slotId: sSlotId, slotText: sText });
+                oBtn.setType("Emphasized");   // Blue = selected
+                oBtn.addStyleClass("selectedSlot");
+            }
+
+    
+            var fBase  = oVM.getProperty("/basePrice");
+            oVM.setProperty("/selectedSlots", aSelected);
+            oVM.setProperty("/totalPrice",    aSelected.length * fBase);
+
+            MessageToast.show(aSelected.length + " slot(s) selected");
         },
 
-        onBookNow: function() {
-            var oJson = this.getView().getModel();
-            var sDate = oJson.getProperty("/selectedDate");
+        onBookNow: function () {
+            var oVM    = this.getView().getModel("viewModel");
+            var oData  = oVM.getData();
+            var aSlots = oData.selectedSlots;
 
-            if (!sDate) {
-                MessageBox.error("Please Select a Date before Booking");
+            if (!oData.selectedDate) {
+                MessageBox.error("Please select a booking date first.");
                 return;
             }
+            if (!aSlots || aSlots.length === 0) {
+                MessageBox.error("Please select at least one slot.");
+                return;
+            }
+            var sSlotIds   = aSlots.map(function (s) { return s.slotId; }).join(",");
+            var sSlotTexts = aSlots.map(function (s) { return s.slotText; }).join("|");
 
-            MessageToast.show("Proceeding to Book...");
-            // Navigation to payment or confirmation will go here
+            this.getOwnerComponent().getRouter().navTo("RouteBooking", {
+                turfId      : oData.turfId,
+                turfName    : encodeURIComponent(oData.turfName),
+                turfLocation: encodeURIComponent(oData.turfLocation),
+                bookingDate : oData.selectedDate,
+                slotIds     : encodeURIComponent(sSlotIds),
+                slotTexts   : encodeURIComponent(sSlotTexts),
+                basePrice   : oData.basePrice
+            });
         }
     });
 });

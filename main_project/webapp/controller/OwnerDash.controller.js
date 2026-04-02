@@ -9,7 +9,7 @@ sap.ui.define([
         }, 
         onAdd: function()
         {
-            this.getOwnerComponent().getRouter().navTo("OwnerAddTurf")
+            this.getOwnerComponent().getRouter().navTo("RouteOwnAddTurf")
         }
     });
 });

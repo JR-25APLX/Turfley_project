@@ -5,71 +5,74 @@ sap.ui.define([
     "sap/m/MessageBox"
 ], (Controller, JSONModel, MessageToast, MessageBox) => {
     "use strict";
+
     return Controller.extend("com.applexus.mainproject.controller.Login", {
-        onInit() {
+
+        onInit: function () {
             var oJson = new JSONModel();
             oJson.setData({
-                user:{
-                   UserId: "",
-                   Password: ""
+                user: {
+                    UserId  : "",
+                    Password: ""
                 }
             });
             this.getView().setModel(oJson);
         },
-        onSignup: function(){
-            var oRoute = this.getOwnerComponent().getRouter();
-            oRoute.navTo("RouteReg");
+
+        onSignup: function () {
+            this.getOwnerComponent().getRouter().navTo("RouteReg");
         },
-        onLogin: function()
-        {
-            var oJson = this.getView().getModel();
+
+        onLogin: function () {
+            var oJson      = this.getView().getModel();
             var oDataModel = this.getOwnerComponent().getModel();
-            var that = this;
-         
-            var UserId = this.getView().byId("i1").getValue();
-            var Password = this.getView().byId("i2").getValue();
- 
-            UserId = UserId.trim().toLowerCase();
-            Password = Password.trim();
- 
+
+            var UserId   = this.getView().byId("i1").getValue().trim().toLowerCase();
+            var Password = this.getView().byId("i2").getValue().trim();
+
             if (!UserId || !Password) {
                 MessageToast.show("Enter both UserID and Password");
                 return;
             }
+
             var emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org|net|co\.in)$/;
-                if (!emailRegex.test(UserId)) {
-                    MessageToast.show("Please Enter a Valid Email Id");
-                    return;
-                }    
-            oJson.setProperty("/user/UserId", UserId);
+            if (!emailRegex.test(UserId)) {
+                MessageToast.show("Please Enter a Valid Email Id");
+                return;
+            }
+
+            oJson.setProperty("/user/UserId",   UserId);
             oJson.setProperty("/user/Password", Password);
-            var oPayload = oJson.getProperty("/user");
-            oDataModel.create("/LoginSet", oPayload, {
-                success: function(data) {
+
+            oDataModel.create("/LoginSet", oJson.getProperty("/user"), {
+                success: function (data) {
                     MessageToast.show("Status: " + data.Message);
-                    if(data.Role === "A") {
-                        that.getOwnerComponent().getRouter().navTo("RouteAdminDash");
+
+                    var oAppModel = new JSONModel({
+                        userId  : data.UserId,
+                        userName: data.Name,
+                        role    : data.Role
+                    });
+                    this.getOwnerComponent().setModel(oAppModel, "appModel");
+
+                    if (data.Role === "A") {
+                        this.getOwnerComponent().getRouter().navTo("RouteAdminDash");
+                    } else if (data.Role === "O") {
+                        this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
+                    } else if (data.Role === "U") {
+                        this.getOwnerComponent().getRouter().navTo("RouteUserDash");
                     }
-                    else if(data.Role === "O"){
-               
-                        var oUserModel = new sap.ui.model.json.JSONModel({ OwnerId: data.UserId });                        
-                        sap.ui.getCore().setModel(oUserModel, "user");
-                        that.getOwnerComponent().getRouter().navTo("RouteOwnDash");
-                    }
-                    else if(data.Role === "U"){
-                        that.getOwnerComponent().getRouter().navTo("RouteUserDash");
-                    }
-                },
-                error: function(oError) {
+                }.bind(this),
+
+                error: function (oError) {
                     try {
-                        var sEmsg = JSON.parse(oError.responseText).error.message.value;
-                        MessageBox.error("Login Failed: " + sEmsg);
-                    }
-                    catch (e) {
+                        var sMsg = JSON.parse(oError.responseText).error.message.value;
+                        MessageBox.error("Login Failed: " + sMsg);
+                    } catch (e) {
                         MessageBox.error("Connection Error");
                     }
                 }
             });
-        },
+        }
     });
 });

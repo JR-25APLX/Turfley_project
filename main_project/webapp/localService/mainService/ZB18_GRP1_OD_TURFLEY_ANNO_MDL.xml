@@ -29,6 +29,12 @@
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERType/p_ownerid">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_SLOT_AVAILABILITYType/p_turf_id">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_SLOT_AVAILABILITYType/p_book_date">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

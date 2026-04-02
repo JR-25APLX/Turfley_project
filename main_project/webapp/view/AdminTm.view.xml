@@ -3,9 +3,10 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:g="sap.ui.layout">
-
+ 
     <Page id="page6" title="{i18n>title}">
-
+ 
+        <!-- Header -->
         <customHeader>
             <Toolbar height="60px">
                 <Title text="TURFLEY" level="H1" titleStyle="H2" />
@@ -17,19 +18,21 @@
                     decorative="true" />
             </Toolbar>
         </customHeader>
-
+ 
+        <!-- Content -->
         <content>
             <VBox class="sapUiMediumMargin">
-
+ 
                 <Title text="TURF MANAGEMENT" level="H2" />
-
+ 
+               
                 <IconTabBar class="sapUiSmallMarginTop" select="onTabSelect">
                     <items>
-
-                        <!-- ADD NEW TURF TAB -->
+ 
+                        <!-- ADD TURF TAB -->
                         <IconTabFilter text="Add New Turf Here" key="Add">
                             <VBox class="sapUiSmallMarginTop">
-
+ 
                                 <!-- Row 1 -->
                                 <g:Grid defaultSpan="L4 M6 S12">
                                     <VBox>
@@ -45,7 +48,7 @@
                                         <Input value="" />
                                     </VBox>
                                 </g:Grid>
-
+ 
                                 <!-- Row 2 -->
                                 <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                                     <VBox>
@@ -61,7 +64,7 @@
                                         <Input value="" type="Number" />
                                     </VBox>
                                 </g:Grid>
-
+ 
                                 <!-- Row 3 -->
                                 <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                                     <VBox>
@@ -72,32 +75,24 @@
                                         <Label text="Enter Owner ID"/>
                                         <Input value="" />
                                     </VBox>
-                                    <VBox>
-                                        <Label text="Add Slots"/>
-                                        <Button
-                                            text="Add Slot"
-                                            icon="sap-icon://date-time"
-                                            type="Ghost"
-                                            press="onAddSlot" 
-                                            width="150px"/>
-                                    </VBox>
                                 </g:Grid>
-
-                                <HBox justifyContent="Center" class="sapUiSmallMarginTop">
+ 
+                                <HBox justifyContent="Center">
                                     <Button text="Add" icon="sap-icon://add" type="Emphasized"/>
                                 </HBox>
-
+ 
                             </VBox>
                         </IconTabFilter>
-
+ 
                         <!-- EDIT TURF TAB -->
                         <IconTabFilter text="Edit Turf Here" key="Edit">
                             <Table
                                 id="turfEditTable"
                                 items="{
                                     path: '/ZIB18_GRP1_TURF_SLOT'
+ 
                                 }">
-
+ 
                                 <columns>
                                     <Column><Title text="Turf ID"/></Column>
                                     <Column><Title text="Turf Name"/></Column>
@@ -108,7 +103,7 @@
                                     <Column><Title text="Edit"/></Column>
                                     <Column><Title text="Disable"/></Column>
                                 </columns>
-
+ 
                                 <items>
                                     <ColumnListItem>
                                         <cells>
@@ -118,31 +113,32 @@
                                             <Text text="{Turf_Type}"/>
                                             <Text text="{Owner}"/>
                                             <Text text="{Price}"/>
-                                            <Button icon="sap-icon://edit" press="onEditTurf"/>
-                                            <Switch
-                                                type="AcceptReject"
-                                                state="{= ${Status} === 'A' }"
-                                                enabled="{= ${Status} !== ''}"
-                                                change="onStatusChange"/>
+                                            <Button icon="sap-icon://edit"/>
+<Switch
+    type="AcceptReject"
+    change="onStatusChange"/>
+                                         
+ 
+ 
                                         </cells>
                                     </ColumnListItem>
                                 </items>
-
+ 
                             </Table>
                         </IconTabFilter>
-
+ 
                         <!-- APPROVALS TAB -->
                         <IconTabFilter text="Approvals" key="Approvals">
                             <VBox class="sapUiMediumMargin">
                                 <Text text="Approval section will go here." />
                             </VBox>
                         </IconTabFilter>
-
+ 
                     </items>
                 </IconTabBar>
-
+ 
             </VBox>
         </content>
-
+ 
     </Page>
 </mvc:View>

@@ -6,9 +6,8 @@ sap.ui.define([
     return Controller.extend("com.applexus.mainproject.controller.UserMyBookings", {
         onInit() {
             var oModel1 = new sap.ui.model.json.JSONModel(); 
-            oModel1.loadData("../SampleData/MyBookings.json")
+            oModel1.loadData("")
 
-            // set the model to the view
             this.getView().setModel(oModel1, "SampleData");
 
         }, 
@@ -16,16 +15,9 @@ sap.ui.define([
             
             var sKey = oEvent.getParameter("key"); 
             var oTable = this.getView().byId("myBookings");
-            var OBinding = oTable.getBinding("items");// connection b/w table and data
+            var OBinding = oTable.getBinding("items");
             var oFilter = new sap.ui.model.Filter("Status" , sap.ui.model.FilterOperator.EQ, sKey);
             OBinding.filter([oFilter])
-            
-
-        
-
-
-                
-            
         }
  
     });

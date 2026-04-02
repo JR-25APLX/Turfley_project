@@ -107,18 +107,17 @@ sap.ui.define([
         },
 
         onBookTurf: function (oEvent) {
-            var oContext = oEvent.getSource().getParent().getBindingContext();
+            var oContext  = oEvent.getSource().getParent().getBindingContext();
             var tId       = oContext.getProperty("TurfId");
             var tName     = oContext.getProperty("Name");
             var tLocation = oContext.getProperty("Location");
 
             this.getOwnerComponent().getRouter().navTo("RouteSlotSelect", {
                 turfId      : tId,
-                turfName    : tName,
-                turfLocation: tLocation
+                turfName    : encodeURIComponent(tName),
+                turfLocation: encodeURIComponent(tLocation)
             });
         },
-
         onMap: function (oEvent) {
             var sUrl = oEvent.getSource().getParent().getBindingContext().getProperty("LocationUrl");
             window.open(sUrl, "_blank");

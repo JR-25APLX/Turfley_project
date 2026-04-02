@@ -6,7 +6,6 @@
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
     <Page id="adminDash">
 
-        <!-- Custom Header -->
         <customHeader>
             <Toolbar height="60px">
                 <Title text="TURFLEY" level="H1" titleStyle="H2" />
@@ -22,10 +21,8 @@
         <content>
             <VBox class="sapUiSmallMargin">
 
-                <!-- Welcome -->
                 <Title text="Welcome, Admin" level="H2"/>
 
-                <!-- Tiles Section -->
                 <HBox justifyContent="SpaceBetween" renderType="Bare" class="tileContainer">
 
                     <GenericTile class="customTile" header="Active Users">
@@ -54,10 +51,8 @@
 
                 </HBox>
 
-                <!-- Charts Section -->
                 <HBox class="sapUiMediumMarginTop" justifyContent="SpaceBetween">
 
-                    <!-- Turf Status -->
                     <VBox width="45%" class="chartBox">
                         <Title text="Turf Active Status" level="H3"/>
 
@@ -85,7 +80,6 @@
                         </viz:VizFrame>
                     </VBox>
 
-                    <!-- Turf Types -->
                     <VBox width="48%" class="chartBox">
                         <Title text="Turf Type Ratio" level="H3"/>
 
@@ -101,18 +95,14 @@
                                     </viz.data:measures>
                                 </viz.data:FlattenedDataset>
                             </viz:dataset>
-
                             <viz:feeds>
                                 <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
                                 <viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>
                             </viz:feeds>
-
                         </viz:VizFrame>
                     </VBox>
-
                 </HBox>
 
-                <!-- Buttons -->
 <HBox class="sapUiLargeMarginTop" justifyContent="SpaceAround">
 
     <Button text="TURF MANAGEMENT" class="bigButton" type="Emphasized"/>

@@ -23,7 +23,7 @@ sap.ui.define([
 
                 turfTypes: [
                     { type: "Cricket", count: 200 },
-                    { type: "Hockey", count: 150 },
+                    { type: "Football", count: 150 },
                     { type: "Badminton", count: 50 }
                 ]
             };
@@ -31,7 +31,6 @@ sap.ui.define([
             var oModel = new JSONModel(oData);
             this.getView().setModel(oModel);
 
-            // Apply chart styling
             this._setChartProperties();
         },
 
@@ -40,10 +39,9 @@ sap.ui.define([
             var oStatusChart = this.byId("idStatusChart");
             var oTypeChart = this.byId("idTypeChart");
 
-            // Turf Status Chart
             oStatusChart.setVizProperties({
     plotArea: {
-        colorPalette: ["#7FB3FF", "#FFD580"],  // light blue, light orange
+        colorPalette: ["#7FB3FF", "#FFD580"], 
         dataLabel: {
             visible: true,
             type: "percentage"
@@ -54,7 +52,7 @@ sap.ui.define([
 
 oTypeChart.setVizProperties({
     plotArea: {
-        colorPalette: ["#7FB3FF", "#A3E4D7", "#F9E79F"], // soft colors
+        colorPalette: ["#7FB3FF", "#A3E4D7", "#F9E79F"], 
         dataLabel: {
             visible: true,
             type: "value"
