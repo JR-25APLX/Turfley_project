@@ -29,10 +29,49 @@
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERType/p_ownerid">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/Owner_id">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/p_ownerid">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Booking_id"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="User_id"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Turf_name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Booking_date"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Booking_status"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Start_time"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="End_time"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Booking_Amount"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_SLOT_AVAILABILITYType/p_turf_id">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_SLOT_AVAILABILITYType/p_book_date">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERBOOKINGSType/p_user_id">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
         </Schema>

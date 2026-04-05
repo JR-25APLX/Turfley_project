@@ -1,129 +1,43 @@
 <mvc:View
     controllerName="com.applexus.mainproject.controller.AdminBm"
-        xmlns:mvc="sap.ui.core.mvc"
-            xmlns="sap.m"
-                xmlns:g="sap.ui.layout">
-                
-                    <Page id="bookingsPage" showHeader="false">
-                    >
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page backgroundDesign="List">
+        <customHeader>
+            <Toolbar height="60px">
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <ToolbarSpacer />
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true" />
+            </Toolbar>
+        </customHeader>
+
         <content>
             <VBox class="sapUiMediumMargin">
+                <Title text="BOOKINGS MANAGEMENT" level="H2" />
 
-                <Toolbar height="60px">
-                    <Title text="TURFLEY" level="H1" titleStyle="H2" />
-                    <ToolbarSpacer />
-                    <Image
-                        src="../Images/justlogo.png"
-                        width="70px"
-                        height="70px"
-                        decorative="true" />
-                </Toolbar>
-
-                <Title text="BOOKINGS MANAGEMENT" level="H2" class="sapUiSmallMarginTop" />
-
-                <IconTabBar
-                    class="sapUiSmallMarginTop"
-                    select="onTabSelect">
+                <IconTabBar id="bookingTabBar" select="onTabSelect" selectedKey="Active" class="sapUiSmallMarginTop">
                     <items>
-
-            
-                        <IconTabFilter text="Active Bookings" key="Active">
-                            <Table
-                                id="activeBookingsTable"
-                                items="{
-                                    path: '/ActiveBookingsSet'
-                                }"
-                                noDataText="No active bookings found.">
-
-                                <columns>
-                                    <Column><Title text="Booking ID"/></Column>
-                                    <Column><Title text="User ID"/></Column>
-                                    <Column><Title text="Turf ID"/></Column>
-                                    <Column><Title text="Payment ID"/></Column>
-                                    <Column><Title text="Date"/></Column>
-                                    <Column><Title text="Final Amount"/></Column>
-                                    <Column><Title text="Curr Key"/></Column>
-                                    <Column><Title text="Status"/></Column>
-                                    <Column><Title text="Actions"/></Column>
-                                </columns>
-
-                                <items>
-                                    <ColumnListItem>
-                                        <cells>
-                                            <Text text="{Booking_Id}"/>
-                                            <Text text="{User_Id}"/>
-                                            <Text text="{Turf_Id}"/>
-                                            <Text text="{Payment_Id}"/>
-                                            <Text text="{
-                                                path: 'Date',
-                                                type: 'sap.ui.model.type.Date',
-                                                formatOptions: { pattern: 'dd/MM/yyyy' }
-                                            }"/>
-                                            <Text text="{Final_Amount}"/>
-                                            <Text text="{Curr_Key}"/>
-                                            <ObjectStatus
-                                                text="{Status}"
-                                                state="{= ${Status} === 'C' ? 'Success' : 'Warning' }"/>
-                                            <Button
-                                                text="Cancel"
-                                                type="Emphasized"
-                                                press="onCancelBooking"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-
-                            </Table>
-                        </IconTabFilter>
-
-
-                        <IconTabFilter text="Past Bookings" key="Past">
-                            <Table
-                                id="pastBookingsTable"
-                                items="{
-                                    path: '/PastBookingsSet'
-                                }"
-                                noDataText="No past bookings found.">
-
-                                <columns>
-                                    <Column><Title text="Booking ID"/></Column>
-                                    <Column><Title text="User ID"/></Column>
-                                    <Column><Title text="Turf ID"/></Column>
-                                    <Column><Title text="Payment ID"/></Column>
-                                    <Column><Title text="Date"/></Column>
-                                    <Column><Title text="Final Amount"/></Column>
-                                    <Column><Title text="Curr Key"/></Column>
-                                    <Column><Title text="Status"/></Column>
-                                </columns>
-
-                                <items>
-                                    <ColumnListItem>
-                                        <cells>
-                                            <Text text="{Booking_Id}"/>
-                                            <Text text="{User_Id}"/>
-                                            <Text text="{Turf_Id}"/>
-                                            <Text text="{Payment_Id}"/>
-                                            <Text text="{
-                                                path: 'Date',
-                                                type: 'sap.ui.model.type.Date',
-                                                formatOptions: { pattern: 'dd/MM/yyyy' }
-                                            }"/>
-                                            <Text text="{Final_Amount}"/>
-                                            <Text text="{Curr_Key}"/>
-                                            <ObjectStatus
-                                                text="{Status}"
-                                                state="{= ${Status} === 'C' ? 'Success' : 'Error' }"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-
-                            </Table>
-                        </IconTabFilter>
-
+                        <IconTabFilter text="Active Bookings" key="Active"/>
+                        <IconTabFilter text="Past Bookings"   key="Past"/>
                     </items>
                 </IconTabBar>
 
+                <Table id="bookingsTable">
+
+                    <columns>
+                        <Column><Text text="Booking ID"/></Column>
+                        <Column><Text text="User ID"/></Column>
+                        <Column><Text text="Turf Name"/></Column>
+                        <Column><Text text="Location"/></Column>
+                        <Column><Text text="Booking Date"/></Column>
+                        <Column><Text text="Amount Paid"/></Column>
+                        <Column><Text text="Status"/></Column>
+                        <Column id="actionsColumn"><Text text="Actions"/></Column>
+                    </columns>
+                                     
+                </Table>
             </VBox>
         </content>
-
     </Page>
 </mvc:View>

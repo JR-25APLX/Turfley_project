@@ -4,7 +4,7 @@
     xmlns="sap.m"
     xmlns:l="sap.ui.layout">
 
-    <Page title="TURFLEY" enableScrolling="true">
+    <Page enableScrolling="true">
         <customHeader>
             <Toolbar height="60px">
                 <Title text="TURFLEY" level="H1"/>
@@ -24,12 +24,14 @@
                         <Label text="Location"/>
                         <Input value="{viewModel>/turfLocation}" editable="false"/>
 
+                        <Label text="Price (per slot)"/>
+                        <Input value="₹ {viewModel>/basePrice}" editable="false"/>
+
                         <Label text="Date"/>
                         <DatePicker id="datePicker"
                                     change="onDateChange"
-                                    displayFormat="dd/MM/yyyy"/>
-
-                        <HBox class="sapUiSmallMarginTop">
+                                    displayFormat="dd/MM/yyyy"
+                                    valueFormat="yyyy-MM-dd"/> <HBox class="sapUiSmallMarginTop">
                             <Button text="Available" type="Accept" enabled="false" class="sapUiSmallMarginEnd"/>
                             <Button text="Booked"    type="Reject" enabled="false" class="sapUiSmallMarginEnd"/>
                             <Button text="Selected"  type="Emphasized" enabled="false"/>
@@ -161,6 +163,7 @@
 
                             </l:Grid>
                         </Panel>
+
 
                         <Button text="BOOK NOW"
                                 press="onBookNow"

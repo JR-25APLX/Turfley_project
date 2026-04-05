@@ -28,7 +28,6 @@
                                    titleStyle="H2"
                                    class="sapUiSmallMarginBottom"/>
 
-                            <!-- Turf Details Card -->
                             <Panel backgroundDesign="Translucent"
                                    class="sapUiSmallMarginBottom"
                                    expandable="false">
@@ -56,7 +55,6 @@
                                 </content>
                             </Panel>
 
-                            <!-- Price Summary with expandable breakdown -->
                             <Panel id="pricePanel"
                                    backgroundDesign="Translucent"
                                    expandable="true"
@@ -74,7 +72,7 @@
                                         </HBox>
 
            <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
-                <Text text="Commission ({viewModel>/commissionPercent}%)"/>
+                <Text text="Platform Fee ({viewModel>/commissionPercent}%)"/>
                 <Text text="₹ {viewModel>/commissionAmount}"/>
             </HBox>  
                                         <core:HTML content="&lt;hr style='border:0;border-top:1px solid #ccc;margin:4px 0'/&gt;"/>
@@ -89,7 +87,6 @@
                                 </content>
                             </Panel>
 
-                            <!-- Action Buttons -->
                             <HBox justifyContent="End" class="sapUiSmallMarginTop">
                                 <Button text="Cancel"
                                         type="Transparent"

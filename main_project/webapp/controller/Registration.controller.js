@@ -2,67 +2,128 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
-    "sap/m/MessageBox" 
+    "sap/m/MessageBox"
 ], (Controller, JSONModel, MessageToast, MessageBox) => {
     "use strict";
 
     return Controller.extend("com.applexus.mainproject.controller.Registration", {
         onInit() {
-            var oJson = new JSONModel();
-            oJson.setData({
-                user: {
-                    Name: "",
-                    Userid: "",
-                    Password: "",
-                    Phone: "",
-                    Role: "" 
-                }
+            var oJson = new JSONModel({
+                user: { Name: "", Userid: "", Password: "", Phone: "", Role: "" }
             });
             this.getView().setModel(oJson);
         },
+        onNameChange: function(oEvent) {
+            var oInput = oEvent.getSource();
+            var sValue = oInput.getValue();
+            var nameRegex = /^[a-zA-Z\s]{3,}$/;
+
+            if (!nameRegex.test(sValue)) {
+                oInput.setValueState("Error");
+                oInput.setValueStateText("Name must be at least 3 letters and contain no numbers/symbols");
+            } else {
+                oInput.setValueState("None");
+            }
+        },
+        onEmailChange: function(oEvent) {
+            var oInput = oEvent.getSource();
+            var sValue = oInput.getValue();
+            var emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org|net|co\.in)$/;
+
+            if (!emailRegex.test(sValue)) {
+                oInput.setValueState("Error");
+                oInput.setValueStateText("Please enter a valid email address");
+            } else {
+                oInput.setValueState("None");
+            }
+        },
+        onPasswordChange: function(oEvent) {
+            var oInput = oEvent.getSource();
+            var sValue = oInput.getValue();
+            var passRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+
+            if (!passRegex.test(sValue)) {
+                oInput.setValueState("Error");
+                oInput.setValueStateText("Password must be 6+ characters with at least one letter and one number");
+            } else {
+                oInput.setValueState("None");
+            }
+            this._validateConfirmPassword();
+        },
+        onConfirmPasswordChange: function() {
+            this._validateConfirmPassword();
+        },
+
+        _validateConfirmPassword: function() {
+            var oPass = this.getView().byId("i5");
+            var oConf = this.getView().byId("i6");
+            
+            if (oConf.getValue() !== oPass.getValue()) {
+                oConf.setValueState("Error");
+                oConf.setValueStateText("Passwords do not match");
+            } else if (oConf.getValue() === "") {
+                oConf.setValueState("None");
+            } else {
+                oConf.setValueState("Success");
+            }
+        },
+
+        onPhoneChange: function(oEvent) {
+            var oInput = oEvent.getSource();
+            var sValue = oInput.getValue();
+            var phoneRegex = /^[0-9]{10}$/;
+
+            if (!phoneRegex.test(sValue)) {
+                oInput.setValueState("Error");
+                oInput.setValueStateText("Phone number must be exactly 10 digits");
+            } else {
+                oInput.setValueState("None");
+            }
+        },
 
         onRegister: function() {
-            debugger;
-            var oJson = this.getView().getModel();
+            var oView = this.getView();
             var oDataModel = this.getOwnerComponent().getModel();
-            var that = this;
-            var fname    = this.getView().byId("i3").getValue();
-            var mailId   = this.getView().byId("i4").getValue().trim().toLowerCase();
-            var password = this.getView().byId("i5").getValue().trim();
-            var cPassword= this.getView().byId("i6").getValue().trim();
-            var phone    = this.getView().byId("i7").getValue();
-            var role     = this.getView().byId("i8").getSelectedKey();
-            if (!fname || !mailId || !password || !cPassword || !phone || !role) {
-                MessageToast.show("Please Enter values in all fields");
-                return;
-            }
-            var emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org|net|co\.in)$/;
-            if (!emailRegex.test(mailId)) {
-                MessageToast.show("Please Enter a Valid Email Id");
-                return;
-            }
-            if (password !== cPassword) {
-                MessageToast.show("Both Passwords must Match");
-                return;
-            }
-            var phoneRegex = /^[0-9]{10}$/;
-            if (!phoneRegex.test(phone)) {
-                MessageToast.show("Please Enter a Valid 10-digit Phone Number");
-                return;
-            }
-            oJson.setProperty("/user/Name",     fname);
-            oJson.setProperty("/user/Userid",   mailId);
-            oJson.setProperty("/user/Password", password);
-            oJson.setProperty("/user/Phone",    phone);
-            oJson.setProperty("/user/Role", role);
-            var oPayload = oJson.getProperty("/user");
+            
 
+            var bValidationError = false;
+            var aInputs = [oView.byId("i3"), oView.byId("i4"), oView.byId("i5"), oView.byId("i6"), oView.byId("i7")];
+
+            aInputs.forEach(oInput => {
+                if (oInput.getValueState() === "Error" || !oInput.getValue()) {
+                    oInput.setValueState("Error");
+                    bValidationError = true;
+                }
+            });
+
+            var sRole = oView.byId("i8").getSelectedKey();
+            if (!sRole) {
+                MessageToast.show("Please select a Role");
+                return;
+            }
+
+            if (bValidationError) {
+                MessageBox.error("Please fix the errors in the form before registering.");
+                return;
+            }
+
+            var oPayload = {
+                Name: oView.byId("i3").getValue(),
+                UserId: oView.byId("i4").getValue().trim().toLowerCase(),
+                Password: oView.byId("i5").getValue().trim(),
+                Phone: oView.byId("i7").getValue(),
+                Role: sRole
+            };
+
+            oView.setBusy(true);
             oDataModel.create("/RegistrationSet", oPayload, {
                 success: function() {
+                    oView.setBusy(false);
                     MessageToast.show("Registration Successful!");
-                    that.getOwnerComponent().getRouter().navTo("RouteLogin");
-                },
+                    this.getOwnerComponent().getRouter().navTo("RouteHome");
+                }.bind(this),
                 error: function(oError) {
+                    oView.setBusy(false);
                     try {
                         var sEmsg = JSON.parse(oError.responseText).error.message.value;
                         MessageBox.error("Registration Failed: " + sEmsg);

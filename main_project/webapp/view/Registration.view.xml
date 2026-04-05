@@ -49,44 +49,58 @@
                             class="sapUiSmallMarginBottom"/>
 
                         <VBox width="100%">
+    <Label text="Enter your Full Name" required="true"/>
+    <Input id="i3"
+        placeholder="Enter Name"
+        change="onNameChange"
+        class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Enter your Full Name" required="true"/>
-                            <Input id="i3"
-                                placeholder="Enter Name"
-                                class="sapUiSmallMarginBottom"/>
+    <Label text="Enter your Email" required="true"/>
+    <Input id="i4"
+        placeholder="Enter your Email"
+        change="onEmailChange"
+        class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Enter your Email" required="true"/>
-                            <Input id="i4"
-                                placeholder="Enter your Email"
-                                class="sapUiSmallMarginBottom"/>
+    <Label text="Enter your Password" required="true"/>
+    <Input id="i5"
+        type="Password"
+        placeholder="At least 6 chars, letters &amp; numbers"
+        liveChange="onPasswordChange"
+        class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Enter your Password" required="true"/>
-                            <Input id="i5"
-                                type="Password"
-                                placeholder="password"
-                                class="sapUiSmallMarginBottom"/>
+    <Label text="Confirm your Password" required="true"/>
+    <Input id="i6"
+        type="Password"
+        placeholder="Must match password"
+        liveChange="onConfirmPasswordChange"
+        class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Confirm your Password" required="true"/>
-                            <Input id="i6"
-                                type="Password"
-                                placeholder="password"
-                                class="sapUiSmallMarginBottom"/>
+    <Label text="Enter your Phone Number" required="true"/>
+    <Input id="i7" 
+        placeholder="10-digit number"
+        change="onPhoneChange"
+        class="sapUiSmallMarginBottom"/>
 
-                            <Label text="Enter your Phone Number"/>
-                            <Input id="i7" 
-                                placeholder="phone Number"
-                                class="sapUiSmallMarginBottom"/>
+    <Label text="Select Role" required="true"/>
+    <Select id="i8" width="100%" class="sapUiSmallMarginBottom">
+        <items>
+            <core:Item key="" text="Select Role"/>
+            <core:Item key="U" text="User"/>
+            <core:Item key="O" text="Owner"/>
+        </items>
+    </Select>
 
-                            <Button
-                                text="Register"
-                                press="onRegister"
-                                type="Emphasized"
-                                width="100%"/>
-
-                        </VBox>
+    <Button
+        id="registerBtn"
+        text="Register"
+        press="onRegister"
+        type="Emphasized"
+        width="100%"/>
+</VBox>
                     </VBox>
                 </content>
             </Panel>
+            
         </FlexBox>
 
 

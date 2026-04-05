@@ -31,9 +31,7 @@ sap.ui.define([
             if (sValue) {
                 var oSearchFilter = new Filter({
                     filters: [
-                        new Filter("Name",     FilterOperator.Contains, sValue),
-                        new Filter("Location", FilterOperator.Contains, sValue),
-                        new Filter("TurfType", FilterOperator.Contains, sValue)
+                        new Filter("Name",     FilterOperator.Contains, sValue)
                     ],
                     and: false
                 });

@@ -46,23 +46,25 @@ sap.ui.define([
 
             oDataModel.create("/LoginSet", oJson.getProperty("/user"), {
                 success: function (data) {
-                    MessageToast.show("Status: " + data.Message);
+    MessageToast.show( data.Message);
+    
+    localStorage.setItem("userId", data.UserId);
+    localStorage.setItem("userRole", data.Role);
 
-                    var oAppModel = new JSONModel({
-                        userId  : data.UserId,
-                        userName: data.Name,
-                        role    : data.Role
-                    });
-                    this.getOwnerComponent().setModel(oAppModel, "appModel");
+    var oAppModel = new JSONModel({
+        userId: data.UserId,
+        role: data.Role
+    });
+    this.getOwnerComponent().setModel(oAppModel, "appModel");
 
-                    if (data.Role === "A") {
-                        this.getOwnerComponent().getRouter().navTo("RouteAdminDash");
-                    } else if (data.Role === "O") {
-                        this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
-                    } else if (data.Role === "U") {
-                        this.getOwnerComponent().getRouter().navTo("RouteUserDash");
-                    }
-                }.bind(this),
+    if (data.Role === "A") {
+        this.getOwnerComponent().getRouter().navTo("RouteAdminDash");
+    } else if (data.Role === "O") {
+        this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
+    } else if (data.Role === "U") {
+        this.getOwnerComponent().getRouter().navTo("RouteUserDash");
+    }
+}.bind(this),
 
                 error: function (oError) {
                     try {

@@ -3,7 +3,7 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/m/MessageBox"
-], (Controller, JSONModel, MessageToast, MessageBox) => {
+], function (Controller, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     var admin_upi = "admin-1@okhdfc";
@@ -13,8 +13,8 @@ sap.ui.define([
         onInit: function () {
             var oJson = new JSONModel({
                 payment: {
-                    UpiId          : "",
-                    isPaymentDone  : false,
+                    UpiId: "",
+                    isPaymentDone: false,
                     isButtonEnabled: false
                 }
             });
@@ -25,81 +25,101 @@ sap.ui.define([
                 .attachPatternMatched(this._onObjectMatched, this);
         },
 
-       _onObjectMatched: function (oEvent) {
-    var oArgs      = oEvent.getParameter("arguments");
+        _onObjectMatched: function (oEvent) {
+            var oArgs = oEvent.getParameter("arguments");
+            var sBookingId = oArgs.bookingId;
+            var sTotalAmount = oArgs.totalAmount;
 
-    var oAppModel  = this.getOwnerComponent().getModel("appModel");
-    var fTotal     = oAppModel ? parseFloat(oAppModel.getProperty("/totalPrice")) : 0;
+            var oPayModel = new JSONModel({
+                bookingId: sBookingId,
+                totalPrice: parseFloat(sTotalAmount).toFixed(2)
+            });
+            this.getView().setModel(oPayModel, "payModel");
 
-    var oPayModel = new JSONModel({
-        bookingId : oArgs.bookingId,
-        totalPrice: fTotal.toFixed(2)
-    });
-    this.getView().setModel(oPayModel, "payModel");
+            this.getView().getModel().setProperty("/payment", {
+                UpiId: "",
+                isPaymentDone: false,
+                isButtonEnabled: false
+            });
 
-    this.getView().getModel().setData({
-        payment: {
-            UpiId          : "",
-            isPaymentDone  : false,
-            isButtonEnabled: false
-        }
-    });
-    this.getView().byId("upiInput").setValue("");
-},
+            var oUpiInput = this.getView().byId("upiInput");
+            if (oUpiInput) {
+                oUpiInput.setValue("");
+            }
+        },
 
         onUpiChange: function (oEvent) {
             var sValue = oEvent.getParameter("value").trim();
-            var oJson  = this.getView().getModel();
-            oJson.setProperty("/payment/isButtonEnabled", !!sValue);
-            oJson.setProperty("/payment/UpiId", sValue);
-        },
-
-        onUpiInfo: function () {
-            MessageBox.information(
-                "Your UPI ID is collected only for refund purposes " +
-                "and will not be used for any other transactions."
-            );
+            var oModel = this.getView().getModel();
+            
+            oModel.setProperty("/payment/isButtonEnabled", !!sValue);
+            oModel.setProperty("/payment/UpiId", sValue);
         },
 
         onConfirmPayment: function () {
-            var oJson     = this.getView().getModel();
-            var oPayModel = this.getView().getModel("payModel");
-            var sUpiId    = oJson.getProperty("/payment/UpiId").trim();
+            debugger;
+            var oView = this.getView();
+            var oJson = oView.getModel();
+            var sUpiId = oJson.getProperty("/payment/UpiId").trim();
+            var sBookingId = oView.getModel("payModel").getProperty("/bookingId");
 
             if (!sUpiId) {
                 MessageToast.show("Please enter your UPI ID");
                 return;
             }
 
-            var oModel     = this.getOwnerComponent().getModel();
-            var sBookingId = oPayModel.getProperty("/bookingId");
-
+            var oModel = this.getOwnerComponent().getModel();
             oJson.setProperty("/payment/isButtonEnabled", false);
 
             var oPayload = {
-                Book_id        : sBookingId,
-                Payment_method : "UPI",
-                Payment_time   : "/Date(" + new Date().getTime() + ")/",
-                Payment_from   : sUpiId,
-                Payment_to     : admin_upi,
-                Payment_type   : "N"
+                "BookId": sBookingId,
+                "PaymentMethod": "UPI",
+                "PaymentFrom": sUpiId,
+                "PaymentTo": admin_upi,
+                "PaymentType": "N"
             };
 
+            oView.setBusy(true);
+
             oModel.create("/PaymentSet", oPayload, {
-                success: function () {
-                    oJson.setProperty("/payment/isPaymentDone",   true);
-                    oJson.setProperty("/payment/isButtonEnabled", false);
-                    MessageToast.show("Payment confirmed!");
-                },
+                success: function (oData) {
+                    oView.setBusy(false);
+                    oJson.setProperty("/payment/isPaymentDone", true);
+
+                    var sSuccessMsg = oData.Message || "Payment Successful! Your turf is booked.";
+
+                    MessageBox.success(sSuccessMsg, {
+                        onClose: function () {
+                            var oODataModel = this.getOwnerComponent().getModel();
+                            oODataModel.refreshSecurityToken(
+                                function () {
+                                    this.getOwnerComponent().getRouter().navTo("RouteUserBooking");
+                                }.bind(this),
+                                function () {
+                                    this.getOwnerComponent().getRouter().navTo("RouteUserBooking");
+                                }.bind(this),
+                                true
+                            );
+                        }.bind(this)
+                    });
+                }.bind(this),
+
                 error: function (oError) {
+                    oView.setBusy(false);
                     oJson.setProperty("/payment/isButtonEnabled", true);
-                    var sMsg = "Payment failed. Please try again.";
-                    try { sMsg = JSON.parse(oError.responseText).error.message.value; }
-                    catch (e) { }
-                    MessageBox.error(sMsg);
+
+                    var sErrorMsg = "Payment failed. Please try again.";
+                    try {
+                        sErrorMsg = JSON.parse(oError.responseText).error.message.value;
+                    } catch (e) {
+                        
+                    }
+                    MessageBox.error(sErrorMsg);
                 }
             });
+        },
+        onUpiInfo: function () {
+            MessageBox.information("Your UPI ID is collected only for refund purposes.");
         }
-
     });
 });

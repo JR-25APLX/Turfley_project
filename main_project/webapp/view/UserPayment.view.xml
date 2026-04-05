@@ -46,7 +46,7 @@
                                 </content>
                             </Panel>
 
-                            <Image src="../Images/qr.png"
+                            <Image src="../Images/QR_Code.png"
                                    width="200px" height="200px"
                                    class="sapUiSmallMarginBottom"/>
 

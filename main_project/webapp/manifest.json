@@ -112,7 +112,6 @@
             "TargetReg"
           ]
         },
-
         {
           "name": "RouteUserDash",
           "pattern": "Turfs",
@@ -129,14 +128,14 @@
         },
         {
           "name": "RouteBooking",
-          "pattern": "BookingSummary/{turfId}/{turfName}/{turfLocation}/{bookingDate}/{slotIds}/{slotTexts}/{basePrice}",
+          "pattern": "BookingSummary/{turfId}/{turfName}/{turfLocation}/{bookingDate}/{slotIds}/{slotTexts}/{basePrice}/{commPercent}",
           "target": [
             "TargetBooking"
           ]
         },
         {
           "name": "RoutePay",
-          "pattern": "Payment",
+          "pattern": "Payment/{bookingId}/{totalAmount}",
           "target": [
             "TargetPay"
           ]
@@ -148,7 +147,6 @@
             "TargetUserBooking"
           ]
         },
-
         {
           "name": "RouteOwnDash",
           "pattern": "Owner_Dashboard",
@@ -177,7 +175,6 @@
             "TargetOwnTurfBooking"
           ]
         },
-
         {
           "name": "RouteAdminDash",
           "pattern": "Admin_Dashboard",
@@ -206,12 +203,11 @@
             "TargetAdminTm"
           ]
         }
-
       ],
       "targets": {
         "TargetLogin": {
           "id": "Login",
-          "name": "Login"           
+          "name": "Login"
         },
         "TargetReg": {
           "id": "Registration",
@@ -222,32 +218,32 @@
           "name": "UserHome"
         },
         "TargetSlotBook": {
-           "id": "UserSlotSelection",
-           "name": "UserSlotSelection" 
-          },
+          "id": "UserSlotSelection",
+          "name": "UserSlotSelection"
+        },
         "TargetBooking": {
-          "id": "UserBooking", 
-          "name": "UserBooking"     
+          "id": "UserBooking",
+          "name": "UserBooking"
         },
         "TargetPay": {
-          "id": "UserPayment",  
-          "name": "UserPayment"      
+          "id": "UserPayment",
+          "name": "UserPayment"
         },
         "TargetUserBooking": {
-          "id": "UserMyBookings",  
-          "name": "UserMyBookings"  
+          "id": "UserMyBookings",
+          "name": "UserMyBookings"
         },
-        "TargetOwnDash": { 
-          "id": "OwnerDash",        
-          "name": "OwnerDash"        
+        "TargetOwnDash": {
+          "id": "OwnerDash",
+          "name": "OwnerDash"
         },
-        "TargetOwnAddTurf": { 
-          "id": "OwnerAddTurf",  
-          "name": "OwnerAddTurf"    
+        "TargetOwnAddTurf": {
+          "id": "OwnerAddTurf",
+          "name": "OwnerAddTurf"
         },
         "TargetOwnEditTurf": {
-          "id": "OwnerEditTurf",   
-          "name": "OwnerEditTurf"    
+          "id": "OwnerEditTurf",
+          "name": "OwnerEditTurf"
         },
         "TargetOwnTurfBooking": {
           "id": "OwnerTurfBooking",
@@ -255,19 +251,19 @@
         },
         "TargetAdminDash": {
           "id": "AdminDash",
-          "name": "AdminDash"  
+          "name": "AdminDash"
         },
-        "TargetAdminUm": { 
-          "id": "AdminUm",     
-          "name": "AdminUm" 
+        "TargetAdminUm": {
+          "id": "AdminUm",
+          "name": "AdminUm"
         },
         "TargetAdminBm": {
-          "id": "AdminBm",  
-          "name": "AdminBm"  
+          "id": "AdminBm",
+          "name": "AdminBm"
         },
-        "TargetAdminTm": { 
-          "id": "AdminTm", 
-          "name": "AdminTm"    
+        "TargetAdminTm": {
+          "id": "AdminTm",
+          "name": "AdminTm"
         }
       }
     },
