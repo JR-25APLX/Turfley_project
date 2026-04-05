@@ -102,7 +102,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetLogin"
+            "TargetAdminTm"
           ]
         },
         {
@@ -202,6 +202,13 @@
           "target": [
             "TargetAdminTm"
           ]
+        },
+        {
+          "name": "RouteAdminEditTurf",
+          "pattern": "Admin_Edit_Turf/{turfId}",
+          "target": [
+            "TargetAdminEditTurf"
+          ]
         }
       ],
       "targets": {
@@ -246,8 +253,8 @@
           "name": "OwnerEditTurf"
         },
         "TargetOwnTurfBooking": {
-          "id": "OwnerTurfBooking",
-          "name": "OwnerTurfBooking"
+          "id": "OwnerBooking",
+          "name": "OwnerBooking"
         },
         "TargetAdminDash": {
           "id": "AdminDash",
@@ -263,7 +270,11 @@
         },
         "TargetAdminTm": {
           "id": "AdminTm",
-          "name": "AdminTm"
+          "name": "AdminTm"   
+        }, 
+        "TargetAdminEditTurf": {
+          "id": "AdminEditTurf", 
+          "name": "AdminEditTurf" 
         }
       }
     },

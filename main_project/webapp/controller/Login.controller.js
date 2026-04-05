@@ -50,13 +50,11 @@ sap.ui.define([
     
     localStorage.setItem("userId", data.UserId);
     localStorage.setItem("userRole", data.Role);
-
     var oAppModel = new JSONModel({
         userId: data.UserId,
         role: data.Role
     });
     this.getOwnerComponent().setModel(oAppModel, "appModel");
-
     if (data.Role === "A") {
         this.getOwnerComponent().getRouter().navTo("RouteAdminDash");
     } else if (data.Role === "O") {

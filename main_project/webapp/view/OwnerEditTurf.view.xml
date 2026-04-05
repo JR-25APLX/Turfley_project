@@ -1,12 +1,12 @@
 <mvc:View
-    controllerName="com.applexus.mainproject.controller.OwnerAddTurf"
+    controllerName="com.applexus.mainproject.controller.OwnerEditTurf"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:g="sap.ui.layout"
 >
     <Page
-        id="page5"
+        id="ownerEditTurf"
         title="{i18n>title}"
     >
         <customHeader>
@@ -29,7 +29,7 @@
         <content>
             <VBox class="sapUiMediumMargin">
                 <Title
-                    text="ADD YOUR NEW TURF HERE"
+                    text="EDIT YOUR TURF HERE"
                     level="H1"
                     titleStyle="H3"
                 />
@@ -40,14 +40,14 @@
                     class="sapUiSmallMarginTop"
                 >
                     <VBox>
-                        <Label text="Enter Turf Name" />
+                        <Label text="Turf Name" />
                         <Input
                             value="{turfModel>/Name}"
                             placeholder="e.g. Green Field"
                         />
                     </VBox>
                     <VBox>
-                        <Label text="Enter Turf Location" />
+                        <Label text="Turf Location" />
                         <Input
                             value="{turfModel>/Location}"
                             placeholder="e.g. Trivandrum"
@@ -55,7 +55,6 @@
                     </VBox>
                     <VBox>
                         <Label text="Turf Type" />
-                        <!--  Select dropdown — only C, B, F -->
                         <Select selectedKey="{turfModel>/Type}">
                             <items>
                                 <core:Item
@@ -85,10 +84,18 @@
                     class="sapUiSmallMarginTop"
                 >
                     <VBox>
-                        <Label text="Enter Turf Location URL" />
+                        <Label text="Turf Location URL" />
                         <Input
                             value="{turfModel>/Locationurl}"
                             placeholder="https://maps.google.com/..."
+                        />
+                    </VBox>
+                    <VBox>
+                        <Label text="Turf Price" />
+                        <Input
+                            value="{turfModel>/Price}"
+                            type="Number"
+                            placeholder="e.g. 500"
                         />
                     </VBox>
                     <VBox>
@@ -100,46 +107,23 @@
                     </VBox>
                 </g:Grid>
 
-                <!-- Row 3 -->
-                <g:Grid
-                    defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop"
-                >
-                    <VBox>
-                        <Label text="Enter Turf Price" />
-                        <Input
-                            value="{turfModel>/Price}"
-                            type="Number"
-                            placeholder="e.g. 500"
-                        />
-                    </VBox>
-                    <VBox>
-                        <Label text="Enter Owner Email" />
-                        <Input
-                            value="{turfModel>/Owner}"
-                            editable="false"
-                            placeholder="e.g. owner@gmail.com"
-                        />
-                    </VBox>
-                </g:Grid>
-
                 <!-- Buttons -->
                 <HBox
                     class="sapUiSmallMarginTop"
                     renderType="Bare"
                 >
                     <Button
-                        text="Add Slots"
-                        icon="sap-icon://add"
+                        text="Edit Slots"
+                        icon="sap-icon://edit"
                         type="Emphasized"
-                        press="onAddSlots"
+                        press="onEditSlots"
                         class="sapUiSmallMarginEnd"
                     />
                     <Button
-                        text="Submit"
+                        text="Save"
                         icon="sap-icon://save"
                         type="Emphasized"
-                        press="onAdd"
+                        press="onSave"
                     />
                 </HBox>
             </VBox>

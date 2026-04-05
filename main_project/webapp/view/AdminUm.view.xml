@@ -1,68 +1,76 @@
-<mvc:View controllerName="com.applexus.mainproject.controller.AdminUm"
+<mvc:View
+    controllerName="com.applexus.mainproject.controller.AdminUm"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-
+>
     <Page id="PageAdminUm">
-
         <customHeader>
             <Toolbar height="60px">
-                <Title text="TURFLEY" level="H1" titleStyle="H2" />    
+                <Title
+                    text="TURFLEY"
+                    level="H1"
+                    titleStyle="H2"
+                />
                 <ToolbarSpacer />
                 <Image
-                src="../Images/justlogo.png"
-                width="70px"
-                height="70px"
-                decorative="true" />
+                    src="../Images/justlogo.png"
+                    width="70px"
+                    height="70px"
+                    decorative="true"
+                />
             </Toolbar>
         </customHeader>
 
-        <VBox class="sapUiMediumMargin">
-            <Title text="USER MANAGEMENT" titleStyle="H4" class="sapUiSmallMarginBottom" />
-            <Table id="userTable" items="{oJson>/users}">
-                <columns>
-                    <Column>
-                        <Text text="User Id" />
-                    </Column>
-                    <Column>
-                        <Text text="Name" />
-                    </Column>
-                    <Column>
-                        <Text text="Phone No" />
-                    </Column>
-                    <Column>
-                        <Text text="Status" />
-                    </Column>
-                    <Column hAlign="Center">
-                        <Text text="Actions" />
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{oJson>UserId}" />   
-                            <Text text="{oJson>Name}" />      
-                            <Text text="{oJson>Phone}" />     
-                            <Text text="{oJson>Status}" />    
-                            <Button text="Block"
-                                    type="Emphasized"
-                                    press="onBlock" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-        </VBox>
-        <Dialog id="confirm" title="Confirm" type="Message">
-            <content>
-                <Text text="Are you sure you want to block this User?" />
-            </content>
-            <beginButton>
-                <Button text="Confirm" type="Emphasized" press="onConfirm" />
-            </beginButton>
-            <endButton>
-                <Button text="Cancel" press="onCancel" />
-            </endButton>
-        </Dialog>
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Title
+                    text="USER MANAGEMENT"
+                    titleStyle="H4"
+                    class="sapUiSmallMarginBottom"
+                />
 
+                <Table
+                    id="userTable"
+                    items="{userModel>/users}"
+                >
+                    <columns>
+                        <Column>
+                            <Text text="User ID" />
+                        </Column>
+                        <Column>
+                            <Text text="Name" />
+                        </Column>
+                        <Column>
+                            <Text text="Role" />
+                        </Column>
+                        <Column>
+                            <Text text="Phone" />
+                        </Column>
+                        <Column>
+                            <Text text="Status" />
+                        </Column>
+                        <Column>
+                            <Text text="Action" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{userModel>UserId}" />
+                                <Text text="{userModel>Name}" />
+                                <Text text="{userModel>Role}" />
+                                <Text text="{userModel>Phone}" />
+                                <Text text="{userModel>Status}" />
+                                <Button
+                                    text="{= ${userModel>Status} === 'B' ? 'Unblock' : 'Block'}"
+                                    type="{= ${userModel>Status} === 'B' ? 'Default' : 'Emphasized'}"
+                                    press="onBlockUnblock"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
     </Page>
 </mvc:View>

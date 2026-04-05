@@ -1,14 +1,16 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
     xmlns:l="sap.ui.layout">
 
     <Dialog
-        id="addSlotDialog1"
+        id="addSlotDialog"
         title="Add Time Slots"
         contentWidth="660px"
         resizable="true"
-        draggable="true">
+        draggable="true"
+        state="None">
 
         <customHeader>
             <Bar>
@@ -19,7 +21,7 @@
                     <Button
                         icon="sap-icon://decline"
                         type="Transparent"
-                        press=".onCancelSlots"/>
+                        press="onCancelSlots"/>
                 </contentRight>
             </Bar>
         </customHeader>
@@ -28,130 +30,62 @@
             <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop">
 
                 <MessageStrip
-                    text="Select the 1-hour slots to activate for this turf."
+                    text="Select the 1-hour slots to activate for this turf. Selected slots will be highlighted in blue."
                     type="Information"
                     showIcon="true"
+                    showCloseButton="false"
                     class="sapUiSmallMarginBottom"/>
 
-                <Panel class="sapUiSmallMarginTop">
-                    <l:Grid defaultSpan="L3 M4 S6">
+                <Toolbar class="sapUiTinyMarginBottom">
+                    <Label text="Selected:" design="Bold"/>
+                    <Text text="{slotModel>/selectedCount}" class="sapUiTinyMarginBegin"/>
+                    <Text text=" slot(s)" />
+                    <ToolbarSpacer/>
+                    <Button
+                        text="Select All"
+                        type="Transparent"
+                        icon="sap-icon://multiselect-all"
+                        press="onSelectAllSlots"/>
+                    <Button
+                        text="Clear All"
+                        type="Transparent"
+                        icon="sap-icon://multiselect-none"
+                        press="onClearAllSlots"/>
+                </Toolbar>
 
-                        <!-- AM Slots -->
-                        <Button text="12 AM - 01 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="0"/></customData>
-                        </Button>
+                <grid:CSSGrid
+                    id="slotCSSGrid"
+                    gridTemplateColumns="repeat(4, 1fr)"
+                    gridGap="0.5rem"
+                    class="sapUiSmallMarginBottom"
+                    items="{slotModel>/slots}">
 
-                        <Button text="01 AM - 02 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="1"/></customData>
-                        </Button>
-
-                        <Button text="02 AM - 03 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="2"/></customData>
-                        </Button>
-
-                        <Button text="03 AM - 04 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="3"/></customData>
-                        </Button>
-
-                        <Button text="04 AM - 05 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="4"/></customData>
-                        </Button>
-
-                        <Button text="05 AM - 06 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="5"/></customData>
-                        </Button>
-
-                        <Button text="06 AM - 07 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="6"/></customData>
-                        </Button>
-
-                        <Button text="07 AM - 08 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="7"/></customData>
-                        </Button>
-
-                        <Button text="08 AM - 09 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="8"/></customData>
-                        </Button>
-
-                        <Button text="09 AM - 10 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="9"/></customData>
-                        </Button>
-
-                        <Button text="10 AM - 11 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="10"/></customData>
-                        </Button>
-
-                        <Button text="11 AM - 12 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="11"/></customData>
-                        </Button>
-
-                        <!-- PM Slots -->
-                        <Button text="12 PM - 01 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="12"/></customData>
-                        </Button>
-
-                        <Button text="01 PM - 02 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="13"/></customData>
-                        </Button>
-
-                        <Button text="02 PM - 03 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="14"/></customData>
-                        </Button>
-
-                        <Button text="03 PM - 04 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="15"/></customData>
-                        </Button>
-
-                        <Button text="04 PM - 05 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="16"/></customData>
-                        </Button>
-
-                        <Button text="05 PM - 06 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="17"/></customData>
-                        </Button>
-
-                        <Button text="06 PM - 07 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="18"/></customData>
-                        </Button>
-
-                        <Button text="07 PM - 08 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="19"/></customData>
-                        </Button>
-
-                        <Button text="08 PM - 09 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="20"/></customData>
-                        </Button>
-
-                        <Button text="09 PM - 10 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="21"/></customData>
-                        </Button>
-
-                        <Button text="10 PM - 11 PM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="22"/></customData>
-                        </Button>
-                        <Button text="11 PM - 12 AM" press=".onSlotPress" type="Default">
-                            <customData><core:CustomData key="startHour" value="23"/></customData>
-                        </Button>
-
-                    </l:Grid>
-                </Panel>
+                    <ToggleButton
+                        text="{slotModel>label}"
+                        pressed="{slotModel>selected}"
+                        width="100%"
+                        tooltip="Slot: {slotModel>startTime} - {slotModel>endTime}"
+                        press="onSlotToggle"
+                        class="turfSlotBtn"/>
+                </grid:CSSGrid>
 
             </VBox>
         </content>
 
         <beginButton>
             <Button
-                text="Confirm Slots"
+                text="Confirm &amp; Save"
                 icon="sap-icon://save"
                 type="Emphasized"
-                press=".onConfirmSlots"/>
+                press="onConfirmSlots"/>
         </beginButton>
 
         <endButton>
             <Button
                 text="Cancel"
                 icon="sap-icon://decline"
-                press=".onCancelSlots"/>
+                type="Transparent"
+                press="onCancelSlots"/>
         </endButton>
 
     </Dialog>

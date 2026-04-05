@@ -1,0 +1,87 @@
+<mvc:View
+    controllerName="com.applexus.mainproject.controller.AdminEditTurf"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:g="sap.ui.layout">
+
+    <Page id="page9" title="{i18n>title}">
+
+        <customHeader>
+            <Toolbar height="60px">
+                <Title text="TURFLEY" level="H1" titleStyle="H2"/>
+                <ToolbarSpacer/>
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true"/>
+            </Toolbar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+                <Title text="Edit Turf Details" level="H1" titleStyle="H3"/>
+
+                <!-- Row 1 -->
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                    <VBox>
+                        <Label text="Turf Name"/>
+                        <Input value="{turfModel>/Name}"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Turf Location"/>
+                        <Input value="{turfModel>/Location}"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Turf Type"/>
+                        <Select selectedKey="{turfModel>/Type}">
+                            <items>
+                                <core:Item key="" text="-- Select Type --"/>
+                                <core:Item key="C" text="C - Cricket"/>
+                                <core:Item key="B" text="B - Badminton"/>
+                                <core:Item key="F" text="F - Football"/>
+                            </items>
+                        </Select>
+                    </VBox>
+                </g:Grid>
+
+                <!-- Row 2 -->
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                    <VBox>
+                        <Label text="Location URL"/>
+                        <Input value="{turfModel>/Locationurl}"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Price"/>
+                        <!-- ✅ Disabled — Admin cannot edit price -->
+                        <Input value="{turfModel>/Price}" enabled="false"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Currency"/>
+                        <!-- ✅ Disabled — Admin cannot edit currency -->
+                        <Input value="{turfModel>/Cuky}" enabled="false"/>
+                    </VBox>
+                </g:Grid>
+
+                <!-- Row 3 -->
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                    <VBox>
+                        <Label text="Commission (%)"/>
+                        <!-- ✅ Admin can edit commission -->
+                        <Input value="{turfModel>/Commission_Perc}" type="Number"/>
+                    </VBox>
+                </g:Grid>
+
+                <!-- Buttons -->
+                <HBox class="sapUiSmallMarginTop" renderType="Bare">
+                    <Button text="Edit Slots" icon="sap-icon://edit" type="Emphasized"
+                            press="onEditSlots" class="sapUiSmallMarginEnd"/>
+                    <Button text="Save Changes" icon="sap-icon://save" type="Emphasized"
+                            press="onSave" class="sapUiSmallMarginEnd"/>
+                    <Button text="Cancel" icon="sap-icon://cancel" type="Default"
+                            press="onCancel"/>
+                </HBox>
+
+            </VBox>
+        </content>
+
+    </Page>
+</mvc:View>
