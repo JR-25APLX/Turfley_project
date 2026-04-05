@@ -48,12 +48,15 @@ sap.ui.define([
                 success: function (data) {
                     MessageToast.show("Status: " + data.Message);
 
-                    var oAppModel = new JSONModel({
-                        userId  : data.UserId,
+                    var oUserModel = new sap.ui.model.json.JSONModel({
+                        OwnerId  : data.UserId,
                         userName: data.Name,
                         role    : data.Role
                     });
-                    this.getOwnerComponent().setModel(oAppModel, "appModel");
+                    // Set it globally (Component level)
+                    sap.ui.getCore().setModel(oUserModel, "user");
+                 
+                    // this.getOwnerComponent().setModel(oUserModel, "user");
 
                     if (data.Role === "A") {
                         this.getOwnerComponent().getRouter().navTo("RouteAdminDash");

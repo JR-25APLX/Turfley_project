@@ -3,65 +3,79 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     "sap/m/MessageBox"
-    ], (Controller, JSONModel, MessageToast) => {
-        "use strict";
+], function (Controller, JSONModel, MessageToast, MessageBox) {
+    "use strict";
 
     return Controller.extend("com.applexus.mainproject.controller.AdminUm", {
-        onInit() {
-            var oJson = new JSONModel();
-            oJson.setData({ users: [] });
-            this.getView().setModel(oJson, "oJson");
-            this._sSelectedUserId = null;
+
+        onInit: function () {
+            this.getView().setModel(new JSONModel({ users: [] }), "userModel");
+
+            //  Load directly — works even when page is default route
+            this._loadUsers();
+
+            //  Also attach route — works when navigated normally
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute("RouteAdminUm").attachMatched(this.loadUsers, this);       
+            oRouter.getRoute("RouteAdminUm").attachPatternMatched(
+                this._onRouteMatched, this
+            );
         },
 
-        loadUsers: function () {
-            var that = this;
-            var oModel = this.getView().getModel(); 
+        _onRouteMatched: function () {
+            this._loadUsers();
+        },
 
-            oModel.read("/ZIB18_GRP1_USER", {
+        // ================================================
+        // LOAD USERS
+        // ================================================
+
+        _loadUsers: function () {
+            this.getOwnerComponent().getModel().read("/ZIB18_GRP1_USER", {
                 success: function (oData) {
-                    console.log("Data received:", oData);
-                    var oJson = that.getView().getModel("oJson");
-                    oJson.setProperty("/users", oData.results); 
-                    MessageToast.show("Users loaded successfully!");
-                },
+                    console.log("Users loaded:", oData.results.length);
+
+                    //  CDS already filters — just set directly
+                    this.getView().getModel("userModel")
+                        .setProperty("/users", oData.results);
+
+                }.bind(this),
                 error: function (oError) {
-                    console.log("Error loading users:", oError);
-                    alert("Failed to load users");
+                    console.error("Load failed:", oError.responseText);
+                    MessageBox.error("Failed to load users!");
                 }
             });
         },
 
-        onBlock: function (oEvent) {
-            var oContext = oEvent.getSource().getBindingContext("oJson");
-            this._sSelectedUserId = oContext.getProperty("UserId"); 
-            this.byId("confirm").open();
-        },
+        // ================================================
+        // BLOCK / UNBLOCK
+        // ================================================
+        onBlockUnblock: function (oEvent) {
+            var oContext = oEvent.getSource().getBindingContext("userModel");
+            var sUserId = oContext.getProperty("UserId");
+            var sStatus = oContext.getProperty("Status");
+            var sNewStatus = sStatus === "B" ? "A" : "B";
+            var sAction = sStatus === "B" ? "Unblock" : "Block";
 
-        onConfirm: function () {
-            var that = this;
-            var oModel = this.getView().getModel(); 
+            MessageBox.confirm("Are you sure you want to " + sAction + " " + sUserId + "?", {
+                onClose: function (sChoice) {
+                    if (sChoice !== MessageBox.Action.OK) { return; } //  early return
 
-            oModel.update("/ZIB18_GRP1_USER('" + this._sSelectedUserId + "')", { Status: "B" }, {
-                success: function () {
-                    MessageToast.show("User " + that._sSelectedUserId + " has been blocked!");
-                    that._sSelectedUserId = null;
-                    that.byId("confirm").close();
-                    that.loadUsers(); 
-                },
-                error: function (oError) {
-                    console.log("Block Error:", oError);
-                    alert("Failed to block user");
-                    that.byId("confirm").close();
-                }
+                    this.getOwnerComponent().getModel().update(
+                        "/UserSet('" + sUserId + "')",
+                        { Status: sNewStatus },
+                        {
+                            merge: true,
+                            success: function () {
+                                MessageToast.show(sUserId + " " + sAction + "ed!");
+                                this._loadUsers();
+                            }.bind(this),
+                            error: function (oError) {
+                                MessageBox.error("Failed to " + sAction + "!");
+                            }
+                        }
+                    );
+                }.bind(this)
             });
-        },
-
-        onCancel: function () {
-            this._sSelectedUserId = null;
-            this.byId("confirm").close();
         }
 
     });

@@ -2,143 +2,236 @@
     controllerName="com.applexus.mainproject.controller.AdminTm"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:g="sap.ui.layout">
- 
-    <Page id="page6" title="{i18n>title}">
- 
-        <!-- Header -->
+    xmlns:g="sap.ui.layout"
+>
+    <Page
+        id="page6"
+        title="{i18n>title}"
+    >
         <customHeader>
             <Toolbar height="60px">
-                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <Title
+                    text="TURFLEY"
+                    level="H1"
+                    titleStyle="H2"
+                />
                 <ToolbarSpacer />
                 <Image
                     src="../Images/justlogo.png"
                     width="70px"
                     height="70px"
-                    decorative="true" />
+                    decorative="true"
+                />
             </Toolbar>
         </customHeader>
- 
-        <!-- Content -->
+
         <content>
             <VBox class="sapUiMediumMargin">
- 
-                <Title text="TURF MANAGEMENT" level="H2" />
- 
-               
-                <IconTabBar class="sapUiSmallMarginTop" select="onTabSelect">
+                <Title
+                    text="TURF MANAGEMENT"
+                    level="H2"
+                />
+
+                <IconTabBar
+                    class="sapUiSmallMarginTop"
+                    select="onTabSelect"
+                >
                     <items>
- 
                         <!-- ADD TURF TAB -->
-                        <IconTabFilter text="Add New Turf Here" key="Add">
+                        <IconTabFilter
+                            text="Add New Turf Here"
+                            key="Add"
+                        >
                             <VBox class="sapUiSmallMarginTop">
- 
                                 <!-- Row 1 -->
                                 <g:Grid defaultSpan="L4 M6 S12">
                                     <VBox>
-                                        <Label text="Enter Turf Name"/>
-                                        <Input value="" />
+                                        <Label text="Enter Turf Name" />
+                                        <Input
+                                            value="{turfModel>/Name}"
+                                            placeholder="e.g. Green Field"
+                                        />
                                     </VBox>
                                     <VBox>
-                                        <Label text="Enter Turf Location"/>
-                                        <Input value="" />
+                                        <Label text="Enter Turf Location" />
+                                        <Input
+                                            value="{turfModel>/Location}"
+                                            placeholder="e.g. Trivandrum"
+                                        />
                                     </VBox>
                                     <VBox>
-                                        <Label text="Enter Turf Type"/>
-                                        <Input value="" />
+                                        <Label text="Turf Type" />
+                                        <!--  Select dropdown — only C, B, F -->
+                                        <Select selectedKey="{turfModel>/Type}">
+                                            <items>
+                                                <core:Item
+                                                    key=""
+                                                    text="-- Select Type --"
+                                                    xmlns:core="sap.ui.core"
+                                                />
+                                                <core:Item
+                                                    key="C"
+                                                    text="C - Cricket"
+                                                    xmlns:core="sap.ui.core"
+                                                />
+                                                <core:Item
+                                                    key="B"
+                                                    text="B - Badminton"
+                                                    xmlns:core="sap.ui.core"
+                                                />
+                                                <core:Item
+                                                    key="F"
+                                                    text="F - Football"
+                                                    xmlns:core="sap.ui.core"
+                                                />
+                                            </items>
+                                        </Select>
                                     </VBox>
                                 </g:Grid>
- 
+
                                 <!-- Row 2 -->
-                                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                                <g:Grid
+                                    defaultSpan="L4 M6 S12"
+                                    class="sapUiSmallMarginTop"
+                                >
                                     <VBox>
-                                        <Label text="Enter Turf Location URL"/>
-                                        <Input value="" />
+                                        <Label text="Enter Turf Location URL" />
+                                        <Input
+                                            value="{turfModel>/Locationurl}"
+                                            placeholder="https://maps.google.com/..."
+                                        />
                                     </VBox>
                                     <VBox>
-                                        <Label text="Currency"/>
-                                        <Input value="INR" editable="false" />
+                                        <Label text="Currency" />
+                                        <Input
+                                            value="{turfModel>/Cuky}"
+                                            enabled="false"
+                                        />
                                     </VBox>
                                     <VBox>
-                                        <Label text="Enter Commission (%)"/>
-                                        <Input value="" type="Number" />
+                                        <Label text="Enter Commission (%)" />
+                                        <Input
+                                            value="{turfModel>/Commission_Perc}"
+                                            type="Number"
+                                            placeholder="e.g. 10"
+                                        />
                                     </VBox>
                                 </g:Grid>
- 
+
                                 <!-- Row 3 -->
-                                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                                <g:Grid
+                                    defaultSpan="L4 M6 S12"
+                                    class="sapUiSmallMarginTop"
+                                >
                                     <VBox>
-                                        <Label text="Enter Turf Price"/>
-                                        <Input value="" type="Number" />
+                                        <Label text="Enter Turf Price" />
+                                        <Input
+                                            value="{turfModel>/Price}"
+                                            type="Number"
+                                            placeholder="e.g. 500"
+                                        />
                                     </VBox>
                                     <VBox>
-                                        <Label text="Enter Owner ID"/>
-                                        <Input value="" />
+                                        <Label text="Enter Owner Email" />
+                                        <Input
+                                            value="{turfModel>/Owner}"
+                                            placeholder="e.g. owner@gmail.com"
+                                        />
                                     </VBox>
                                 </g:Grid>
- 
-                                <HBox justifyContent="Center">
-                                    <Button text="Add" icon="sap-icon://add" type="Emphasized"/>
+
+                                <!-- Buttons -->
+                                <HBox
+                                    class="sapUiSmallMarginTop"
+                                    renderType="Bare"
+                                >
+                                    <Button
+                                        text="Add Slots"
+                                        icon="sap-icon://add"
+                                        type="Emphasized"
+                                        press="onAddSlots"
+                                        class="sapUiSmallMarginEnd"
+                                    />
+                                    <Button
+                                        text="Add"
+                                        icon="sap-icon://save"
+                                        type="Emphasized"
+                                        press="onAdd"
+                                    />
                                 </HBox>
- 
                             </VBox>
                         </IconTabFilter>
- 
+
                         <!-- EDIT TURF TAB -->
-                        <IconTabFilter text="Edit Turf Here" key="Edit">
+                        <IconTabFilter
+                            text="Edit Turf Here"
+                            key="Edit"
+                        >
                             <Table
                                 id="turfEditTable"
-                                items="{
-                                    path: '/ZIB18_GRP1_TURF_SLOT'
- 
-                                }">
- 
+                                items="{path: '/TurfSet'}"
+                            >
                                 <columns>
-                                    <Column><Title text="Turf ID"/></Column>
-                                    <Column><Title text="Turf Name"/></Column>
-                                    <Column><Title text="Turf Location"/></Column>
-                                    <Column><Title text="Turf Type"/></Column>
-                                    <Column><Title text="Turf Owner ID"/></Column>
-                                    <Column><Title text="Price"/></Column>
-                                    <Column><Title text="Edit"/></Column>
-                                    <Column><Title text="Disable"/></Column>
+                                    <Column>
+                                        <Title text="Turf ID" />
+                                    </Column>
+                                    <Column>
+                                        <Title text="Turf Name" />
+                                    </Column>
+                                    <Column>
+                                        <Title text="Turf Location" />
+                                    </Column>
+                                    <Column>
+                                        <Title text="Turf Type" />
+                                    </Column>
+                                    <Column>
+                                        <Title text="Owner" />
+                                    </Column>
+                                    <Column>
+                                        <Title text="Price" />
+                                    </Column>
+                                    <Column>
+                                        <Title text="Edit" />
+                                    </Column>
+                                    <Column>
+                                        <Title text="Status" />
+                                    </Column>
                                 </columns>
- 
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                            <Text text="{Turf_Id}"/>
-                                            <Text text="{Turf_Name}"/>
-                                            <Text text="{Location}"/>
-                                            <Text text="{Turf_Type}"/>
-                                            <Text text="{Owner}"/>
-                                            <Text text="{Price}"/>
-                                            <Button icon="sap-icon://edit"/>
-<Switch
-    type="AcceptReject"
-    change="onStatusChange"/>
-                                         
- 
- 
+                                            <Text text="{Id}" />
+                                            <Text text="{Name}" />
+                                            <Text text="{Location}" />
+                                            <Text text="{Type}" />
+                                            <Text text="{Owner}" />
+                                            <Text text="{Price}" />
+                                            <Button
+                                                icon="sap-icon://edit"
+                                                press="onEditTurf"
+                                            />
+                                            <Switch
+                                                type="AcceptReject"
+                                                change="onStatusChange"
+                                            />
                                         </cells>
                                     </ColumnListItem>
                                 </items>
- 
                             </Table>
                         </IconTabFilter>
- 
+
                         <!-- APPROVALS TAB -->
-                        <IconTabFilter text="Approvals" key="Approvals">
+                        <IconTabFilter
+                            text="Approvals"
+                            key="Approvals"
+                        >
                             <VBox class="sapUiMediumMargin">
                                 <Text text="Approval section will go here." />
                             </VBox>
                         </IconTabFilter>
- 
                     </items>
                 </IconTabBar>
- 
             </VBox>
         </content>
- 
     </Page>
 </mvc:View>

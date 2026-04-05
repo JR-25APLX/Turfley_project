@@ -1,7 +1,8 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:grid="sap.ui.layout.cssgrid">
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:l="sap.ui.layout">
 
     <Dialog
         id="addSlotDialog"
@@ -58,6 +59,7 @@
                     gridGap="0.5rem"
                     class="sapUiSmallMarginBottom"
                     items="{slotModel>/slots}">
+
                     <ToggleButton
                         text="{slotModel>label}"
                         pressed="{slotModel>selected}"
@@ -77,6 +79,7 @@
                 type="Emphasized"
                 press="onConfirmSlots"/>
         </beginButton>
+
         <endButton>
             <Button
                 text="Cancel"

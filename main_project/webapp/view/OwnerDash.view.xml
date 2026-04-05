@@ -1,69 +1,106 @@
-<mvc:View xmlns:core="sap.ui.core" controllerName="com.applexus.mainproject.controller.OwnerDash"
+<mvc:View
+    xmlns:core="sap.ui.core"
+    controllerName="com.applexus.mainproject.controller.OwnerDash"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page3" title="{i18n>title}">
-    <customHeader>
+    xmlns="sap.m"
+>
+    <Page
+        id="page3"
+        title="{i18n>title}"
+    >
+        <customHeader>
             <Toolbar height="60px">
-           
-            <!-- To display TURFLEY on the Left Side -->
-                <Title text="TURFLEY" level="H1" titleStyle="H2" />    
- 
-            <!-- This will push Logo to the Right Side -->
+                <!-- To display TURFLEY on the Left Side -->
+                <Title
+                    text="TURFLEY"
+                    level="H1"
+                    titleStyle="H2"
+                />
+
+                <!-- This will push Logo to the Right Side -->
                 <ToolbarSpacer />
- 
-            <!-- Logo of Turfley  -->
+
+                <!-- Logo of Turfley  -->
                 <Image
-                src="../Images/justlogo.png"
-                width="70px"
-                height="70px"
-                decorative="true" />
+                    src="../Images/justlogo.png"
+                    width="70px"
+                    height="70px"
+                    decorative="true"
+                />
             </Toolbar>
-    </customHeader>
-    
-    <content>
-        <VBox class="sapUiMediumMargin">
+        </customHeader>
 
-            <Title  text="Welcome, Owner" level="H1" titleStyle="H2" /> 
-            <Title  text="List of Turfs" level="H1" titleStyle="H4" class="sapUiSmallMarginTop" /> 
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Title
+                    text="Welcome, Owner"
+                    level="H1"
+                    titleStyle="H2"
+                />
+                <HBox
+                    justifyContent="SpaceBetween"
+                    width="100%"
+                >
+                    <Title
+                        text="List of Turfs"
+                        level="H1"
+                        titleStyle="H4"
+                        class="sapUiSmallMarginTop"
+                    />
 
-            <Table class="sapUiSmallMarginTop">
-                <columns>
-                    <Column >
-                        <Title text="Turf Name" ></Title>               
-                    </Column>  
-                    <Column >
-                        <Title text="Turf Location" ></Title>               
-                    </Column>
-                    <Column >
-                        <Title text="Turf Type" ></Title>               
-                    </Column>
-                    <Column >
-                        <Title text="Actions" ></Title>               
-                    </Column>
+                    <Button
+                        text="View My Bookings"
+                        type="Emphasized"
+                        press="onViewMyBookings"
+                    />
+                </HBox>
 
-                </columns>   
-            </Table>
-            <Button text="Add New Turf Here" type="Emphasized" press="onAdd" class="sapUiMediumMarginTop"></Button>
+                <Table
+                    class="sapUiSmallMarginTop"
+                    items="{turfModel>/turfs}"
+                >
+                    <columns>
+                        <Column>
+                            <Title text="Turf Name" />
+                        </Column>
+                        <Column>
+                            <Title text="Turf Location" />
+                        </Column>
+                        <Column>
+                            <Title text="Turf Type" />
+                        </Column>
+                        <Column>
+                            <Title text="Turf Status" />
+                        </Column>
+                        <Column>
+                            <Title text="Actions" />
+                        </Column>
+                    </columns>
 
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{turfModel>Turf_Name}" />
+                                <Text text="{turfModel>Turf_Location}" />
+                                <Text text="{turfModel>Turf_Type_Text}" />
+                                <Text text="{turfModel>Status_turf}" />
 
-    
-    
-    
-    
-    
-    
-    
-    
-        </VBox>
-    </content>
- 
-
- 
- 
-       
+                                <Button
+                                    icon="sap-icon://edit"
+                                    type="Emphasized"
+                                    press="onEditTurf"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <Button
+                    text="Add New Turf Here"
+                    type="Emphasized"
+                    press="onAdd"
+                    class="sapUiMediumMarginTop"
+                />
+            </VBox>
+        </content>
     </Page>
 </mvc:View>
- 
-
-
-

@@ -2,9 +2,97 @@
     controllerName="com.applexus.mainproject.controller.OwnerBooking"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:g="sap.ui.layout">
-    <Page id="ownerbooking" enableScrolling="true" showHeader="false">
+>
+    <Page id="ownerbooking">
+        <customHeader>
+            <Toolbar height="60px">
+                <Title
+                    text="TURFLEY"
+                    level="H1"
+                    titleStyle="H2"
+                />
+                <ToolbarSpacer />
+                <Image
+                    src="../Images/justlogo.png"
+                    width="70px"
+                    height="70px"
+                    decorative="true"
+                />
+            </Toolbar>
+        </customHeader>
 
-    
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Title
+                    text="Booking History"
+                    level="H1"
+                    titleStyle="H4"
+                    class="sapUiSmallMarginTop"
+                />
+
+                <Table
+                    id="ownerBookingTable"
+                    class="sapUiSmallMarginTop"
+                    items="{bookingModel>/}"
+                >
+                    <columns>
+                        <Column>
+                            <Title text="Booking ID" />
+                        </Column>
+                        <Column>
+                            <Title text="User ID" />
+                        </Column>
+                        <Column>
+                            <Title text="Turf Name" />
+                        </Column>
+                        <Column>
+                            <Title text="Booking Date" />
+                        </Column>
+                        <Column>
+                            <Title text="Start Time" />
+                        </Column>
+                        <Column>
+                            <Title text="End Time" />
+                        </Column>
+                        <Column>
+                            <Title text="Booking Amount" />
+                        </Column>
+                        <Column>
+                            <Title text="Booking Status" />
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{bookingModel>Booking_id}" />
+                                <Text text="{bookingModel>User_id}" />
+                                <Text text="{bookingModel>Turf_name}" />
+                                <Text
+                                    text="{
+                                    path: 'bookingModel>Booking_date',
+                                    formatter: '.formatDate'
+                                }"
+                                />
+                                <Text
+                                    text="{
+                                    path: 'bookingModel>Start_time',
+                                    formatter: '.formatTime'
+                                }"
+                                />
+                                <Text
+                                    text="{
+                                    path: 'bookingModel>End_time',
+                                    formatter: '.formatTime'
+                                }"
+                                />
+                                <Text text="{bookingModel>Booking_Amount}" />
+                                <Text text="{bookingModel>Booking_status}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
     </Page>
 </mvc:View>
