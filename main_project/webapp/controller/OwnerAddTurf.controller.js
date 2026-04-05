@@ -35,7 +35,7 @@ sap.ui.define([
         // OPEN SLOTS DIALOG
 
         onAddSlots: function () {
-            var oData = this._oTurfModel.getData();
+            var oData = this._oTurfModel.getData(); // Get All Values Owner entered
 
             if (!oData.Name || oData.Name.trim() === "") {
                 MessageBox.error("Please fill Turf Name before selecting slots!"); return;
@@ -125,7 +125,7 @@ sap.ui.define([
         // ADD TURF
         // ================================================
         onAdd: function () {
-            var oData = this._oTurfModel.getData();
+            var oData = this._oTurfModel.getData(); // Taking all the data entered by the user and storing it in Odata
 
             if (!oData.Name || oData.Name.trim() === "") {
                 MessageBox.error("Turf Name cannot be empty!"); return;
@@ -160,7 +160,7 @@ sap.ui.define([
                 Status: "P",
                 turf_slot_nav: this._aSelectedSlots
             };
-
+           
             this.getOwnerComponent().getModel().create("/TurfSet", oPayload, {
                 success: function () {
                     MessageToast.show("Turf submitted for approval!");
