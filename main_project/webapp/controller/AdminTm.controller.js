@@ -131,7 +131,6 @@ sap.ui.define([
             var sTurfId = oEvent.getSource()
                                 .getBindingContext()
                                 .getProperty("Id");
-            console.log("Edit Turf:", sTurfId);
             this.getOwnerComponent().getRouter().navTo("RouteAdminEditTurf", {
                 turfId: sTurfId
             });
@@ -335,7 +334,7 @@ sap.ui.define([
                 Status           : "A",
                 turf_slot_nav    : this._aSelectedSlots
             };
-            console.log("Add Payload:", JSON.stringify(oPayload));
+       
             this.getOwnerComponent().getModel().create("/TurfSet", oPayload, {
                 success: function () {
                     MessageToast.show("Turf added successfully!");

@@ -88,17 +88,15 @@ sap.ui.define([
 
                 error: function (oError) {
                     var sMsg = "Failed to load turf statistics.";
-                    try { sMsg = JSON.parse(oError.responseText).error.message.value; } catch (e) { /**/ }
+                    sMsg = JSON.parse(oError.responseText).error.message.value; 
                     MessageBox.error(sMsg);
                 }
             });
         },
         onTmPress: function () {
-            debugger;
             this.getOwnerComponent().getRouter().navTo("RouteAdminTm");
         },
         onBmPress: function () {
-            debugger;
             this.getOwnerComponent().getRouter().navTo("RouteAdminBm");
         },
         onUmPress: function () {

@@ -25,14 +25,12 @@ sap.ui.define([
             this._loadUsers();
         },
 
-        // ================================================
+    
         // LOAD USERS
-        // ================================================
-
+    
         _loadUsers: function () {
             this.getOwnerComponent().getModel().read("/ZIB18_GRP1_USER", {
                 success: function (oData) {
-                    console.log("Users loaded:", oData.results.length);
 
                     //  CDS already filters — just set directly
                     this.getView().getModel("userModel")
@@ -40,15 +38,13 @@ sap.ui.define([
 
                 }.bind(this),
                 error: function (oError) {
-                    console.error("Load failed:", oError.responseText);
                     MessageBox.error("Failed to load users!");
                 }
             });
         },
 
-        // ================================================
+        
         // BLOCK / UNBLOCK
-        // ================================================
         onBlockUnblock: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("userModel");
             var sUserId = oContext.getProperty("UserId");

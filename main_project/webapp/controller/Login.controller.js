@@ -12,7 +12,7 @@ sap.ui.define([
             var oJson = new JSONModel();
             oJson.setData({
                 user: {
-                    UserId  : "",
+                    UserId: "",
                     Password: ""
                 }
             });
@@ -24,10 +24,10 @@ sap.ui.define([
         },
 
         onLogin: function () {
-            var oJson      = this.getView().getModel();
+            var oJson = this.getView().getModel();
             var oDataModel = this.getOwnerComponent().getModel();
 
-            var UserId   = this.getView().byId("i1").getValue().trim().toLowerCase();
+            var UserId = this.getView().byId("i1").getValue().trim().toLowerCase();
             var Password = this.getView().byId("i2").getValue().trim();
 
             if (!UserId || !Password) {
@@ -41,28 +41,33 @@ sap.ui.define([
                 return;
             }
 
-            oJson.setProperty("/user/UserId",   UserId);
+            oJson.setProperty("/user/UserId", UserId);
             oJson.setProperty("/user/Password", Password);
 
             oDataModel.create("/LoginSet", oJson.getProperty("/user"), {
                 success: function (data) {
-    MessageToast.show( data.Message);
-    
-    localStorage.setItem("userId", data.UserId);
-    localStorage.setItem("userRole", data.Role);
-    var oAppModel = new JSONModel({
-        userId: data.UserId,
-        role: data.Role
-    });
-    this.getOwnerComponent().setModel(oAppModel, "appModel");
-    if (data.Role === "A") {
-        this.getOwnerComponent().getRouter().navTo("RouteAdminDash");
-    } else if (data.Role === "O") {
-        this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
-    } else if (data.Role === "U") {
-        this.getOwnerComponent().getRouter().navTo("RouteUserDash");
-    }
-}.bind(this),
+                    MessageToast.show(data.Message);
+
+                    localStorage.setItem("userId", data.UserId);
+                    localStorage.setItem("userRole", data.Role);
+                    var oAppModel = new JSONModel({
+                        userId: data.UserId,
+                        role: data.Role
+                    });
+                    var oUserModel = new sap.ui.model.json.JSONModel({
+                            OwnerId: data.UserId});
+ 
+                    sap.ui.getCore().setModel(oUserModel, "user");
+
+                    this.getOwnerComponent().setModel(oAppModel, "appModel");
+                    if (data.Role === "A") {
+                        this.getOwnerComponent().getRouter().navTo("RouteAdminDash");
+                    } else if (data.Role === "O") {
+                        this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
+                    } else if (data.Role === "U") {
+                        this.getOwnerComponent().getRouter().navTo("RouteUserDash");
+                    }
+                }.bind(this),
 
                 error: function (oError) {
                     try {

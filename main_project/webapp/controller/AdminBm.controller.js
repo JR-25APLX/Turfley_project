@@ -1,130 +1,3 @@
-// sap.ui.define([
-//     "sap/ui/core/mvc/Controller",
-//     "sap/ui/model/Filter",
-//     "sap/ui/model/FilterOperator",
-//     "sap/m/MessageBox",
-//     "sap/m/MessageToast"
-// ], function (Controller, Filter, FilterOperator, MessageBox) {
-//     "use strict";
-
-//     return Controller.extend("com.applexus.mainproject.controller.AdminBm", {
-
-//         onInit: function () {
-//             this.getOwnerComponent().getRouter()
-//                 .getRoute("RouteAdminBm")
-//                 .attachMatched(this._onRouteMatched, this);
-//         },
-
-//         _onRouteMatched: function () {
-//             this._applyTabFilter("Active");
-//         },
-
-//         onTabSelect: function (oEvent) {
-//             this._applyTabFilter(oEvent.getParameter("key"));
-//         },
-
-//         _applyTabFilter: function (sKey) {
-//             var oTable = this.byId("bookingsTable");
-//             var oBinding = oTable.getBinding("items");
-//             var oToday = new Date();
-//             oToday.setHours(0, 0, 0, 0);
-
-//             this.byId("actionsColumn").setVisible(sKey === "Active");
-
-//             if (!oBinding) return;
-
-//             var aFilters = [];
-//             if (sKey === "Active") {
-//                 aFilters.push(new Filter("BookingDate", FilterOperator.GE, oToday));
-//             } else {
-//                 aFilters.push(new Filter("BookingDate", FilterOperator.LT, oToday));
-//             }
-//             oBinding.filter(aFilters);
-//         },
-
-//         formatStatusState: function (sStatus) {
-//             return sStatus === "Active" ? "Success" : "Error";
-//         },
-
-//         formatCancelEnabled: function (sStatus) {
-//             return sStatus !== "Cancelled";
-//         },
-
-//         onCancelBooking: function (oEvent) {
-//             var oContext = oEvent.getSource().getBindingContext();
-//             var sBookingId = oContext.getProperty("BookingId");
-
-//             MessageBox.confirm(
-//                 "Are you sure you want to cancel Booking " + sBookingId,
-//                 {
-//                     title: "Confirm Cancellation",
-//                     actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-//                     onClose: function (sAction) {
-//                         if (sAction === MessageBox.Action.YES) {
-//                             this._processCancellation(sBookingId);
-//                         }
-//                     }.bind(this)
-//                 }
-//             );
-//         },
-
-//         _processCancellation: function (sBookingId) {
-//             var oView = this.getView();
-//             var oModel = this.getOwnerComponent().getModel();
-//             oView.setBusy(true);
-
-//             oModel.update("/Booking_HeaderSet('" + sBookingId + "')", {
-//                 Bookingid: sBookingId,
-//                 Status: "C"
-//             }, {
-//                 merge: true,
-//                 success: function () {
-//                     this._fetchOriginalPaymentAndRefund(sBookingId, oView, oModel);
-//                 }.bind(this),
-//                 error: function (oError) {
-//                     oView.setBusy(false);
-//                     var sMsg = "Cancellation failed.";
-//                     try {
-//                         sMsg = JSON.parse(oError.responseText).error.message.value;
-//                     } catch (e) { }
-//                     MessageBox.error(sMsg);
-//                 }
-//             });
-//         },
-
-//         _fetchOriginalPaymentAndRefund: function (sBookingId, oView, oModel) {
-//             var oRefundPayload = {
-//                 BookId: sBookingId,
-//                 PaymentType: "R"
-//             };
-
-//             oModel.create("/PaymentSet", oRefundPayload, {
-//                 success: function () {
-//                     oView.setBusy(false);
-//                     MessageBox.success(
-//                         "Booking " + sBookingId + " cancelled. Refund initiated!",
-//                         {
-//                             onClose: function () {
-//                                 oModel.refresh();
-//                             }
-//                         }
-//                     );
-//                 }.bind(this),
-//                 error: function (oError) {
-//                     oView.setBusy(false);
-//                     var sMsg = "Refund creation failed. Please contact support.";
-//                     try {
-//                         sMsg = JSON.parse(oError.responseText).error.message.value;
-//                     } catch (e) { }
-//                     MessageBox.warning(sMsg);
-//                 }
-//             });
-//         }
-
-//     });
-// });
-
-
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
@@ -132,26 +5,23 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/ColumnListItem",
     "sap/m/Text",
-    "sap/m/Link",
     "sap/m/Button",
     "sap/m/ObjectNumber",
     "sap/m/ObjectStatus"
-], function (Controller, Filter, FilterOperator, MessageBox, ColumnListItem, Text, Link, Button, ObjectNumber, ObjectStatus) {
+], function (Controller, Filter, FilterOperator, MessageBox, ColumnListItem, Text, Button, ObjectNumber, ObjectStatus) {
     "use strict";
 
     return Controller.extend("com.applexus.mainproject.controller.AdminBm", {
 
         onInit: function () {
- var oRouter = this.getOwnerComponent().getRouter();
+            var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("RouteAdminBm").attachMatched(this._onRouteMatched, this);
+        },
 
- },
         _onRouteMatched: function () {
-                       
             var sPath = "/ZIB18_GRP1_AD_BOOKINGS";
-            var oTable = this.getView().byId("myBookings");
-
-            var oActionsColumn = this.getView().byId("actions");
+            var oTable = this.getView().byId("bookingsTable");
+            var oActionsColumn = this.getView().byId("actionsColumn");
             if (oActionsColumn) {
                 oActionsColumn.setVisible(true);
             }
@@ -163,10 +33,7 @@ sap.ui.define([
                         new Text({ text: "{BookingId}" }),
                         new Text({ text: "{UserId}" }),
                         new Text({ text: "{TurfName}" }),
-                        new Link({
-                            text: "{Location}",
-                            press: this.onLocationPress.bind(this)
-                        }),
+                        new Text({ text: "{Location}" }),
                         new Text({
                             text: {
                                 path: "BookingDate",
@@ -178,36 +45,36 @@ sap.ui.define([
                             number: "{AmountPaid}",
                             unit: "{Currency}"
                         }),
-                        new ObjectStatus({                
+                        new ObjectStatus({
                             text: "{Status}",
                             state: {
-                                path: 'Status',
+                                path: "Status",
                                 formatter: this.formatStatusState.bind(this)
                             }
                         }),
                         new Button({
                             text: "Cancel",
                             type: "Emphasized",
-                            press: this.onCancel.bind(this),
+                            press: this.onCancelBooking.bind(this),
                             enabled: {
                                 path: "BookingDate",
                                 formatter: this.isUpcoming.bind(this)
                             }
                         })
-
                     ]
                 })
             });
         },
+
         formatStatusState: function (sStatus) {
             switch (sStatus) {
                 case "Confirmed": return "Success";
-                case "C":         return "Error"; 
+                case "C":         return "Error";
                 default:          return "None";
             }
         },
 
-        formatCancelEnabled: function(sStatus) {
+        formatCancelEnabled: function (sStatus) {
             return sStatus !== "C";
         },
 
@@ -222,10 +89,9 @@ sap.ui.define([
 
         onTabSelect: function (oEvent) {
             var sKey = oEvent.getParameter("key");
-            var oTable = this.getView().byId("myBookings");
+            var oTable = this.getView().byId("bookingsTable");
             var oBinding = oTable.getBinding("items");
-            var oActionsColumn = this.getView().byId("actions");
-
+            var oActionsColumn = this.getView().byId("actionsColumn");
             if (oActionsColumn) {
                 oActionsColumn.setVisible(sKey === "Active");
             }

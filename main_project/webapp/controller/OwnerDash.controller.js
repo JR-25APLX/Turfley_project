@@ -19,15 +19,8 @@ sap.ui.define([
             // Getting the Logged In Details from the user Model
             var oUserModel = sap.ui.getCore().getModel("user");
 
-            // To Prevent Crashing, if oUserModel is Missing 
-            if (!oUserModel) {
-                console.error("User model not found!");
-                return;
-            }
-
-            // Here, We get the OwnerId from the Login Page and stored in sOwnerId
+            // Here, OwnerId from login page
             var sOwnerId = oUserModel.getProperty("/OwnerId");
-            console.log("OwnerId:", sOwnerId);
 
             // Checking Whether Owner Id is containg any info or not
             if (!sOwnerId) {
@@ -51,7 +44,6 @@ sap.ui.define([
             // OData Call
             oDataModel.read(sPath, {
                 success: function (oData) {
-                    console.log("Turfs fetched:", oData.results);
 
                     //Converting Backend Data into UI Data
                     var oTurfModel = new JSONModel({ turfs: oData.results });
@@ -74,19 +66,9 @@ sap.ui.define([
             // It gives the info about the row clicked by Owner, 
             var oContext = oEvent.getSource().getBindingContext("turfModel");
 
-            if (!oContext) {
-                console.error("No binding context!");
-                return;
-            }
-
             // Since oContext is pointing to the row
             var sTurfId = oContext.getProperty("Turf_Id");
             console.log("Navigating to edit turf:", sTurfId);
-
-            if (!sTurfId) {
-                console.error("TurfID is undefined!");
-                return;
-            }
 
             // Navigating to the Edit Screen with this TurfId
             this.getOwnerComponent().getRouter().navTo("RouteOwnEditTurf", {

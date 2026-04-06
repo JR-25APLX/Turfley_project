@@ -24,7 +24,6 @@ sap.ui.define([
 
             // Same path pattern as OwnerDash
             var sPath = "/ZIB18_GRP1_OWNER_BOOKING(p_ownerid='" + sOwnerId + "')/Set";
-            console.log("Path:", sPath);
 
             this.getOwnerComponent().getModel().read(sPath, {
                 success: function (oData) {

@@ -77,7 +77,7 @@
 
                 <HBox class="sapUiLargeMarginTop" justifyContent="SpaceAround">
                     <Button text="TURF MANAGEMENT" press="onTmPress" type="Emphasized"/>
-                    <Button text="BOOKINGS" press="onBmPress" type="Emphasized"/>
+                    <Button text="BOOKING MANAGEMENT" press="onBmPress" type="Emphasized"/>
                     <Button text="USER MANAGEMENT" press="onUmPress" type="Emphasized"/>
                 </HBox>
             </VBox>

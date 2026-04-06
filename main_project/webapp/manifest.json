@@ -102,7 +102,7 @@
           "name": "RouteHome",
           "pattern": ":?query:",
           "target": [
-            "TargetAdminTm"
+            "TargetLogin"
           ]
         },
         {
@@ -270,11 +270,11 @@
         },
         "TargetAdminTm": {
           "id": "AdminTm",
-          "name": "AdminTm"   
-        }, 
+          "name": "AdminTm"
+        },
         "TargetAdminEditTurf": {
-          "id": "AdminEditTurf", 
-          "name": "AdminEditTurf" 
+          "id": "AdminEditTurf",
+          "name": "AdminEditTurf"
         }
       }
     },
