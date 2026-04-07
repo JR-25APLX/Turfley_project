@@ -121,8 +121,8 @@
                 <Property Name="Commissionamount" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Cuky" sap:label="Commission Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Cuky" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency Key" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
                 <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Booking status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <NavigationProperty Name="Booking_header_payment_nav" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.Booking_header_payment" FromRole="FromRole_Booking_header_payment" ToRole="ToRole_Booking_header_payment"/>
                 <NavigationProperty Name="booking_header_item_nav" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.Booking_header_item" FromRole="FromRole_Booking_header_item" ToRole="ToRole_Booking_header_item"/>
+                <NavigationProperty Name="Booking_header_payment_nav" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.Booking_header_payment" FromRole="FromRole_Booking_header_payment" ToRole="ToRole_Booking_header_payment"/>
             </EntityType>
             <EntityType Name="Booking_Item" sap:content-version="1">
                 <Key>
