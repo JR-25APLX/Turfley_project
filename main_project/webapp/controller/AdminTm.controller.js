@@ -116,7 +116,7 @@ sap.ui.define([
             });
         },
 
-        // Add Turf & Slot Logic (Unchanged)
+
         _getGrid: function () { return this._oDialog.getContent()[0].getItems()[1].getContent()[0]; },
 
         onAddSlots: function () {
@@ -167,18 +167,88 @@ sap.ui.define([
 
         onAdd: function () {
             var oData = this._oTurfModel.getData();
+
+            if (!oData.Name || oData.Name.trim() === "") {
+                MessageBox.error("Turf Name cannot be empty!");
+                return;
+            }
+            if (!oData.Location || oData.Location.trim() === "") {
+                MessageBox.error("Location cannot be empty!");
+                return;
+            }
+            if (!oData.Locationurl || oData.Locationurl.trim() === "") {
+                MessageBox.error("Location URL cannot be empty!");
+                return;
+            }
+            if (!oData.Type || oData.Type.trim() === "") {
+                MessageBox.error("Turf Type cannot be empty!");
+                return;
+            }
+            if (oData.Type !== "C" && oData.Type !== "B" && oData.Type !== "F") {
+                MessageBox.error("Type must be C, B or F!");
+                return;
+            }
+            if (!oData.Price || isNaN(oData.Price)) {
+                MessageBox.error("Price cannot be empty!");
+                return;
+            }
+            if (!oData.Commission_Perc || isNaN(oData.Commission_Perc)) {
+                MessageBox.error("Commission cannot be empty!");
+                return;
+            }
+            var rEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!oData.Owner || !rEmail.test(oData.Owner)) {
+                MessageBox.error("Owner ID must be a valid email!");
+                return;
+            }
+            if (!this._aSelectedSlots || this._aSelectedSlots.length === 0) {
+                MessageBox.error("Please select at least one slot!");
+                return;
+            }
+
             var oPayload = {
-                Name: oData.Name, Location: oData.Location, Locationurl: oData.Locationurl,
-                Type: oData.Type, Owner: oData.Owner, Price: parseFloat(oData.Price).toFixed(2),
-                Cuky: "INR", CommissionPercent: parseFloat(oData.Commission_Perc).toFixed(2),
-                Status: "A", turf_slot_nav: this._aSelectedSlots
+                Name: oData.Name,
+                Location: oData.Location,
+                Locationurl: oData.Locationurl,
+                Type: oData.Type,
+                Owner: oData.Owner,
+                Price: parseFloat(oData.Price).toFixed(2),
+                Cuky: "INR",
+                CommissionPercent: parseFloat(oData.Commission_Perc).toFixed(2),
+                Status: "A",
+                turf_slot_nav: this._aSelectedSlots
             };
+
+            console.log("Add Payload:", JSON.stringify(oPayload));
+
             this.getOwnerComponent().getModel().create("/TurfSet", oPayload, {
                 success: function () {
-                    MessageToast.show("Added!");
-                    this._oTurfModel.setData({ Name: "", Location: "", Locationurl: "", Type: "", Owner: "", Price: "", Cuky: "INR", Commission_Perc: "" });
+                    MessageToast.show("Turf added successfully!");
+
+                    this._oTurfModel.setData({
+                        Name: "",
+                        Location: "",
+                        Locationurl: "",
+                        Type: "",
+                        Owner: "",
+                        Price: "",
+                        Cuky: "INR",
+                        Commission_Perc: ""
+                    });
+
                     this._aSelectedSlots = [];
-                }.bind(this)
+
+                }.bind(this),
+
+                error: function (oError) {
+                    var sMessage = "An error occurred.";
+                    try {
+                        sMessage = JSON.parse(oError.responseText).error.message.value;
+                    } catch (e) {
+                        sMessage = oError.message || sMessage;
+                    }
+                    MessageBox.error(sMessage);
+                }
             });
         }
     });
