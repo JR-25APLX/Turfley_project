@@ -40,11 +40,11 @@ sap.ui.define([
         onPasswordChange: function(oEvent) {
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
-            var passRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/;
+            var passRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
 
             if (!passRegex.test(sValue)) {
                 oInput.setValueState("Error");
-                oInput.setValueStateText("Password must be 6+ characters with at least one letter and one number");
+                oInput.setValueStateText("Password must be minimum 8 and maximum 15 characters with at least one letter and one number");
             } else {
                 oInput.setValueState("None");
             }
@@ -71,7 +71,7 @@ sap.ui.define([
         onPhoneChange: function(oEvent) {
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
-            var phoneRegex = /^[0-9]{10}$/;
+            var phoneRegex = /^[0-9]{10,10}$/;
 
             if (!phoneRegex.test(sValue)) {
                 oInput.setValueState("Error");

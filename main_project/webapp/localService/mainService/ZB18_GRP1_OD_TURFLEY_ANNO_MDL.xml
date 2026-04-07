@@ -26,32 +26,119 @@
     </edmx:Reference>
     <edmx:DataServices>
         <Schema Namespace="zb18_grp1_od_turfley_anno_mdl.v1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_APPROVALSType/Cuky">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_APPROVALSType/Status">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_APPROVALSType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TurfId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Location"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TurfType"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Owner"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Price"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_BOOKINGSType/Currency">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_BOOKINGSType/StatusCriticality">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_BOOKINGSType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="BookingId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="UserId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TurfName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Location"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="BookingDate"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AmountPaid"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                            <PropertyValue Property="Value" Path="Status"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>BookingId</PropertyPath>
+                        <PropertyPath>UserId</PropertyPath>
+                        <PropertyPath>TurfName</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERType/p_ownerid">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/slot_id">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/Booking_status1">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/Currency">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/Owner_id">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/StatusCriticality">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType/p_ownerid">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNER_BOOKINGType">
+                <Annotation Term="UI.DataPoint" Qualifier="Booking_status">
+                    <Record>
+                        <PropertyValue Property="Value" Path="Booking_status"/>
+                        <PropertyValue Property="Title" String="Status"/>
+                        <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.LineItem">
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Booking_id"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="User_id"/>
+                            <PropertyValue Property="Value" Path="slot_id"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Turf_name"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Booking_date"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Booking_status"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Start_time"/>
@@ -62,6 +149,18 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Booking_Amount"/>
                         </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                            <PropertyValue Property="Value" Path="Booking_status"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Booking_id</PropertyPath>
+                        <PropertyPath>Turf_name</PropertyPath>
+                        <PropertyPath>Booking_date</PropertyPath>
+                        <PropertyPath>Booking_status</PropertyPath>
                     </Collection>
                 </Annotation>
             </Annotations>
@@ -71,8 +170,86 @@
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_SLOT_AVAILABILITYType/p_book_date">
                 <Annotation Term="UI.Hidden"/>
             </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_TURFType/TurfId">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_TURFType/LocationUrl">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_TURFType/Status_code">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_TURFType/Status">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_TURFType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Location"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TurfType"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Name</PropertyPath>
+                        <PropertyPath>Location</PropertyPath>
+                        <PropertyPath>TurfType</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERBOOKINGSType/UserId">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERBOOKINGSType/Currency">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERBOOKINGSType/LocationUrl">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERBOOKINGSType/StatusCriticality">
+                <Annotation Term="UI.Hidden"/>
+            </Annotations>
             <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERBOOKINGSType/p_user_id">
                 <Annotation Term="UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_USERBOOKINGSType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="BookingId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TurfName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Location"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="BookingDate"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AmountPaid"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Criticality" Path="StatusCriticality"/>
+                            <PropertyValue Property="Value" Path="BookingStatus"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>BookingId</PropertyPath>
+                        <PropertyPath>TurfName</PropertyPath>
+                        <PropertyPath>BookingDate</PropertyPath>
+                    </Collection>
+                </Annotation>
             </Annotations>
         </Schema>
     </edmx:DataServices>

@@ -1,57 +1,57 @@
+
+
+
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
-], function (Controller, JSONModel, MessageToast) {
+    "sap/m/MessageBox"
+], function (Controller, MessageBox) {
     "use strict";
-
+ 
     return Controller.extend("com.applexus.mainproject.controller.OwnerBooking", {
-
+ 
         onInit: function () {
-            var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute("RouteOwnTurfBooking").attachPatternMatched(
-                this._onRouteMatched, this
-            );
+            this._sOwnerId = null;
+            this._bTableReady = false;
+ 
+            this.getOwnerComponent()
+                .getRouter()
+                .getRoute("RouteOwnTurfBooking")
+                .attachPatternMatched(this._onRouteMatched, this);
         },
-
+ 
         _onRouteMatched: function () {
-            var sOwnerId = sap.ui.getCore().getModel("user").getProperty("/OwnerId");
+       
+ 
+            var sOwnerId = localStorage.getItem('userId')
+ 
+ 
+            this._sOwnerId = sOwnerId.trim();
+ 
+ 
+                this.byId("OwnerBookingSmartTable").rebindTable();
 
-            if (!sOwnerId) {
-                MessageToast.show("Owner ID not found!");
+        },
+ 
+        onSmartTableInit: function () {
+            this._bTableReady = true;
+
+        },
+ 
+        onFilterSearch: function () {
+            if (!this._sOwnerId) {
+                MessageBox.warning("Owner ID is not set. Cannot load bookings.");
                 return;
             }
-
-            // Same path pattern as OwnerDash
+            this.byId("OwnerBookingSmartTable").rebindTable();
+        },
+ 
+        onBeforeRebindTable: function (oEvent) {
+ 
+            var sOwnerId = localStorage.getItem('userId')
+            var oSmartTable = oEvent.getSource();
             var sPath = "/ZIB18_GRP1_OWNER_BOOKING(p_ownerid='" + sOwnerId + "')/Set";
-
-            this.getOwnerComponent().getModel().read(sPath, {
-                success: function (oData) {
-                    console.log("Bookings loaded:", oData.results);
-                    var oModel = new JSONModel(oData.results || []);
-                    this.getView().setModel(oModel, "bookingModel");
-                }.bind(this),
-                error: function (oError) {
-                    console.error("Booking load failed:", oError);
-                }
-            });
-        },
-
-
-        // Format Date
-        formatDate: function (oDate) {
-            if (!oDate) { return ""; }
-            return new Date(oDate).toLocaleDateString("en-IN");
-            // Output: 01/06/2025
-        },
-
-        // Format Time
-        formatTime: function (oTime) {
-            if (!oTime || !oTime.ms) { return ""; }
-            return new Date(oTime.ms).toISOString().substring(11, 16);
-            // Output: 08:00
+            oSmartTable.setTableBindingPath(sPath);
         }
-
-
+ 
     });
 });

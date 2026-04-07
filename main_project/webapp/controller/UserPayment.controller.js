@@ -13,8 +13,8 @@ sap.ui.define([
         onInit: function () {
             var oJson = new JSONModel({
                 payment: {
-                    UpiId: "",
-                    isPaymentDone: false,
+                    UpiId          : "",
+                    isPaymentDone  : false,
                     isButtonEnabled: false
                 }
             });
@@ -26,72 +26,107 @@ sap.ui.define([
         },
 
         _onObjectMatched: function (oEvent) {
-            var oArgs = oEvent.getParameter("arguments");
-            var sBookingId = oArgs.bookingId;
+            var oArgs        = oEvent.getParameter("arguments");
             var sTotalAmount = oArgs.totalAmount;
 
             var oPayModel = new JSONModel({
-                bookingId: sBookingId,
+                bookingId : "",
                 totalPrice: parseFloat(sTotalAmount).toFixed(2)
             });
             this.getView().setModel(oPayModel, "payModel");
 
             this.getView().getModel().setProperty("/payment", {
-                UpiId: "",
-                isPaymentDone: false,
+                UpiId          : "",
+                isPaymentDone  : false,
                 isButtonEnabled: false
             });
 
             var oUpiInput = this.getView().byId("upiInput");
-            if (oUpiInput) {
-                oUpiInput.setValue("");
-            }
+            if (oUpiInput) { oUpiInput.setValue(""); }
         },
 
         onUpiChange: function (oEvent) {
             var sValue = oEvent.getParameter("value").trim();
             var oModel = this.getView().getModel();
-            
             oModel.setProperty("/payment/isButtonEnabled", !!sValue);
             oModel.setProperty("/payment/UpiId", sValue);
         },
 
         onConfirmPayment: function () {
-            debugger;
-            var oView = this.getView();
-            var oJson = oView.getModel();
-            var sUpiId = oJson.getProperty("/payment/UpiId").trim();
-            var sBookingId = oView.getModel("payModel").getProperty("/bookingId");
+            var oView     = this.getView();
+            var oJson     = oView.getModel();
+            var sUpiId    = oJson.getProperty("/payment/UpiId").trim();
+            var oAppModel = this.getOwnerComponent().getModel("appModel");
+            var oModel    = this.getOwnerComponent().getModel();
 
             if (!sUpiId) {
                 MessageToast.show("Please enter your UPI ID");
                 return;
             }
 
-            var oModel = this.getOwnerComponent().getModel();
-            oJson.setProperty("/payment/isButtonEnabled", false);
+            var oBooking = oAppModel ? oAppModel.getProperty("/pendingBooking") : null;
+
+            if (!oBooking) {
+                MessageBox.error("Booking data not found. Please go back and try again.");
+                return;
+            }
+
+            var sUserId = localStorage.getItem("userId");
+
+            var aParts = oBooking.rawDate.split("-");
+            var sDate = new Date(
+                                  parseInt(aParts[0], 10),     
+                                  parseInt(aParts[1], 10) - 1,  
+                                  parseInt(aParts[2], 10),
+                                  12, 0, 0, 0
+                                );
 
             var oPayload = {
-                "BookId": sBookingId,
-                "PaymentMethod": "UPI",
-                "PaymentFrom": sUpiId,
-                "PaymentTo": admin_upi,
-                "PaymentType": "N"
+                Bookingid        : "",
+                Userid           : sUserId,
+                Turfid           : oBooking.turfId,
+                Bookingdate      : sDate,
+                Commissionamount : parseFloat(oBooking.commissionAmount).toFixed(3),
+                Cuky             : "INR",
+                Status           : "A",
+                booking_header_item_nav: oBooking.slotIds.map(function (sSlotId) {
+                    return {
+                        Slotid    : sSlotId.trim(),
+                        Slotprice : (parseFloat(oBooking.slotTotal) / oBooking.slotIds.length).toFixed(3),
+                        Cuky      : "INR"
+                    };
+                }),
+                Booking_header_payment_nav: [{   
+                    PaymentMethod: "UPI",
+                    PaymentFrom  : sUpiId,
+                    PaymentTo    : admin_upi,
+                    PaymentType  : "N"
+                }]
             };
 
+            oJson.setProperty("/payment/isButtonEnabled", false);
             oView.setBusy(true);
 
-            oModel.create("/PaymentSet", oPayload, {
-                success: function (oData) {
+            oModel.create("/Booking_HeaderSet", oPayload, {
+                success: function (oCreated) {
                     oView.setBusy(false);
                     oJson.setProperty("/payment/isPaymentDone", true);
 
-                    var sSuccessMsg = oData.Message || "Payment Successful! Your turf is booked.";
+                    if (oAppModel) {
+                        oAppModel.setProperty("/pendingBooking", null);
+                    }
+
+                    var sBookingId = oCreated.Bookingid
+                                  || oCreated.Bookid
+                                  || oCreated.BookId
+                                  || oCreated.BOOKINGID;
+
+                    var sSuccessMsg = "Payment Successful! Your turf is booked." +
+                                      (sBookingId ? " Booking ID: " + sBookingId : "");
 
                     MessageBox.success(sSuccessMsg, {
                         onClose: function () {
-                            var oODataModel = this.getOwnerComponent().getModel();
-                            oODataModel.refreshSecurityToken(
+                            oModel.refreshSecurityToken(
                                 function () {
                                     this.getOwnerComponent().getRouter().navTo("RouteUserBooking");
                                 }.bind(this),
@@ -107,17 +142,15 @@ sap.ui.define([
                 error: function (oError) {
                     oView.setBusy(false);
                     oJson.setProperty("/payment/isButtonEnabled", true);
-
                     var sErrorMsg = "Payment failed. Please try again.";
                     try {
                         sErrorMsg = JSON.parse(oError.responseText).error.message.value;
-                    } catch (e) {
-                        
-                    }
+                    } catch (e) {}
                     MessageBox.error(sErrorMsg);
                 }
             });
         },
+
         onUpiInfo: function () {
             MessageBox.information("Your UPI ID is collected only for refund purposes.");
         }

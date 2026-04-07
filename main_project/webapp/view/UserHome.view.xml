@@ -1,102 +1,107 @@
-<mvc:View controllerName="com.applexus.mainproject.controller.UserHome"
+<mvc:View
+    controllerName="com.applexus.mainproject.controller.UserHome"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
 
-    <Page id="userhome" enableScrolling="true">
+    <Page id="userhome">
         <customHeader>
             <Toolbar height="60px">
-                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <Title
+                    text="TURFLEY"
+                    level="H1"
+                    titleStyle="H2"
+                />
                 <ToolbarSpacer />
+                <Button 
+                    text="My Bookings" 
+                    type="Transparent" 
+                    press="onMyBookings" 
+                    icon="sap-icon://appointment" />
+                    <Button 
+        text="Logout" 
+        type="Transparent" 
+        icon="sap-icon://log" 
+        press="onLogout" />
                 <Image
                     src="../Images/justlogo.png"
-                    width="80px"
-                    height="75px"
-                    decorative="true" />
+                    width="70px"
+                    height="70px"
+                    decorative="true"
+                />
             </Toolbar>
         </customHeader>
-        <content>
-            <VBox class="sapUiMediumMargin">
-                <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
-                    <Title text="LIST OF TURFS" level="H2" />
-                    <Button
-                        text="My Bookings"
-                        type="Emphasized"
-                        icon="sap-icon://menu2"
-                        press="onMyBookings" />
-                </HBox>
-                <HBox alignItems="Center" width="100%" class="sapUiSmallMarginBottom">
-                    <SearchField id="s1"
-                                 placeholder="Search Here"
-                                 search="onSearch"
-                                 liveChange="onSearch"
-                                 class="sapUiSmallMarginEnd"
-                                 width="100%">
-                        <layoutData>
-                            <FlexItemData growFactor="1" />
-                        </layoutData>
-                    </SearchField>
-                    <MenuButton
-                        text="Filter"
-                        icon="sap-icon://filter"
-                        buttonMode="Regular">
-                        <menu>
-                            <Menu itemSelected="onFilter">
-                                <items>
-                                    <MenuItem key="location" text="Location" />
-                                    <MenuItem key="turfType" text="Turf Type" />
-                                    <MenuItem key="reset" text="Reset Filters" />
-                                </items>
-                            </Menu>
-                        </menu>
-                    </MenuButton>
-                </HBox>
-                <Table id="t1"
-                       items="{
-                           path: '/ZIB18_GRP1_TURF',
-                           parameters: { operationMode: 'Client' },
-                           filters: [{ path: 'Status_code', operator: 'EQ', value1: 'A' }]
-                       }"
-                       showSeparators="Inner">
-                    <columns>
-                        <Column width="auto">
-                            <Text text="Turf Name" />
-                        </Column>
-                        <Column width="auto" hAlign="Left">
-                            <Text text="Location" />
-                        </Column>
-                        <Column width="4rem" hAlign="Left" />
-                        <Column width="auto" hAlign="Center">
-                            <Text text="Turf Type" />
-                        </Column>
-                        <Column width="8rem" hAlign="Center" />
-                    </columns>
 
+        <content>
+            <smartFilterBar:SmartFilterBar
+                id="turfFilterBar"
+                entitySet="ZIB18_GRP1_TURF"
+                showGoOnFB="true"
+                search="onFilterSearch">
+                
+                <smartFilterBar:controlConfiguration>
+                    <smartFilterBar:ControlConfiguration 
+                        key="Location" 
+                        visible="true"
+                        index="1" />
+                    
+                    <smartFilterBar:ControlConfiguration 
+                        key="TurfType" 
+                        visible="true"
+                        index="2" />
+                </smartFilterBar:controlConfiguration>
+            </smartFilterBar:SmartFilterBar>
+
+            <smartTable:SmartTable
+                id="turfSmartTable"
+                entitySet="ZIB18_GRP1_TURF"
+                smartFilterId="turfFilterBar"
+                tableType="ResponsiveTable"
+                useVariantManagement="true"
+                useTablePersonalisation="true"
+                enableAutoBinding="true"
+                header="Active Turfs"
+                showRowCount="true"
+                requestAtLeastFields="TurfId,Name,Location,LocationUrl">
+
+                <Table>
+                    <columns>
+                        <Column hAlign="Center">
+                            <customData>
+                                <core:CustomData key="p13nData" 
+                                    value='\{"columnKey": "MapColumn", "columnIndex": 10, "leadingProperty": "LocationUrl"\}' />
+                            </customData>
+                            <Text text="Map" />
+                        </Column>
+
+                        <Column hAlign="End">
+                            <customData>
+                                <core:CustomData key="p13nData" 
+                                    value='\{"columnKey": "ActionColumn", "columnIndex": 11\}' />
+                            </customData>
+                            <Text text="Action" />
+                        </Column>
+                    </columns>
                     <items>
                         <ColumnListItem>
                             <cells>
-                                <Text text="{Name}" />
-                                <Text text="{Location}" />
-                                <Button icon="sap-icon://map"
-                                        type="Transparent"
-                                        tooltip="View on Map"
-                                        press="onMap" />
-                                <Text text="{= ${TurfType} === 'F' ? 'Football' :
-                                               ${TurfType} === 'C' ? 'Cricket'  :
-                                               ${TurfType} === 'B' ? 'Badminton' : '' }" />
-                                <Button text="Book"
-                                        type="Emphasized"
-                                        press="onBookTurf" />
+                                <Button 
+                                    icon="sap-icon://map" 
+                                    type="Transparent" 
+                                    press="onMap" 
+                                    tooltip="View on Map" />
+                                
+                                <Button 
+                                    text="Book Now" 
+                                    type="Accept" 
+                                    press="onBookTurf" />
                             </cells>
                         </ColumnListItem>
                     </items>
-                    <noData>
-                        <IllustratedMessage
-                            illustrationType="sapIllus-NoData"
-                            title="No Turfs Found" />
-                    </noData>
                 </Table>
-            </VBox>
+            </smartTable:SmartTable>
         </content>
     </Page>
 </mvc:View>

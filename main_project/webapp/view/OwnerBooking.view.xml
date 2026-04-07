@@ -2,9 +2,12 @@
     controllerName="com.applexus.mainproject.controller.OwnerBooking"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
->
-    <Page id="ownerbooking">
-        <customHeader>
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+ 
+    <Page title="Owner Booking History">
+    
+            <customHeader>
             <Toolbar height="60px">
                 <Title
                     text="TURFLEY"
@@ -20,79 +23,41 @@
                 />
             </Toolbar>
         </customHeader>
-
-        <content>
-            <VBox class="sapUiMediumMargin">
-                <Title
-                    text="Booking History"
-                    level="H1"
-                    titleStyle="H4"
-                    class="sapUiSmallMarginTop"
-                />
-
-                <Table
-                    id="ownerBookingTable"
-                    class="sapUiSmallMarginTop"
-                    items="{bookingModel>/}"
-                >
-                    <columns>
-                        <Column>
-                            <Title text="Booking ID" />
-                        </Column>
-                        <Column>
-                            <Title text="User ID" />
-                        </Column>
-                        <Column>
-                            <Title text="Turf Name" />
-                        </Column>
-                        <Column>
-                            <Title text="Booking Date" />
-                        </Column>
-                        <Column>
-                            <Title text="Start Time" />
-                        </Column>
-                        <Column>
-                            <Title text="End Time" />
-                        </Column>
-                        <Column>
-                            <Title text="Booking Amount" />
-                        </Column>
-                        <Column>
-                            <Title text="Booking Status" />
-                        </Column>
-                    </columns>
-
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text text="{bookingModel>Booking_id}" />
-                                <Text text="{bookingModel>User_id}" />
-                                <Text text="{bookingModel>Turf_name}" />
-                                <Text
-                                    text="{
-                                    path: 'bookingModel>Booking_date',
-                                    formatter: '.formatDate'
-                                }"
-                                />
-                                <Text
-                                    text="{
-                                    path: 'bookingModel>Start_time',
-                                    formatter: '.formatTime'
-                                }"
-                                />
-                                <Text
-                                    text="{
-                                    path: 'bookingModel>End_time',
-                                    formatter: '.formatTime'
-                                }"
-                                />
-                                <Text text="{bookingModel>Booking_Amount}" />
-                                <Text text="{bookingModel>Booking_status}" />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-            </VBox>
-        </content>
+ 
+ 
+        <smartFilterBar:SmartFilterBar
+            id="ownerBookingFilterBar"
+            entitySet="ZIB18_GRP1_OWNER_BOOKINGSet"
+            showGoOnFB="true"
+            search="onFilterSearch">
+ 
+            <smartFilterBar:controlConfiguration>
+                <smartFilterBar:ControlConfiguration
+                    key="p_ownerid"
+                    mandatory="notMandatory"
+                    visible="false"/>
+            </smartFilterBar:controlConfiguration>
+ 
+        </smartFilterBar:SmartFilterBar>
+ 
+  
+        <smartTable:SmartTable
+            id="OwnerBookingSmartTable"
+            entitySet="ZIB18_GRP1_OWNER_BOOKINGSet"
+            smartFilterId="ownerBookingFilterBar"
+            tableType="ResponsiveTable"
+            useVariantManagement="true"
+            useTablePersonalisation="true"
+            enableAutoBinding="true"
+            initialise="onSmartTableInit"
+            beforeRebindTable="onBeforeRebindTable"
+            header="Booking History"
+            showRowCount="true"
+            >
+ 
+        </smartTable:SmartTable>
+ 
     </Page>
+ 
 </mvc:View>
+

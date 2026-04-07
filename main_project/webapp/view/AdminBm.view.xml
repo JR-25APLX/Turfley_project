@@ -1,7 +1,10 @@
 <mvc:View
     controllerName="com.applexus.mainproject.controller.AdminBm"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable">
 
     <Page backgroundDesign="List">
         <customHeader>
@@ -16,27 +19,51 @@
             <VBox class="sapUiMediumMargin">
                 <Title text="BOOKINGS MANAGEMENT" level="H2" />
 
+                <smartFilterBar:SmartFilterBar 
+                    id="smartFilterBar" 
+                    entitySet="ZIB18_GRP1_AD_BOOKINGS" />
+
                 <IconTabBar id="bookingTabBar" select="onTabSelect" selectedKey="Active" class="sapUiSmallMarginTop">
                     <items>
-                        <IconTabFilter text="Active Bookings" key="Active"/>
-                        <IconTabFilter text="Past Bookings"   key="Past"/>
+                        <IconTabFilter text="Active Bookings" key="Active" icon="sap-icon://accept" />
+                        <IconTabFilter text="Past Bookings" key="Past" icon="sap-icon://history" />
                     </items>
                 </IconTabBar>
 
-                <Table id="bookingsTable">
+                <smartTable:SmartTable 
+                    id="bookingsSmartTable"
+                    entitySet="ZIB18_GRP1_AD_BOOKINGS"
+                    smartFilterId="smartFilterBar"
+                    tableType="ResponsiveTable"
+                    useTablePersonalisation="true"
+                    header="Bookings"
+                    showRowCount="true"
+                    enableAutoBinding="true"
+                    beforeRebindTable="onBeforeRebindTable"
+                    requestAtLeastFields="BookingId,BookingDate,Status">
 
-                    <columns>
-                        <Column><Text text="Booking ID"/></Column>
-                        <Column><Text text="User ID"/></Column>
-                        <Column><Text text="Turf Name"/></Column>
-                        <Column><Text text="Location"/></Column>
-                        <Column><Text text="Booking Date"/></Column>
-                        <Column><Text text="Amount Paid"/></Column>
-                        <Column><Text text="Status"/></Column>
-                        <Column id="actionsColumn"><Text text="Actions"/></Column>
-                    </columns>
-                                     
-                </Table>
+                    <Table id="innerTable">
+                        <columns>
+                            <Column id="actionsColumn" hAlign="End">
+                                <customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "Action", "columnIndex": 100\}' />
+                                </customData>
+                                <Text text="Actions" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Button 
+                                        text="Cancel" 
+                                        type="Reject" 
+                                        press="onCancelBooking" 
+                                        enabled="{path: 'Status', formatter: '.formatCancelEnabled'}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
             </VBox>
         </content>
     </Page>

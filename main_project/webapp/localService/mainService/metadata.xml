@@ -78,7 +78,6 @@
                 <Property Name="PaymentId" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Payment ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="BookId" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Book ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="PaymentMethod" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Payment method" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PaymentTime" Type="Edm.String" MaxLength="27" sap:unicode="false" sap:label="payment time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="PaymentFrom" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Payment From" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="PaymentTo" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Payment to" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="PaymentType" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Payment type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
@@ -118,10 +117,11 @@
                 <Property Name="Bookingid" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Book ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Userid" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Turfid" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Turf ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Bookingdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Book Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Bookingdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Book Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Commissionamount" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="3" sap:unicode="false" sap:unit="Cuky" sap:label="Commission Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Cuky" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency Key" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
                 <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Booking status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="Booking_header_payment_nav" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.Booking_header_payment" FromRole="FromRole_Booking_header_payment" ToRole="ToRole_Booking_header_payment"/>
                 <NavigationProperty Name="booking_header_item_nav" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.Booking_header_item" FromRole="FromRole_Booking_header_item" ToRole="ToRole_Booking_header_item"/>
             </EntityType>
             <EntityType Name="Booking_Item" sap:content-version="1">
@@ -154,30 +154,44 @@
                 <Key>
                     <PropertyRef Name="Admin"/>
                 </Key>
-                <Property Name="Admin" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="Admin" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="User ID" sap:quickinfo="User Id"/>
                 <Property Name="ActiveUsers" Type="Edm.Byte"/>
                 <Property Name="BlockedUsers" Type="Edm.Byte"/>
                 <Property Name="Owners" Type="Edm.Byte"/>
             </EntityType>
-            <EntityType Name="ZIB18_GRP1_AD_BOOKINGSType" sap:label="Booking Details fo Admin" sap:content-version="1">
+            <EntityType Name="ZIB18_GRP1_AD_APPROVALSType" sap:label="Turf Details for Admin Approval" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="TurfId"/>
+                </Key>
+                <Property Name="TurfId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Turf ID"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf Name" sap:quickinfo="Name of the turf"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Location" sap:quickinfo="Location of the turf"/>
+                <Property Name="TurfType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Type" sap:quickinfo="Type of the turf"/>
+                <Property Name="Owner" Type="Edm.String" MaxLength="100" sap:label="Owner" sap:quickinfo="Owner id"/>
+                <Property Name="Price" Type="Edm.Decimal" Precision="11" Scale="3" sap:unit="Cuky" sap:label="Price" sap:quickinfo="Basic price of the turf"/>
+                <Property Name="Cuky" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Turf status" sap:quickinfo="Status of the turf"/>
+            </EntityType>
+            <EntityType Name="ZIB18_GRP1_AD_BOOKINGSType" sap:label="Booking Details for Admin" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="BookingId"/>
                 </Key>
-                <Property Name="BookingId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Book ID"/>
-                <Property Name="UserId" Type="Edm.String" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
-                <Property Name="BookingDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Book Date"/>
-                <Property Name="TurfName" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf name" sap:quickinfo="Name of the turf"/>
-                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Turf location" sap:quickinfo="Location of the turf"/>
-                <Property Name="AmountPaid" Type="Edm.Decimal" Precision="12" Scale="3" sap:unit="Currency"/>
+                <Property Name="BookingId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Booking ID" sap:quickinfo="Book ID"/>
+                <Property Name="UserId" Type="Edm.String" MaxLength="100" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="TurfName" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf Name" sap:quickinfo="Name of the turf"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Location" sap:quickinfo="Location of the turf"/>
+                <Property Name="BookingDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Booking Date" sap:quickinfo="Book Date"/>
+                <Property Name="AmountPaid" Type="Edm.Decimal" Precision="12" Scale="3" sap:unit="Currency" sap:label="Amount Paid"/>
                 <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
-                <Property Name="Status" Type="Edm.String" MaxLength="9"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="9" sap:label="Status"/>
+                <Property Name="StatusCriticality" Type="Edm.Byte"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_BOOKING_HEADERType" sap:label="Booking Header Root Entity" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="Booking_id"/>
                 </Key>
                 <Property Name="Booking_id" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Book ID"/>
-                <Property Name="User_id" Type="Edm.String" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="User_id" Type="Edm.String" MaxLength="100" sap:label="User ID" sap:quickinfo="User Id"/>
                 <Property Name="Turf_id" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Turf ID"/>
                 <Property Name="Booking_date" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Book Date"/>
                 <Property Name="Commission" Type="Edm.Decimal" Precision="11" Scale="3" sap:unit="Cky" sap:label="Commission Amount" sap:quickinfo="Comission Amount"/>
@@ -189,7 +203,7 @@
                     <PropertyRef Name="p_ownerid"/>
                     <PropertyRef Name="Turf_Id"/>
                 </Key>
-                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Owner id"/>
+                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="Owner id"/>
                 <Property Name="Turf_Id" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Turf ID"/>
                 <Property Name="Turf_Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf name" sap:quickinfo="Name of the turf"/>
                 <Property Name="Turf_Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Turf location" sap:quickinfo="Location of the turf"/>
@@ -207,32 +221,35 @@
                 <Key>
                     <PropertyRef Name="p_ownerid"/>
                 </Key>
-                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="20" sap:parameter="mandatory" sap:label="Owner id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="100" sap:parameter="mandatory" sap:label="Owner id" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <NavigationProperty Name="Set" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.assoc_7DF72F6343326A5839AEE8A6A63E6EE2" FromRole="FromRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2" ToRole="ToRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_OWNER_BOOKINGType" sap:label="Booking Details of particular Owner" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="p_ownerid"/>
                     <PropertyRef Name="Booking_id"/>
+                    <PropertyRef Name="slot_id"/>
                 </Key>
-                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="User ID"/>
+                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="User ID"/>
                 <Property Name="Booking_id" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Booking ID" sap:quickinfo="Book ID"/>
-                <Property Name="User_id" Type="Edm.String" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="slot_id" Type="Edm.String" Nullable="false" MaxLength="5" sap:display-format="UpperCase" sap:label="SLOT_id" sap:quickinfo="Slot id"/>
                 <Property Name="Turf_name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf Name" sap:quickinfo="Name of the turf"/>
                 <Property Name="Booking_date" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Booking Date" sap:quickinfo="Book Date"/>
-                <Property Name="Booking_status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Status" sap:quickinfo="Booking status"/>
+                <Property Name="Booking_status1" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Status" sap:quickinfo="Booking status"/>
                 <Property Name="Start_time" Type="Edm.Time" Precision="0" sap:label="Start Time" sap:quickinfo="Start time of a slot"/>
                 <Property Name="End_time" Type="Edm.Time" Precision="0" sap:label="End Time" sap:quickinfo="End time of a slot"/>
                 <Property Name="Booking_Amount" Type="Edm.Decimal" Precision="12" Scale="3" sap:unit="Currency" sap:label="Amount Paid"/>
                 <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
-                <Property Name="Owner_id" Type="Edm.String" MaxLength="20" sap:label="Owner id"/>
+                <Property Name="Owner_id" Type="Edm.String" MaxLength="100" sap:label="Owner id"/>
+                <Property Name="Booking_status" Type="Edm.String" MaxLength="9" sap:label="Status"/>
+                <Property Name="StatusCriticality" Type="Edm.Byte"/>
                 <NavigationProperty Name="Parameters" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.assoc_47B0D728B95943F2D11ACE7AB0A095A3" FromRole="ToRole_assoc_47B0D728B95943F2D11ACE7AB0A095A3" ToRole="FromRole_assoc_47B0D728B95943F2D11ACE7AB0A095A3" sap:filterable="false"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_OWNER_BOOKINGParameters" sap:semantics="parameters" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="p_ownerid"/>
                 </Key>
-                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="20" sap:parameter="mandatory" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="p_ownerid" Type="Edm.String" Nullable="false" MaxLength="100" sap:parameter="mandatory" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <NavigationProperty Name="Set" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.assoc_47B0D728B95943F2D11ACE7AB0A095A3" FromRole="FromRole_assoc_47B0D728B95943F2D11ACE7AB0A095A3" ToRole="ToRole_assoc_47B0D728B95943F2D11ACE7AB0A095A3"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_SLOT_AVAILABILITYType" sap:label="Slot availability of the turf" sap:content-version="1">
@@ -271,12 +288,12 @@
                     <PropertyRef Name="TurfId"/>
                 </Key>
                 <Property Name="TurfId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Turf ID"/>
-                <Property Name="Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf name" sap:quickinfo="Name of the turf"/>
-                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Turf location" sap:quickinfo="Location of the turf"/>
-                <Property Name="LocationUrl" Type="Edm.String" MaxLength="550" sap:label="Location url"/>
-                <Property Name="TurfType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Type of the turf"/>
-                <Property Name="Status_code" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Turf status" sap:quickinfo="Status of the turf"/>
-                <Property Name="Status" Type="Edm.String" MaxLength="8"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf Name" sap:quickinfo="Name of the turf"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Location" sap:quickinfo="Location of the turf"/>
+                <Property Name="LocationUrl" Type="Edm.String" MaxLength="550" sap:label="Location URL" sap:quickinfo="Location url"/>
+                <Property Name="TurfType" Type="Edm.String" MaxLength="9" sap:label="Turf Type"/>
+                <Property Name="Status_code" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Status Code" sap:quickinfo="Status of the turf"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="8" sap:label="Status"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_TURF_SLOTType" sap:label="Turf And Slot Association" sap:content-version="1">
                 <Key>
@@ -287,7 +304,7 @@
                 <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Turf location" sap:quickinfo="Location of the turf"/>
                 <Property Name="LocationUrl" Type="Edm.String" MaxLength="550" sap:label="Location url"/>
                 <Property Name="Turf_Type" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Type of the turf"/>
-                <Property Name="Owner" Type="Edm.String" MaxLength="20" sap:label="Owner id"/>
+                <Property Name="Owner" Type="Edm.String" MaxLength="100" sap:label="Owner id"/>
                 <Property Name="Price" Type="Edm.Decimal" Precision="11" Scale="3" sap:unit="Currency_Key" sap:label="Basic price" sap:quickinfo="Basic price of the turf"/>
                 <Property Name="Currency_Key" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
                 <Property Name="Commision_Percent" Type="Edm.Decimal" Precision="5" Scale="3" sap:unit="Currency_Key" sap:label="Commission percent" sap:quickinfo="Commission percentage of admin"/>
@@ -298,33 +315,38 @@
                 <Key>
                     <PropertyRef Name="UserId"/>
                 </Key>
-                <Property Name="UserId" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="UserId" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="User ID" sap:quickinfo="User Id"/>
                 <Property Name="Role" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Role"/>
                 <Property Name="Name" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Name"/>
                 <Property Name="Phone" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="Phone" sap:quickinfo="Phone Number"/>
                 <Property Name="Status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="User status"/>
                 <Property Name="Upiid" Type="Edm.String" MaxLength="20" sap:label="UPI ID"/>
+                <Property Name="role_full" Type="Edm.String" MaxLength="5"/>
+                <Property Name="status_full" Type="Edm.String" MaxLength="7"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_USERBOOKINGSType" sap:label="User My Bookings" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="p_user_id"/>
                     <PropertyRef Name="BookingId"/>
                 </Key>
-                <Property Name="p_user_id" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="User ID"/>
-                <Property Name="BookingId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Book ID"/>
-                <Property Name="UserId" Type="Edm.String" MaxLength="20" sap:label="User ID" sap:quickinfo="User Id"/>
-                <Property Name="BookingDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Book Date"/>
-                <Property Name="TurfName" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf name" sap:quickinfo="Name of the turf"/>
-                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Turf location" sap:quickinfo="Location of the turf"/>
-                <Property Name="AmountPaid" Type="Edm.Decimal" Precision="12" Scale="3" sap:unit="Currency"/>
+                <Property Name="p_user_id" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="User ID"/>
+                <Property Name="BookingId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Booking ID" sap:quickinfo="Book ID"/>
+                <Property Name="UserId" Type="Edm.String" MaxLength="100" sap:label="User ID" sap:quickinfo="User Id"/>
+                <Property Name="TurfName" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Turf Name" sap:quickinfo="Name of the turf"/>
+                <Property Name="Location" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Location" sap:quickinfo="Location of the turf"/>
+                <Property Name="BookingDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Booking Date" sap:quickinfo="Book Date"/>
+                <Property Name="AmountPaid" Type="Edm.Decimal" Precision="12" Scale="3" sap:unit="Currency" sap:label="Amount Paid"/>
                 <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Currency Key" sap:semantics="currency-code"/>
+                <Property Name="LocationUrl" Type="Edm.String" MaxLength="550" sap:label="Location url"/>
+                <Property Name="BookingStatus" Type="Edm.String" MaxLength="9" sap:label="Status"/>
+                <Property Name="StatusCriticality" Type="Edm.Byte"/>
                 <NavigationProperty Name="Parameters" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.assoc_52DC830806B72A72F58A0202ECB6AFA8" FromRole="ToRole_assoc_52DC830806B72A72F58A0202ECB6AFA8" ToRole="FromRole_assoc_52DC830806B72A72F58A0202ECB6AFA8" sap:filterable="false"/>
             </EntityType>
             <EntityType Name="ZIB18_GRP1_USERBOOKINGSParameters" sap:semantics="parameters" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="p_user_id"/>
                 </Key>
-                <Property Name="p_user_id" Type="Edm.String" Nullable="false" MaxLength="20" sap:parameter="mandatory" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="p_user_id" Type="Edm.String" Nullable="false" MaxLength="100" sap:parameter="mandatory" sap:label="User ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <NavigationProperty Name="Set" Relationship="ZB18_GRP1_OD_TURFLEY_SRV.assoc_52DC830806B72A72F58A0202ECB6AFA8" FromRole="FromRole_assoc_52DC830806B72A72F58A0202ECB6AFA8" ToRole="ToRole_assoc_52DC830806B72A72F58A0202ECB6AFA8"/>
             </EntityType>
             <Association Name="assoc_7DF72F6343326A5839AEE8A6A63E6EE2" sap:content-version="1">
@@ -356,7 +378,7 @@
                 </ReferentialConstraint>
             </Association>
             <Association Name="Booking_header_item" sap:content-version="1">
-                <End Type="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Header" Multiplicity="*" Role="FromRole_Booking_header_item"/>
+                <End Type="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Header" Multiplicity="0..1" Role="FromRole_Booking_header_item"/>
                 <End Type="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Item" Multiplicity="*" Role="ToRole_Booking_header_item"/>
                 <ReferentialConstraint>
                     <Principal Role="FromRole_Booking_header_item">
@@ -364,6 +386,18 @@
                     </Principal>
                     <Dependent Role="ToRole_Booking_header_item">
                         <PropertyRef Name="Bookingid"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Booking_header_payment" sap:content-version="1">
+                <End Type="ZB18_GRP1_OD_TURFLEY_SRV.Booking_Header" Multiplicity="0..1" Role="FromRole_Booking_header_payment"/>
+                <End Type="ZB18_GRP1_OD_TURFLEY_SRV.Payment" Multiplicity="*" Role="ToRole_Booking_header_payment"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Booking_header_payment">
+                        <PropertyRef Name="Bookingid"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Booking_header_payment">
+                        <PropertyRef Name="BookId"/>
                     </Dependent>
                 </ReferentialConstraint>
             </Association>
@@ -381,6 +415,7 @@
             </Association>
             <EntityContainer Name="ZB18_GRP1_OD_TURFLEY_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="ZIB18_GRP1_Admin_Dash" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_Admin_DashType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZIB18_GRP1_AD_APPROVALS" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_APPROVALSType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <EntitySet Name="ZIB18_GRP1_AD_BOOKINGS" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_AD_BOOKINGSType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <EntitySet Name="ZIB18_GRP1_BOOKING_HEADER" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_BOOKING_HEADERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <EntitySet Name="ZIB18_GRP1_OWNERSet" EntityType="ZB18_GRP1_OD_TURFLEY_SRV.ZIB18_GRP1_OWNERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:addressable="false" sap:content-version="1"/>
@@ -418,6 +453,10 @@
                 <AssociationSet Name="assoc_7DF72F6343326A5839AEE8A6A63E6EE2" Association="ZB18_GRP1_OD_TURFLEY_SRV.assoc_7DF72F6343326A5839AEE8A6A63E6EE2" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="ZIB18_GRP1_OWNER" Role="FromRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
                     <End EntitySet="ZIB18_GRP1_OWNERSet" Role="ToRole_assoc_7DF72F6343326A5839AEE8A6A63E6EE2"/>
+                </AssociationSet>
+                <AssociationSet Name="Booking_header_paymentSet" Association="ZB18_GRP1_OD_TURFLEY_SRV.Booking_header_payment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Booking_HeaderSet" Role="FromRole_Booking_header_payment"/>
+                    <End EntitySet="PaymentSet" Role="ToRole_Booking_header_payment"/>
                 </AssociationSet>
                 <AssociationSet Name="assoc_47B0D728B95943F2D11ACE7AB0A095A3" Association="ZB18_GRP1_OD_TURFLEY_SRV.assoc_47B0D728B95943F2D11ACE7AB0A095A3" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="ZIB18_GRP1_OWNER_BOOKING" Role="FromRole_assoc_47B0D728B95943F2D11ACE7AB0A095A3"/>
