@@ -20,7 +20,7 @@
                 />
             </Toolbar>
         </customHeader>
-
+ 
         <content>
             <VBox class="sapUiMediumMargin">
                 <Title
@@ -28,7 +28,7 @@
                     titleStyle="H4"
                     class="sapUiSmallMarginBottom"
                 />
-
+ 
                 <Table
                     id="userTable"
                     items="{userModel>/users}"
@@ -58,12 +58,12 @@
                             <cells>
                                 <Text text="{userModel>UserId}" />
                                 <Text text="{userModel>Name}" />
-                                <Text text="{userModel>Role}" />
+                                <Text text="{userModel>role_full}" />
                                 <Text text="{userModel>Phone}" />
-                                <Text text="{userModel>Status}" />
+                                <Text text="{userModel>status_full}" />
                                 <Button
                                     text="{= ${userModel>Status} === 'B' ? 'Unblock' : 'Block'}"
-                                    type="{= ${userModel>Status} === 'B' ? 'Default' : 'Emphasized'}"
+                                    type="{= ${userModel>Status} === 'B' ? 'Accept' : 'Reject'}"
                                     press="onBlockUnblock"
                                 />
                             </cells>
@@ -74,3 +74,4 @@
         </content>
     </Page>
 </mvc:View>
+ 

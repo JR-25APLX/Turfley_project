@@ -11,7 +11,6 @@ sap.ui.define([
         onInit: function () {
             this.getView().setModel(new JSONModel({ users: [] }), "userModel");
             this._loadUsers();
-
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("RouteAdminUm").attachPatternMatched(
                 this._onRouteMatched, this
@@ -22,6 +21,7 @@ sap.ui.define([
             this._loadUsers();
         },
 
+        // LOAD USERS
         _loadUsers: function () {
             this.getOwnerComponent().getModel().read("/ZIB18_GRP1_USER", {
                 success: function (oData) {
@@ -29,12 +29,12 @@ sap.ui.define([
                         .setProperty("/users", oData.results);
 
                 }.bind(this),
-                error: function () {
+                error: function (oError) {
                     MessageBox.error("Failed to load users!");
                 }
             });
         },
-
+        // BLOCK / UNBLOCK
         onBlockUnblock: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("userModel");
             var sUserId = oContext.getProperty("UserId");
@@ -44,7 +44,7 @@ sap.ui.define([
 
             MessageBox.confirm("Are you sure you want to " + sAction + " " + sUserId + "?", {
                 onClose: function (sChoice) {
-                    if (sChoice !== MessageBox.Action.OK) { return; } 
+                    if (sChoice !== MessageBox.Action.OK) { return; }
 
                     this.getOwnerComponent().getModel().update(
                         "/UserSet('" + sUserId + "')",
@@ -55,7 +55,7 @@ sap.ui.define([
                                 MessageToast.show(sUserId + " " + sAction + "ed!");
                                 this._loadUsers();
                             }.bind(this),
-                            error: function () {
+                            error: function (oError) {
                                 MessageBox.error("Failed to " + sAction + "!");
                             }
                         }
