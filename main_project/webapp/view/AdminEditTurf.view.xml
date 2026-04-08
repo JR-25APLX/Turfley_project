@@ -19,8 +19,6 @@
             <VBox class="sapUiMediumMargin">
 
                 <Title text="Edit Turf Details" level="H1" titleStyle="H3"/>
-
-                <!-- Row 1 -->
                 <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Turf Name"/>
@@ -42,35 +40,29 @@
                         </Select>
                     </VBox>
                 </g:Grid>
-
-                <!-- Row 2 -->
                 <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Location URL"/>
                         <Input value="{turfModel>/Locationurl}"/>
                     </VBox>
                     <VBox>
-                        <Label text="Price"/>
-                        <!-- ✅ Disabled — Admin cannot edit price -->
+                        <Label text="Price"/>   
                         <Input value="{turfModel>/Price}" enabled="false"/>
                     </VBox>
                     <VBox>
-                        <Label text="Currency"/>
-                        <!-- ✅ Disabled — Admin cannot edit currency -->
+                        <Label text="Currency"/>       
                         <Input value="{turfModel>/Cuky}" enabled="false"/>
                     </VBox>
                 </g:Grid>
 
-                <!-- Row 3 -->
+                
                 <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Commission (%)"/>
-                        <!-- ✅ Admin can edit commission -->
                         <Input value="{turfModel>/Commission_Perc}" type="Number"/>
                     </VBox>
                 </g:Grid>
 
-                <!-- Buttons -->
                 <HBox class="sapUiSmallMarginTop" renderType="Bare">
                     <Button text="Edit Slots" icon="sap-icon://edit" type="Emphasized"
                             press="onEditSlots" class="sapUiSmallMarginEnd"/>

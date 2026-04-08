@@ -10,17 +10,12 @@
     >
         <customHeader>
             <Toolbar height="60px">
-                <!-- To display TURFLEY on the Left Side -->
                 <Title
                     text="TURFLEY"
                     level="H1"
                     titleStyle="H2"
                 />
-
-                <!-- This will push Logo to the Right Side -->
                 <ToolbarSpacer />
-
-                <!-- Logo of Turfley  -->
                 <Image
                     src="../Images/justlogo.png"
                     width="70px"

@@ -13,8 +13,8 @@ sap.ui.define([
         onInit: function () {
             var oJson = new JSONModel({
                 payment: {
-                    UpiId          : "",
-                    isPaymentDone  : false,
+                    UpiId: "",
+                    isPaymentDone: false,
                     isButtonEnabled: false
                 }
             });
@@ -26,18 +26,18 @@ sap.ui.define([
         },
 
         _onObjectMatched: function (oEvent) {
-            var oArgs        = oEvent.getParameter("arguments");
+            var oArgs = oEvent.getParameter("arguments");
             var sTotalAmount = oArgs.totalAmount;
 
             var oPayModel = new JSONModel({
-                bookingId : "",
+                bookingId: "",
                 totalPrice: parseFloat(sTotalAmount).toFixed(2)
             });
             this.getView().setModel(oPayModel, "payModel");
 
             this.getView().getModel().setProperty("/payment", {
-                UpiId          : "",
-                isPaymentDone  : false,
+                UpiId: "",
+                isPaymentDone: false,
                 isButtonEnabled: false
             });
 
@@ -53,11 +53,11 @@ sap.ui.define([
         },
 
         onConfirmPayment: function () {
-            var oView     = this.getView();
-            var oJson     = oView.getModel();
-            var sUpiId    = oJson.getProperty("/payment/UpiId").trim();
+            var oView = this.getView();
+            var oJson = oView.getModel();
+            var sUpiId = oJson.getProperty("/payment/UpiId").trim();
             var oAppModel = this.getOwnerComponent().getModel("appModel");
-            var oModel    = this.getOwnerComponent().getModel();
+            var oModel = this.getOwnerComponent().getModel();
 
             if (!sUpiId) {
                 MessageToast.show("Please enter your UPI ID");
@@ -75,32 +75,32 @@ sap.ui.define([
 
             var aParts = oBooking.rawDate.split("-");
             var sDate = new Date(
-                                  parseInt(aParts[0], 10),     
-                                  parseInt(aParts[1], 10) - 1,  
-                                  parseInt(aParts[2], 10),
-                                  12, 0, 0, 0
-                                );
+                parseInt(aParts[0], 10),
+                parseInt(aParts[1], 10) - 1,
+                parseInt(aParts[2], 10),
+                12, 0, 0, 0
+            );
 
             var oPayload = {
-                Bookingid        : "",
-                Userid           : sUserId,
-                Turfid           : oBooking.turfId,
-                Bookingdate      : sDate,
-                Commissionamount : parseFloat(oBooking.commissionAmount).toFixed(3),
-                Cuky             : "INR",
-                Status           : "A",
+                Bookingid: "",
+                Userid: sUserId,
+                Turfid: oBooking.turfId,
+                Bookingdate: sDate,
+                Commissionamount: parseFloat(oBooking.commissionAmount).toFixed(3),
+                Cuky: "INR",
+                Status: "A",
                 booking_header_item_nav: oBooking.slotIds.map(function (sSlotId) {
                     return {
-                        Slotid    : sSlotId.trim(),
-                        Slotprice : (parseFloat(oBooking.slotTotal) / oBooking.slotIds.length).toFixed(3),
-                        Cuky      : "INR"
+                        Slotid: sSlotId.trim(),
+                        Slotprice: (parseFloat(oBooking.slotTotal) / oBooking.slotIds.length).toFixed(3),
+                        Cuky: "INR"
                     };
                 }),
-                Booking_header_payment_nav: [{   
+                Booking_header_payment_nav: [{
                     PaymentMethod: "UPI",
-                    PaymentFrom  : sUpiId,
-                    PaymentTo    : admin_upi,
-                    PaymentType  : "N"
+                    PaymentFrom: sUpiId,
+                    PaymentTo: admin_upi,
+                    PaymentType: "N"
                 }]
             };
 
@@ -117,12 +117,12 @@ sap.ui.define([
                     }
 
                     var sBookingId = oCreated.Bookingid
-                                  || oCreated.Bookid
-                                  || oCreated.BookId
-                                  || oCreated.BOOKINGID;
+                        || oCreated.Bookid
+                        || oCreated.BookId
+                        || oCreated.BOOKINGID;
 
                     var sSuccessMsg = "Payment Successful! Your turf is booked." +
-                                      (sBookingId ? " Booking ID: " + sBookingId : "");
+                        (sBookingId ? " Booking ID: " + sBookingId : "");
 
                     MessageBox.success(sSuccessMsg, {
                         onClose: function () {
@@ -145,7 +145,7 @@ sap.ui.define([
                     var sErrorMsg = "Payment failed. Please try again.";
                     try {
                         sErrorMsg = JSON.parse(oError.responseText).error.message.value;
-                    } catch (e) {}
+                    } catch (e) { }
                     MessageBox.error(sErrorMsg);
                 }
             });

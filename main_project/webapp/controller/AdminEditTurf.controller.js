@@ -10,7 +10,7 @@ sap.ui.define([
     return Controller.extend("com.applexus.mainproject.controller.AdminEditTurf", {
 
         onInit: function () {
-            this._aSelectedSlots   = [];
+            this._aSelectedSlots = [];
             this._aExistingSlotIds = [];
 
             var oRouter = this.getOwnerComponent().getRouter();
@@ -20,10 +20,10 @@ sap.ui.define([
         },
 
         _onRouteMatched: function (oEvent) {
-            this._sTurfId          = oEvent.getParameter("arguments").turfId;
-            this._aSelectedSlots   = [];
+            this._sTurfId = oEvent.getParameter("arguments").turfId;
+            this._aSelectedSlots = [];
             this._aExistingSlotIds = [];
-            this._oDialog          = null;
+            this._oDialog = null;
 
             var oModel = this.getOwnerComponent().getModel();
 
@@ -31,13 +31,13 @@ sap.ui.define([
             oModel.read("/TurfSet('" + this._sTurfId + "')", {
                 success: function (oData) {
                     this._oTurfModel = new JSONModel({
-                        Name           : oData.Name,
-                        Location       : oData.Location,
-                        Locationurl    : oData.Locationurl,
-                        Type           : oData.Type,
-                        Price          : oData.Price,
-                        Cuky           : oData.Cuky,
-                        Owner          : oData.Owner,
+                        Name: oData.Name,
+                        Location: oData.Location,
+                        Locationurl: oData.Locationurl,
+                        Type: oData.Type,
+                        Price: oData.Price,
+                        Cuky: oData.Cuky,
+                        Owner: oData.Owner,
                         Commission_Perc: oData.CommissionPercent
                     });
                     this.getView().setModel(this._oTurfModel, "turfModel");
@@ -56,9 +56,9 @@ sap.ui.define([
                     });
                     this._aSelectedSlots = oData.results.map(function (s) {
                         return {
-                            SlotId   : s.SlotId,
+                            SlotId: s.SlotId,
                             StartTime: s.StartTime,
-                            EndTime  : s.EndTime
+                            EndTime: s.EndTime
                         };
                     });
                 }.bind(this),
@@ -68,7 +68,6 @@ sap.ui.define([
             });
         },
 
-        // Helper — get Grid from dialog
         _getGrid: function () {
             return this._oDialog.getContent()[0].getItems()[1].getContent()[0];
         },
@@ -87,11 +86,10 @@ sap.ui.define([
         _preSelectSlots: function () {
             var aExisting = this._aExistingSlotIds || [];
 
-            //  Using _getGrid()
             this._getGrid().getContent().forEach(function (oButton) {
-                var iHour    = parseInt(oButton.data("startHour"));
+                var iHour = parseInt(oButton.data("startHour"));
                 var iSlotNum = iHour + 1;
-                var sSlotId  = "S" + (iSlotNum < 10 ? "00" + iSlotNum : "0" + iSlotNum);
+                var sSlotId = "S" + (iSlotNum < 10 ? "00" + iSlotNum : "0" + iSlotNum);
 
                 oButton.setType(
                     aExisting.indexOf(sSlotId) !== -1 ? "Emphasized" : "Default"
@@ -109,17 +107,17 @@ sap.ui.define([
         onConfirmSlots: function () {
             var aSelectedSlots = [];
 
-            //  Using _getGrid()
+
             this._getGrid().getContent().forEach(function (oButton) {
                 if (oButton.getType() === "Emphasized") {
-                    var iHour    = parseInt(oButton.data("startHour"));
-                    var iEnd     = iHour + 1;
+                    var iHour = parseInt(oButton.data("startHour"));
+                    var iEnd = iHour + 1;
                     var iSlotNum = iHour + 1;
 
                     aSelectedSlots.push({
-                        SlotId   : "S" + (iSlotNum < 10 ? "00" + iSlotNum : "0" + iSlotNum),
+                        SlotId: "S" + (iSlotNum < 10 ? "00" + iSlotNum : "0" + iSlotNum),
                         StartTime: "PT" + (iHour < 10 ? "0" + iHour : "" + iHour) + "H00M00S",
-                        EndTime  : "PT" + (iEnd  < 10 ? "0" + iEnd  : "" + iEnd)  + "H00M00S"
+                        EndTime: "PT" + (iEnd < 10 ? "0" + iEnd : "" + iEnd) + "H00M00S"
                     });
                 }
             });
@@ -129,7 +127,7 @@ sap.ui.define([
                 return;
             }
 
-            this._aSelectedSlots   = aSelectedSlots;
+            this._aSelectedSlots = aSelectedSlots;
             this._aExistingSlotIds = aSelectedSlots.map(function (s) { return s.SlotId; });
 
             MessageToast.show(aSelectedSlots.length + " slot(s) selected!");
@@ -162,21 +160,20 @@ sap.ui.define([
             }
 
             var oPayload = {
-                Id               : this._sTurfId,
-                Name             : oData.Name,
-                Location         : oData.Location,
-                Locationurl      : oData.Locationurl,
-                Type             : oData.Type,
-                Price            : oData.Price,
-                Cuky             : oData.Cuky,
-                Owner            : oData.Owner,
+                Id: this._sTurfId,
+                Name: oData.Name,
+                Location: oData.Location,
+                Locationurl: oData.Locationurl,
+                Type: oData.Type,
+                Price: oData.Price,
+                Cuky: oData.Cuky,
+                Owner: oData.Owner,
                 CommissionPercent: parseFloat(oData.Commission_Perc || 0).toFixed(2),
                 turfedit_slot_nav: this._aSelectedSlots
             };
 
             this.getOwnerComponent().getModel().create("/TurfEditSet", oPayload, {
                 success: function () {
-                    //  Toast + 2 second delay before navigate
                     MessageToast.show("Turf updated successfully!");
                     setTimeout(function () {
                         this.getOwnerComponent().getRouter().navTo("RouteAdminTm");

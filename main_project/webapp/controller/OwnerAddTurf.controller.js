@@ -10,7 +10,7 @@ sap.ui.define([
 
         onInit: function () {
             var oUserModel = sap.ui.getCore().getModel("user");
-            this._sOwnerId = oUserModel.getProperty("/OwnerId"); //  Store OwnerId on controller
+            this._sOwnerId = oUserModel.getProperty("/OwnerId"); 
             this._aSelectedSlots = [];
 
             this._oTurfModel = new JSONModel({
@@ -26,16 +26,12 @@ sap.ui.define([
             this.getView().setModel(this._oTurfModel, "turfModel");
         },
 
-        //  Helper — get Grid from dialog
         _getGrid: function () {
             return this._oDialog.getContent()[0].getItems()[1].getContent()[0];
         },
 
-
-        // OPEN SLOTS DIALOG
-
         onAddSlots: function () {
-            var oData = this._oTurfModel.getData(); // Get All Values Owner entered
+            var oData = this._oTurfModel.getData(); 
 
             if (!oData.Name || oData.Name.trim() === "") {
                 MessageBox.error("Please fill Turf Name before selecting slots!"); return;
@@ -68,8 +64,6 @@ sap.ui.define([
             }
         },
 
-
-        // RESTORE PREVIOUSLY SELECTED SLOTS AS BLUE
         _restoreSelectedSlots: function () {
             var aSelected = this._aSelectedSlots;
             this._getGrid().getContent().forEach(function (oButton) {
@@ -81,17 +75,11 @@ sap.ui.define([
             });
         },
 
-        // ================================================
-        // SLOT BUTTON TOGGLE
-        // ================================================
         onSlotPress: function (oEvent) {
             var oButton = oEvent.getSource();
             oButton.setType(oButton.getType() === "Default" ? "Emphasized" : "Default");
         },
 
-        // ================================================
-        // CONFIRM SLOTS
-        // ================================================
         onConfirmSlots: function () {
             var aSlots = [];
 
@@ -116,16 +104,11 @@ sap.ui.define([
             this._oDialog.close();
         },
 
-        // ================================================
         // CANCEL SLOTS
-        // ================================================
         onCancelSlots: function () { this._oDialog.close(); },
 
-        // ================================================
-        // ADD TURF
-        // ================================================
         onAdd: function () {
-            var oData = this._oTurfModel.getData(); // Taking all the data entered by the user and storing it in Odata
+            var oData = this._oTurfModel.getData(); 
 
             if (!oData.Name || oData.Name.trim() === "") {
                 MessageBox.error("Turf Name cannot be empty!"); return;
@@ -154,18 +137,17 @@ sap.ui.define([
                 Location: oData.Location,
                 Locationurl: oData.Locationurl,
                 Type: oData.Type,
-                Owner: this._sOwnerId, //  controller variable
+                Owner: this._sOwnerId, 
                 Price: parseFloat(oData.Price).toFixed(2),
                 Cuky: "INR",
                 Status: "P",
                 turf_slot_nav: this._aSelectedSlots
             };
-           
+
             this.getOwnerComponent().getModel().create("/TurfSet", oPayload, {
                 success: function () {
                     MessageToast.show("Turf submitted for approval!");
 
-                    //  Reset form — Owner filled from controller variable
                     this._oTurfModel.setData({
                         Name: "",
                         Location: "",
@@ -177,7 +159,6 @@ sap.ui.define([
                     });
 
                     this._aSelectedSlots = [];
-
                     // Navigate back to Owner Dashboard
                     this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
 

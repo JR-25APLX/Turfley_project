@@ -31,55 +31,43 @@
                 <Title
                     text="ADD YOUR NEW TURF HERE"
                     level="H1"
-                    titleStyle="H3"
-                />
-
-                <!-- Row 1 -->
+                    titleStyle="H3"/>
                 <g:Grid
                     defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop"
-                >
+                    class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Enter Turf Name" />
                         <Input
                             value="{turfModel>/Name}"
-                            placeholder="e.g. Green Field"
-                        />
+                            placeholder="e.g. Green Field"/>
                     </VBox>
                     <VBox>
                         <Label text="Enter Turf Location" />
                         <Input
                             value="{turfModel>/Location}"
-                            placeholder="e.g. Trivandrum"
-                        />
+                            placeholder="e.g. Trivandrum"/>
                     </VBox>
                     <VBox>
                         <Label text="Turf Type" />
-                        <!--  Select dropdown — only C, B, F -->
                         <Select selectedKey="{turfModel>/Type}">
                             <items>
                                 <core:Item
                                     key=""
-                                    text="-- Select Type --"
-                                />
+                                    text="-- Select Type --"/>
                                 <core:Item
                                     key="C"
-                                    text="C - Cricket"
-                                />
+                                    text="C - Cricket" />
                                 <core:Item
                                     key="B"
-                                    text="B - Badminton"
-                                />
+                                    text="B - Badminton"/>
                                 <core:Item
                                     key="F"
-                                    text="F - Football"
-                                />
+                                    text="F - Football"/>
                             </items>
                         </Select>
                     </VBox>
                 </g:Grid>
 
-                <!-- Row 2 -->
                 <g:Grid
                     defaultSpan="L4 M6 S12"
                     class="sapUiSmallMarginTop"
@@ -100,47 +88,38 @@
                     </VBox>
                 </g:Grid>
 
-                <!-- Row 3 -->
                 <g:Grid
                     defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop"
-                >
+                    class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Enter Turf Price" />
                         <Input
                             value="{turfModel>/Price}"
                             type="Number"
-                            placeholder="e.g. 500"
-                        />
+                            placeholder="e.g. 500"/>
                     </VBox>
                     <VBox>
                         <Label text="Enter Owner Email" />
                         <Input
                             value="{turfModel>/Owner}"
                             editable="false"
-                            placeholder="e.g. owner@gmail.com"
-                        />
+                            placeholder="e.g. owner@gmail.com"/>
                     </VBox>
                 </g:Grid>
-
-                <!-- Buttons -->
                 <HBox
                     class="sapUiSmallMarginTop"
-                    renderType="Bare"
-                >
+                    renderType="Bare">
                     <Button
                         text="Add Slots"
                         icon="sap-icon://add"
                         type="Emphasized"
                         press="onAddSlots"
-                        class="sapUiSmallMarginEnd"
-                    />
+                        class="sapUiSmallMarginEnd"/>
                     <Button
                         text="Submit"
                         icon="sap-icon://save"
                         type="Emphasized"
-                        press="onAdd"
-                    />
+                        press="onAdd"/>
                 </HBox>
             </VBox>
         </content>

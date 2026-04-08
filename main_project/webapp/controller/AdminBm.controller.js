@@ -14,14 +14,12 @@ sap.ui.define([
         },
 
         _onRouteMatched: function () {
-            // SmartTable auto-binds, so we just trigger a refresh if needed
             var oSmartTable = this.getView().byId("bookingsSmartTable");
             if (oSmartTable) {
                 oSmartTable.rebindTable();
             }
         },
 
-        // Triggered when Go is pressed or Tab is switched
         onBeforeRebindTable: function (oEvent) {
             var mParams = oEvent.getParameter("bindingParams");
             var sKey = this.getView().byId("bookingTabBar").getSelectedKey();

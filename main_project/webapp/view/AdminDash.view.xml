@@ -25,7 +25,7 @@
                             <NumericContent value="{dashModel>/owners}" />
                         </TileContent>
                     </GenericTile>
-                    <GenericTile class="customTile" header="Number of Turfs">
+                    <GenericTile class="customTile" header="Number of Active Turfs">
                         <TileContent>
                             <NumericContent value="{dashModel>/turfs}" />
                         </TileContent>

@@ -4,7 +4,7 @@ sap.ui.define([
   "use strict";
 
   return BaseController.extend("com.applexus.mainproject.controller.App", {
-      onInit() {
-      }
+    onInit() {
+    }
   });
 });

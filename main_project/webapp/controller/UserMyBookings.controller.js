@@ -9,7 +9,7 @@ sap.ui.define([
     "sap/m/Link",
     "sap/m/Button",
     "sap/m/ObjectNumber",
-    "sap/m/ObjectStatus" 
+    "sap/m/ObjectStatus"
 ], function (Controller, Filter, FilterOperator, MessageBox, MessageToast, ColumnListItem, Text, Link, Button, ObjectNumber, ObjectStatus) {
     "use strict";
 
@@ -52,7 +52,6 @@ sap.ui.define([
                             number: "{AmountPaid}",
                             unit: "{Currency}"
                         }),
-                        // Status with Criticality (Colors)
                         new ObjectStatus({
                             text: "{BookingStatus}",
                             state: {
@@ -76,15 +75,14 @@ sap.ui.define([
 
         formatStatusState: function (iCriticality) {
             switch (iCriticality) {
-                case 3: return "Success"; // Green
-                case 1: return "Error";   // Red
-                case 2: return "Warning"; // Yellow
+                case 3: return "Success"; 
+                case 1: return "Error"; 
+                case 2: return "Warning";
                 default: return "None";
             }
         },
 
         formatCancelEnabled: function (sStatus) {
-            // Only allow cancellation for Active/Confirmed bookings
             return sStatus === "Confirmed";
         },
 
@@ -92,7 +90,7 @@ sap.ui.define([
             var sKey = oEvent.getParameter("key");
             var oTable = this.getView().byId("myBookings");
             var oBinding = oTable.getBinding("items");
-            
+
             if (!oBinding) return;
 
             var oToday = new Date();
@@ -162,7 +160,7 @@ sap.ui.define([
                         }
                     });
                 }.bind(this),
-                error: function (oError) {
+                error: function () {
                     oView.setBusy(false);
                     MessageBox.warning("Refund creation failed. Please contact support.");
                 }

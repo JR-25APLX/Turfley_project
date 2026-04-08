@@ -7,8 +7,8 @@
             <Bar>
                 <contentLeft>
                         <Title
-                                text="TURFLEY"
-                                titleStyle="H3" />
+                            text="TURFLEY"
+                            titleStyle="H3" />
                 </contentLeft>
             </Bar>
         </customHeader>
@@ -17,20 +17,15 @@
                 height="100%"
                 alignItems="Center"
                 justifyContent="Center">
- 
                 <Panel
                     width="350px"
                     class="sapUiResponsiveMargin"
-                    backgroundDesign="Translucent">
- 
-                    <content>
- 
+                    backgroundDesign="Translucent"> 
+                    <content> 
                         <VBox
                             alignItems="Center"
                             justifyContent="Center"
-                            class="sapUiMediumMargin">
- 
-                           
+                            class="sapUiMediumMargin">                         
                             <Image
                                 src="../Images/image.png"
                                 width="200px"
@@ -40,12 +35,7 @@
                                 text="Login"
                                 titleStyle="H3"
                                 class="sapUiSmallMarginBottom" />
- 
-                        
- 
-                           
                             <VBox width="100%">
- 
                                 <Label text="Enter your email to get started" required="true"/>
                                 <Input id= "i1"
                                      placeholder="Enter email"
@@ -55,18 +45,14 @@
                                 <Input id="i2"
                                     type="Password"
                                     placeholder="Enter your password"
-                                    class="sapUiSmallMarginBottom"/>
- 
-                               
+                                    class="sapUiSmallMarginBottom"/>                               
                                 <Button
                                     text="Login"
                                     press="onLogin"
                                     type="Emphasized"
                                     width="100%"
                                     />
- 
                             </VBox>
- 
                         </VBox>
                        <HBox
                             justifyContent="Center"
@@ -78,12 +64,7 @@
                     </HBox>
                     </content>
                 </Panel>
- 
             </FlexBox>
- 
-
- 
-       
     </Page>
 </mvc:View>
  

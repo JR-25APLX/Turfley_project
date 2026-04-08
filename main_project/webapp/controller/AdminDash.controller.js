@@ -28,12 +28,12 @@ sap.ui.define([
                 return;
             }
             this.getView().setModel(new JSONModel({
-                activeUsers : 0,
+                activeUsers: 0,
                 blockedUsers: 0,
-                owners      : 0,
-                turfs       : 0,
-                turfStatus  : [],
-                turfType    : []
+                owners: 0,
+                turfs: 0,
+                turfStatus: [],
+                turfType: []
             }), "dashModel");
 
             this._loadUserStats(sUserId);
@@ -46,9 +46,9 @@ sap.ui.define([
             oODataModel.read(sPath, {
                 success: function (oData) {
                     var oDashModel = this.getView().getModel("dashModel");
-                    oDashModel.setProperty("/activeUsers",  oData.ActiveUsers  || 0);
+                    oDashModel.setProperty("/activeUsers", oData.ActiveUsers || 0);
                     oDashModel.setProperty("/blockedUsers", oData.BlockedUsers || 0);
-                    oDashModel.setProperty("/owners",       oData.Owners       || 0);
+                    oDashModel.setProperty("/owners", oData.Owners || 0);
                 }.bind(this),
 
                 error: function (oError) {
@@ -65,10 +65,10 @@ sap.ui.define([
                 success: function (oData) {
                     var aTurfs = oData.results || [];
                     var mStatusMap = {};
-                    var mTypeMap   = {};
+                    var mTypeMap = {};
                     aTurfs.forEach(function (oTurf) {
-                        var sStatusCode  = oTurf.Status_code || "?";
-                        var sStatusLabel = oTurf.Status      || sStatusCode;
+                        var sStatusCode = oTurf.Status_code || "?";
+                        var sStatusLabel = oTurf.Status || sStatusCode;
                         if (!mStatusMap[sStatusCode]) {
                             mStatusMap[sStatusCode] = { type: sStatusLabel, count: 0 };
                         }
@@ -81,14 +81,14 @@ sap.ui.define([
                     });
 
                     var oDashModel = this.getView().getModel("dashModel");
-                    oDashModel.setProperty("/turfs",      aTurfs.length);
+                    oDashModel.setProperty("/turfs", aTurfs.length);
                     oDashModel.setProperty("/turfStatus", Object.values(mStatusMap));
-                    oDashModel.setProperty("/turfType",   Object.values(mTypeMap));
+                    oDashModel.setProperty("/turfType", Object.values(mTypeMap));
                 }.bind(this),
 
                 error: function (oError) {
                     var sMsg = "Failed to load turf statistics.";
-                    sMsg = JSON.parse(oError.responseText).error.message.value; 
+                    sMsg = JSON.parse(oError.responseText).error.message.value;
                     MessageBox.error(sMsg);
                 }
             });

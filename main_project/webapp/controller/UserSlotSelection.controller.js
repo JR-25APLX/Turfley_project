@@ -16,18 +16,18 @@ sap.ui.define([
         },
 
         _onObjectMatched: function (oEvent) {
-            var oArgs  = oEvent.getParameter("arguments");
+            var oArgs = oEvent.getParameter("arguments");
             var oModel = this.getOwnerComponent().getModel();
 
             var oViewModel = new JSONModel({
-                turfId       : oArgs.turfId,
-                turfName     : decodeURIComponent(oArgs.turfName),
-                turfLocation : decodeURIComponent(oArgs.turfLocation),
-                selectedDate : "",
+                turfId: oArgs.turfId,
+                turfName: decodeURIComponent(oArgs.turfName),
+                turfLocation: decodeURIComponent(oArgs.turfLocation),
+                selectedDate: "",
                 selectedSlots: [],
-                totalPrice   : 0,
-                basePrice    : 0,
-                commPercent  : 0
+                totalPrice: 0,
+                basePrice: 0,
+                commPercent: 0
             });
             this.getView().setModel(oViewModel, "viewModel");
 
@@ -40,22 +40,17 @@ sap.ui.define([
                     oViewModel.setProperty("/commPercent", 5);
                 }
             });
+            var oAppModel = this.getOwnerComponent().getModel("appModel");
+            var oPending = oAppModel && oAppModel.getProperty("/slotSelectionState");
 
-            // ── Restore state saved before navigating to booking summary ──
-            var oAppModel   = this.getOwnerComponent().getModel("appModel");
-            var oPending    = oAppModel && oAppModel.getProperty("/slotSelectionState");
-
-            // Only restore if it belongs to the same turf
             if (oPending && oPending.turfId === oArgs.turfId) {
-                oViewModel.setProperty("/selectedDate",  oPending.selectedDate);
+                oViewModel.setProperty("/selectedDate", oPending.selectedDate);
                 oViewModel.setProperty("/selectedSlots", oPending.selectedSlots);
-                oViewModel.setProperty("/totalPrice",    oPending.totalPrice);
+                oViewModel.setProperty("/totalPrice", oPending.totalPrice);
 
-                // Sync the DatePicker control to the restored date
                 var oDP = this.getView().byId("datePicker");
                 if (oDP) { oDP.setValue(oPending.selectedDate); }
 
-                // Reload slot colours for the saved date, then re-highlight selections
                 this._loadSlots(oArgs.turfId, oPending.selectedDate, oPending.selectedSlots);
             } else {
                 this._resetAllButtons();
@@ -63,7 +58,7 @@ sap.ui.define([
         },
 
         onDateChange: function (oEvent) {
-            var oDP  = oEvent.getSource();
+            var oDP = oEvent.getSource();
             var sISO = oDP.getValue();
 
             if (!sISO || !oDP.isValidValue()) {
@@ -72,20 +67,19 @@ sap.ui.define([
             }
 
             var oVM = this.getView().getModel("viewModel");
-            oVM.setProperty("/selectedDate",  sISO);
-            oVM.setProperty("/selectedSlots", []);   // fresh date → clear old picks
-            oVM.setProperty("/totalPrice",    0);
+            oVM.setProperty("/selectedDate", sISO);
+            oVM.setProperty("/selectedSlots", []);
+            oVM.setProperty("/totalPrice", 0);
 
             this._loadSlots(oVM.getProperty("/turfId"), sISO, []);
         },
 
-        // aRestoreSlots is optional — passed only when coming back from booking summary
         _loadSlots: function (sTurfId, sISO, aRestoreSlots) {
             var oModel = this.getOwnerComponent().getModel();
-            var sPath  = "/ZIB18_GRP1_SLOT_AVAILABILITY"
-                       + "(p_turf_id='" + sTurfId + "'"
-                       + ",p_book_date=datetime'" + sISO + "T00%3A00%3A00'"
-                       + ")/Set";
+            var sPath = "/ZIB18_GRP1_SLOT_AVAILABILITY"
+                + "(p_turf_id='" + sTurfId + "'"
+                + ",p_book_date=datetime'" + sISO + "T00%3A00%3A00'"
+                + ")/Set";
 
             var oView = this.getView();
             oView.setBusy(true);
@@ -95,7 +89,6 @@ sap.ui.define([
                     oView.setBusy(false);
                     this._applySlotColors(oData.results);
 
-                    // Re-highlight previously chosen slots after colours are applied
                     if (aRestoreSlots && aRestoreSlots.length) {
                         this._restoreSelectedSlots(aRestoreSlots);
                     }
@@ -125,12 +118,12 @@ sap.ui.define([
                 }
             });
 
-            var oGrid    = this.getView().byId("slotGrid");
+            var oGrid = this.getView().byId("slotGrid");
             var aButtons = oGrid.getContent();
 
             aButtons.forEach(function (oBtn) {
                 var iStartHour = parseInt(oBtn.data("startHour"), 10);
-                var oSlot      = oSlotMap[iStartHour];
+                var oSlot = oSlotMap[iStartHour];
 
                 if (!oSlot) { oBtn.setEnabled(false); return; }
 
@@ -147,8 +140,6 @@ sap.ui.define([
                 }
             });
         },
-
-        // ── Mirror of OwnerAddTurf._restoreSelectedSlots ──────────────────
         _restoreSelectedSlots: function (aSelectedSlots) {
             var oGrid = this.getView().byId("slotGrid");
             oGrid.getContent().forEach(function (oBtn) {
@@ -176,11 +167,11 @@ sap.ui.define([
         },
 
         onSlotPress: function (oEvent) {
-            var oBtn    = oEvent.getSource();
+            var oBtn = oEvent.getSource();
             var sStatus = oBtn.data("status");
             var sSlotId = oBtn.data("slotId");
-            var sText   = oBtn.getText();
-            var oVM     = this.getView().getModel("viewModel");
+            var sText = oBtn.getText();
+            var oVM = this.getView().getModel("viewModel");
 
             if (!oVM.getProperty("/selectedDate")) {
                 MessageToast.show("Please select a date first"); return;
@@ -190,7 +181,7 @@ sap.ui.define([
             }
 
             var aSelected = oVM.getProperty("/selectedSlots");
-            var iIndex    = aSelected.findIndex(function (s) { return s.slotId === sSlotId; });
+            var iIndex = aSelected.findIndex(function (s) { return s.slotId === sSlotId; });
 
             if (iIndex > -1) {
                 aSelected.splice(iIndex, 1);
@@ -208,7 +199,7 @@ sap.ui.define([
         },
 
         onBookNow: function () {
-            var oVM   = this.getView().getModel("viewModel");
+            var oVM = this.getView().getModel("viewModel");
             var oData = oVM.getData();
             var aSlots = oData.selectedSlots;
 
@@ -219,25 +210,25 @@ sap.ui.define([
             var oAppModel = this.getOwnerComponent().getModel("appModel");
             if (oAppModel) {
                 oAppModel.setProperty("/slotSelectionState", {
-                    turfId       : oData.turfId,
-                    selectedDate : oData.selectedDate,
+                    turfId: oData.turfId,
+                    selectedDate: oData.selectedDate,
                     selectedSlots: oData.selectedSlots,
-                    totalPrice   : oData.totalPrice
+                    totalPrice: oData.totalPrice
                 });
             }
 
-            var sSlotIds   = aSlots.map(function (s) { return s.slotId;   }).join(",");
+            var sSlotIds = aSlots.map(function (s) { return s.slotId; }).join(",");
             var sSlotTexts = aSlots.map(function (s) { return s.slotText; }).join("|");
 
             this.getOwnerComponent().getRouter().navTo("RouteBooking", {
-                turfId       : oData.turfId,
-                turfName     : encodeURIComponent(oData.turfName),
-                turfLocation : encodeURIComponent(oData.turfLocation),
-                bookingDate  : oData.selectedDate,
-                slotIds      : encodeURIComponent(sSlotIds),
-                slotTexts    : encodeURIComponent(sSlotTexts),
-                basePrice    : oData.basePrice,
-                commPercent  : oData.commPercent
+                turfId: oData.turfId,
+                turfName: encodeURIComponent(oData.turfName),
+                turfLocation: encodeURIComponent(oData.turfLocation),
+                bookingDate: oData.selectedDate,
+                slotIds: encodeURIComponent(sSlotIds),
+                slotTexts: encodeURIComponent(sSlotTexts),
+                basePrice: oData.basePrice,
+                commPercent: oData.commPercent
             });
         }
     });

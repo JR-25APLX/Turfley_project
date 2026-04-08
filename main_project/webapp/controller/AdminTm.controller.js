@@ -26,7 +26,6 @@ sap.ui.define([
         },
 
         _onRouteMatched: function () {
-            // SmartTables auto-bind, but we can trigger refresh if needed
             if (this.byId("turfEditSmartTable")) { this.byId("turfEditSmartTable").rebindTable(); }
         },
 
@@ -54,9 +53,9 @@ sap.ui.define([
                         oModel.update(sPath, { Status: sNewStatus }, {
                             merge: true,
                             success: function () { MessageToast.show("Status Updated!"); },
-                            error: function () { 
+                            error: function () {
                                 oSwitch.setState(!bState);
-                                MessageToast.show("Update Failed!"); 
+                                MessageToast.show("Update Failed!");
                             }
                         });
                     } else { oSwitch.setState(!bState); }
@@ -70,7 +69,7 @@ sap.ui.define([
         },
 
         onApproveTurf: function (oEvent) {
-            var sTurfId = oEvent.getSource().getBindingContext().getProperty("TurfId"); 
+            var sTurfId = oEvent.getSource().getBindingContext().getProperty("TurfId");
             this._sPendingApproveTurfId = sTurfId;
             var oDialog = this._getApprovalDialog();
             this._oCommissionInput.setValue("");
@@ -93,7 +92,7 @@ sap.ui.define([
             });
             this._oApprovalDialog = new Dialog({
                 title: "Approve Turf",
-                content: [ new VBox({ items: [ new Label({ text: "Commission Percent", design: "Bold" }), this._oCommissionInput ] }).addStyleClass("sapUiSmallMargin") ],
+                content: [new VBox({ items: [new Label({ text: "Commission Percent", design: "Bold" }), this._oCommissionInput] }).addStyleClass("sapUiSmallMargin")],
                 beginButton: this._oApproveBtn,
                 endButton: new Button({ text: "Cancel", press: function () { this._oApprovalDialog.close(); }.bind(this) })
             });

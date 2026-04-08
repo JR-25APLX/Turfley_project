@@ -64,7 +64,6 @@
                                 <content>
                                     <VBox class="sapUiSmallMargin">
 
-                                        <!-- Slot price row -->
                                         <HBox justifyContent="SpaceBetween"
                                               class="sapUiTinyMarginBottom">
                                             <Text text="{viewModel>/slotCount} slot(s) × ₹ {viewModel>/basePrice}"/>

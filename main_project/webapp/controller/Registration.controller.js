@@ -13,7 +13,7 @@ sap.ui.define([
             });
             this.getView().setModel(oJson);
         },
-        onNameChange: function(oEvent) {
+        onNameChange: function (oEvent) {
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
             var nameRegex = /^[a-zA-Z\s]{3,}$/;
@@ -25,7 +25,7 @@ sap.ui.define([
                 oInput.setValueState("None");
             }
         },
-        onEmailChange: function(oEvent) {
+        onEmailChange: function (oEvent) {
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
             var emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org|net|co\.in)$/;
@@ -37,7 +37,7 @@ sap.ui.define([
                 oInput.setValueState("None");
             }
         },
-        onPasswordChange: function(oEvent) {
+        onPasswordChange: function (oEvent) {
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
             var passRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
@@ -50,14 +50,14 @@ sap.ui.define([
             }
             this._validateConfirmPassword();
         },
-        onConfirmPasswordChange: function() {
+        onConfirmPasswordChange: function () {
             this._validateConfirmPassword();
         },
 
-        _validateConfirmPassword: function() {
+        _validateConfirmPassword: function () {
             var oPass = this.getView().byId("i5");
             var oConf = this.getView().byId("i6");
-            
+
             if (oConf.getValue() !== oPass.getValue()) {
                 oConf.setValueState("Error");
                 oConf.setValueStateText("Passwords do not match");
@@ -68,7 +68,7 @@ sap.ui.define([
             }
         },
 
-        onPhoneChange: function(oEvent) {
+        onPhoneChange: function (oEvent) {
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
             var phoneRegex = /^[0-9]{10,10}$/;
@@ -81,10 +81,10 @@ sap.ui.define([
             }
         },
 
-        onRegister: function() {
+        onRegister: function () {
             var oView = this.getView();
             var oDataModel = this.getOwnerComponent().getModel();
-            
+
 
             var bValidationError = false;
             var aInputs = [oView.byId("i3"), oView.byId("i4"), oView.byId("i5"), oView.byId("i6"), oView.byId("i7")];
@@ -117,12 +117,12 @@ sap.ui.define([
 
             oView.setBusy(true);
             oDataModel.create("/RegistrationSet", oPayload, {
-                success: function() {
+                success: function () {
                     oView.setBusy(false);
                     MessageToast.show("Registration Successful!");
                     this.getOwnerComponent().getRouter().navTo("RouteHome");
                 }.bind(this),
-                error: function(oError) {
+                error: function (oError) {
                     oView.setBusy(false);
                     try {
                         var sEmsg = JSON.parse(oError.responseText).error.message.value;
