@@ -17,16 +17,7 @@ sap.ui.define([
         },
 
         _onRouteMatched: function () {
-
-
-            var sOwnerId = localStorage.getItem('userId')
-
-
-            this._sOwnerId = sOwnerId.trim();
-
-
             this.byId("OwnerBookingSmartTable").rebindTable();
-
         },
 
         onSmartTableInit: function () {

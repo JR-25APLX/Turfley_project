@@ -9,10 +9,9 @@ sap.ui.define([
     return Controller.extend("com.applexus.mainproject.controller.OwnerAddTurf", {
 
         onInit: function () {
-            var oUserModel = sap.ui.getCore().getModel("user");
-            this._sOwnerId = oUserModel.getProperty("/OwnerId"); 
+            var sUserId = localStorage.getItem("userId");
+            this._sOwnerId = sUserId;
             this._aSelectedSlots = [];
-
             this._oTurfModel = new JSONModel({
                 Name: "",
                 Location: "",
@@ -31,7 +30,7 @@ sap.ui.define([
         },
 
         onAddSlots: function () {
-            var oData = this._oTurfModel.getData(); 
+            var oData = this._oTurfModel.getData();
 
             if (!oData.Name || oData.Name.trim() === "") {
                 MessageBox.error("Please fill Turf Name before selecting slots!"); return;
@@ -108,7 +107,8 @@ sap.ui.define([
         onCancelSlots: function () { this._oDialog.close(); },
 
         onAdd: function () {
-            var oData = this._oTurfModel.getData(); 
+            var oData = this._oTurfModel.getData();
+            var oUrlRegex = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
 
             if (!oData.Name || oData.Name.trim() === "") {
                 MessageBox.error("Turf Name cannot be empty!"); return;
@@ -116,17 +116,27 @@ sap.ui.define([
             if (!oData.Location || oData.Location.trim() === "") {
                 MessageBox.error("Location cannot be empty!"); return;
             }
-            if (!oData.Locationurl || oData.Locationurl.trim() === "") {
-                MessageBox.error("Location URL cannot be empty!"); return;
+            if (!oUrlRegex.test(oData.Locationurl.trim())) {
+                MessageBox.error("Please enter a valid Location URL (e.g. https://maps.google.com/...)!");
+                return;
             }
             if (!oData.Type || oData.Type.trim() === "") {
                 MessageBox.error("Please select a Turf Type!"); return;
             }
             if (oData.Type !== "C" && oData.Type !== "B" && oData.Type !== "F") {
-                MessageBox.error("Turf Type must be C, B, or F!"); return;
+                MessageBox.error("Turf Type must be Cricket, Badminton, or Football!"); return;
             }
-            if (!oData.Price || isNaN(oData.Price)) {
-                MessageBox.error("Price cannot be empty!"); return;
+            if (!oData.Price || oData.Price === "") {
+                MessageBox.error("Please enter the Price!");
+                return;
+            }
+            if (isNaN(oData.Price) || parseFloat(oData.Price) < 250 || parseFloat(oData.Price) > 10000) {
+                MessageBox.error("Price must be between ₹200 and ₹10000!");
+                return;
+            }
+            if (isNaN(oData.Price) || parseFloat(oData.Price) <= 0) {
+                MessageBox.error("Please enter a valid Price greater than 0!");
+                return;
             }
             if (!this._aSelectedSlots || !this._aSelectedSlots.length) {
                 MessageBox.error("Please select at least one slot!"); return;
@@ -137,7 +147,7 @@ sap.ui.define([
                 Location: oData.Location,
                 Locationurl: oData.Locationurl,
                 Type: oData.Type,
-                Owner: this._sOwnerId, 
+                Owner: this._sOwnerId,
                 Price: parseFloat(oData.Price).toFixed(2),
                 Cuky: "INR",
                 Status: "P",
@@ -159,7 +169,6 @@ sap.ui.define([
                     });
 
                     this._aSelectedSlots = [];
-                    // Navigate back to Owner Dashboard
                     this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
 
                 }.bind(this),

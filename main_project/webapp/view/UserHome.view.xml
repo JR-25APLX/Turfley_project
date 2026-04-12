@@ -6,102 +6,90 @@
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
 
-    <Page id="userhome">
+    <Page id="userHome">
         <customHeader>
             <Toolbar height="60px">
-                <Title
-                    text="TURFLEY"
-                    level="H1"
-                    titleStyle="H2"
-                />
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
                 <ToolbarSpacer />
                 <Button 
                     text="My Bookings" 
                     type="Transparent" 
                     press="onMyBookings" 
                     icon="sap-icon://appointment" />
-                    <Button 
-        text="Logout" 
-        type="Transparent" 
-        icon="sap-icon://log" 
-        press="onLogout" />
-                <Image
-                    src="../Images/justlogo.png"
-                    width="70px"
-                    height="70px"
-                    decorative="true"
-                />
+                <Button 
+                    text="Logout" 
+                    icon="sap-icon://log" 
+                    press="onLogout" 
+                    type="Default" />
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true" />
             </Toolbar>
         </customHeader>
 
         <content>
-            <smartFilterBar:SmartFilterBar
-                id="turfFilterBar"
-                entitySet="ZIB18_GRP1_TURF"
-                showGoOnFB="true"
-                search="onFilterSearch">
-                
-                <smartFilterBar:controlConfiguration>
-                    <smartFilterBar:ControlConfiguration 
-                        key="Location" 
-                        visible="true"
-                        index="1" />
-                    
-                    <smartFilterBar:ControlConfiguration 
-                        key="TurfType" 
-                        visible="true"
-                        index="2" />
-                </smartFilterBar:controlConfiguration>
-            </smartFilterBar:SmartFilterBar>
+            <VBox class="sapUiSmallMargin"> 
+                <Title 
+                    text="LIST OF TURFS" 
+                    level="H2" 
+                    titleStyle="H3" 
+                    class="sapUiSmallMargin" />
 
-            <smartTable:SmartTable
-                id="turfSmartTable"
-                entitySet="ZIB18_GRP1_TURF"
-                smartFilterId="turfFilterBar"
-                tableType="ResponsiveTable"
-                useVariantManagement="true"
-                useTablePersonalisation="true"
-                enableAutoBinding="true"
-                header="Active Turfs"
-                showRowCount="true"
-                requestAtLeastFields="TurfId,Name,Location,LocationUrl">
+                <smartFilterBar:SmartFilterBar
+                    id="turfFilterBar"
+                    entitySet="ZIB18_GRP1_TURF"
+                    showGoOnFB="true"
+                    search="onFilterSearch"/>
 
-                <Table>
-                    <columns>
-                        <Column hAlign="Center">
-                            <customData>
-                                <core:CustomData key="p13nData" 
-                                    value='\{"columnKey": "MapColumn", "columnIndex": 10, "leadingProperty": "LocationUrl"\}' />
-                            </customData>
-                            <Text text="Map" />
-                        </Column>
+                <smartTable:SmartTable
+                    id="turfSmartTable"
+                    entitySet="ZIB18_GRP1_TURF"
+                    smartFilterId="turfFilterBar"
+                    tableType="ResponsiveTable"
+                    useVariantManagement="true"
+                    useTablePersonalisation="true"
+                    enableAutoBinding="true"
+                    header="Active Turfs"
+                    showRowCount="true"
+                    requestAtLeastFields="TurfId,Name,Location,LocationUrl">
 
-                        <Column hAlign="End">
-                            <customData>
-                                <core:CustomData key="p13nData" 
-                                    value='\{"columnKey": "ActionColumn", "columnIndex": 11\}' />
-                            </customData>
-                            <Text text="Action" />
-                        </Column>
-                    </columns>
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Button 
-                                    icon="sap-icon://map" 
-                                    type="Transparent" 
-                                    press="onMap" 
-                                    tooltip="View on Map" />
-                                
-                                <Button 
-                                    text="Book Now" 
-                                    type="Accept" 
-                                    press="onBookTurf" />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-            </smartTable:SmartTable>
+                    <Table>
+                        <columns>
+                            <Column hAlign="Center">
+                                <customData>
+                                    <core:CustomData 
+                                        key="p13nData" 
+                                        value='\{"columnKey": "MapColumn", "columnIndex": 10, "leadingProperty": "LocationUrl"\}' />
+                                </customData>
+                                <Text text="Map" />
+                            </Column>
+
+                            <Column hAlign="End">
+                                <customData>
+                                    <core:CustomData 
+                                        key="p13nData" 
+                                        value='\{"columnKey": "ActionColumn", "columnIndex": 11\}' />
+                                </customData>
+                                <Text text="Action" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Button 
+                                        icon="sap-icon://map" 
+                                        type="Transparent" 
+                                        press="onMap" 
+                                        tooltip="View on Map" />
+                                    
+                                    <Button 
+                                        text="Book Now" 
+                                        type="Accept" 
+                                        press="onBookTurf" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

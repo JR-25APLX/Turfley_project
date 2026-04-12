@@ -1,48 +1,92 @@
-<mvc:View controllerName="com.applexus.mainproject.controller.UserMyBookings"
+<mvc:View 
+    controllerName="com.applexus.mainproject.controller.UserMyBookings"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable">
 
-    <Page backgroundDesign="List">
+    <Page id="myBookings" backgroundDesign="List">
         <customHeader>
             <Toolbar height="60px">
-                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <Title text="TURFLEY" level="H1" titleStyle="H2"/>
                 <ToolbarSpacer />
-                <Image
+                <Image 
                     src="../Images/justlogo.png"
                     width="70px"
                     height="70px"
-                    decorative="true" />
+                    decorative="true"/>
             </Toolbar>
         </customHeader>
-        
+
         <content>
             <VBox class="sapUiMediumMargin">
-                <Title text="MY BOOKINGS" level="H1"/>
-                
+                <Title 
+                    text="MY BOOKINGS"
+                    level="H1"
+                    titleStyle="H3"/>
+
+                <smartFilterBar:SmartFilterBar 
+                    id="userFilterBar"
+                    entitySet="ZIB18_GRP1_USERBOOKINGSSet">
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration 
+                            key="p_user_id"
+                            mandatory="notMandatory"
+                            visible="false" />
+                    </smartFilterBar:controlConfiguration>
+                </smartFilterBar:SmartFilterBar>
+
                 <IconTabBar 
-                    class="sapUiSmallMarginTop" 
-                    select="onTabSelect" 
-                    id="bookingTabs" 
-                    selectedKey="Active">
+                    id="bookingTabBar"
+                    select="onTabSelect"
+                    selectedKey="Active"
+                    class="sapUiSmallMarginTop">
                     <items>
-                        <IconTabFilter text="Active Bookings" key="Active" icon="sap-icon://accept"/>
-                        <IconTabFilter text="Past Bookings" key="Past" icon="sap-icon://history"/>
+                        <IconTabFilter 
+                            text="Active Bookings"
+                            key="Active"
+                            icon="sap-icon://accept" />
+                        <IconTabFilter 
+                            text="Past Bookings"
+                            key="Past"
+                            icon="sap-icon://history" />
                     </items>
                 </IconTabBar>
 
-                <Table id="myBookings" sticky="ColumnHeaders">
-                    <columns>
-                        <Column><Text text="Booking ID"/></Column>
-                        <Column><Text text="Turf Name"/></Column>
-                        <Column><Text text="Location"/></Column>
-                        <Column minScreenWidth="Tablet" demandPopin="true">
-                            <Text text="Booking Date"/>
-                        </Column>
-                        <Column><Text text="Amount Paid"/></Column>
-                        <Column><Text text="Status"/></Column> <Column id="actions"><Text text="Actions"/></Column>
-                    </columns>
-                </Table>
+                <smartTable:SmartTable 
+                    id="myBookingsSmartTable"
+                    entitySet="ZIB18_GRP1_USERBOOKINGSSet"
+                    smartFilterId="userFilterBar"
+                    tableType="ResponsiveTable"
+                    useTablePersonalisation="true"
+                    header="Bookings"
+                    showRowCount="true"
+                    enableAutoBinding="true"
+                    beforeRebindTable="onRebindTable">
+
+                    <Table id="innerTable">
+                        <columns>
+                            <Column id="actionsColumn" hAlign="End">
+                                <customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "Action", "columnIndex": 100\}'/>
+                                </customData>
+                                <Text text="Actions" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Button
+                                        text="Cancel"
+                                        type="Reject"
+                                        press="onCancel"
+                                        enabled="{path: 'BookingStatus', formatter: '.formatCancelEnabled'}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
             </VBox>
         </content>
     </Page>

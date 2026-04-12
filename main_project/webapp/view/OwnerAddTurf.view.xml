@@ -3,38 +3,25 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:g="sap.ui.layout"
->
-    <Page
-        id="page5"
-        title="{i18n>title}"
-    >
+    xmlns:g="sap.ui.layout">
+
+    <Page id="ownerAddTurf">
         <customHeader>
             <Toolbar height="60px">
-                <Title
-                    text="TURFLEY"
-                    level="H1"
-                    titleStyle="H2"
-                />
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
                 <ToolbarSpacer />
-                <Image
-                    src="../Images/justlogo.png"
-                    width="70px"
-                    height="70px"
-                    decorative="true"
-                />
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true" />
             </Toolbar>
         </customHeader>
 
         <content>
             <VBox class="sapUiMediumMargin">
                 <Title
-                    text="ADD YOUR NEW TURF HERE"
-                    level="H1"
+                    text="ADD YOUR NEW TURF"
+                    level="H2"
                     titleStyle="H3"/>
-                <g:Grid
-                    defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop">
+
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Enter Turf Name" />
                         <Input
@@ -51,46 +38,31 @@
                         <Label text="Turf Type" />
                         <Select selectedKey="{turfModel>/Type}">
                             <items>
-                                <core:Item
-                                    key=""
-                                    text="-- Select Type --"/>
-                                <core:Item
-                                    key="C"
-                                    text="C - Cricket" />
-                                <core:Item
-                                    key="B"
-                                    text="B - Badminton"/>
-                                <core:Item
-                                    key="F"
-                                    text="F - Football"/>
+                                <core:Item key="" text="-- Select Type --"/>
+                                <core:Item key="C" text="C - Cricket" />
+                                <core:Item key="B" text="B - Badminton"/>
+                                <core:Item key="F" text="F - Football"/>
                             </items>
                         </Select>
                     </VBox>
                 </g:Grid>
 
-                <g:Grid
-                    defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop"
-                >
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Enter Turf Location URL" />
                         <Input
                             value="{turfModel>/Locationurl}"
-                            placeholder="https://maps.google.com/..."
-                        />
+                            placeholder="https://maps.google.com/..."/>
                     </VBox>
                     <VBox>
                         <Label text="Currency" />
                         <Input
                             value="{turfModel>/Cuky}"
-                            enabled="false"
-                        />
+                            enabled="false"/>
                     </VBox>
                 </g:Grid>
 
-                <g:Grid
-                    defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop">
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Enter Turf Price" />
                         <Input
@@ -99,16 +71,16 @@
                             placeholder="e.g. 500"/>
                     </VBox>
                     <VBox>
-                        <Label text="Enter Owner Email" />
+                        <Label text="Enter Owner Email" visible="false" />
                         <Input
                             value="{turfModel>/Owner}"
                             editable="false"
-                            placeholder="e.g. owner@gmail.com"/>
+                            placeholder="e.g. owner@gmail.com"
+                            visible="false"/>
                     </VBox>
                 </g:Grid>
-                <HBox
-                    class="sapUiSmallMarginTop"
-                    renderType="Bare">
+
+                <HBox class="sapUiSmallMarginTop" renderType="Bare">
                     <Button
                         text="Add Slots"
                         icon="sap-icon://add"

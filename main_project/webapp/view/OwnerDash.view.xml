@@ -1,27 +1,24 @@
-<mvc:View
-    xmlns:core="sap.ui.core"
+<mvc:View 
+    xmlns:core="sap.ui.core" 
     controllerName="com.applexus.mainproject.controller.OwnerDash"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
->
-    <Page
-        id="page3"
-        title="{i18n>title}"
-    >
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable">
+
+    <Page id="ownerDash">
         <customHeader>
             <Toolbar height="60px">
                 <Title
                     text="TURFLEY"
                     level="H1"
-                    titleStyle="H2"
-                />
+                    titleStyle="H2"/>
                 <ToolbarSpacer />
                 <Image
                     src="../Images/justlogo.png"
                     width="70px"
                     height="70px"
-                    decorative="true"
-                />
+                    decorative="true"/>
             </Toolbar>
         </customHeader>
 
@@ -30,71 +27,86 @@
                 <Title
                     text="Welcome, Owner"
                     level="H1"
-                    titleStyle="H2"
-                />
+                    titleStyle="H2"/>
+
                 <HBox
                     justifyContent="SpaceBetween"
                     width="100%"
-                >
+                    class="sapUiSmallMarginTop">
                     <Title
-                        text="List of Turfs"
-                        level="H1"
-                        titleStyle="H4"
-                        class="sapUiSmallMarginTop"
-                    />
-
-                    <Button
-                        text="View My Bookings"
-                        type="Emphasized"
-                        press="onViewMyBookings"
-                    />
+                        text="TURF MANAGEMENT"
+                        level="H3"
+                        titleStyle="H3"/>
+                    <HBox>
+                        <Button
+                            text="Turf Bookings"
+                            type="Emphasized"
+                            press="onViewMyBookings"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button
+                            text="Add New Turf"
+                            type="Emphasized"
+                            press="onAdd"
+                            class="sapUiTinyMarginEnd"/>
+                        <Button
+                            text="Logout"
+                            icon="sap-icon://log"
+                            press="onLogout"
+                            type="default"/>
+                    </HBox>
                 </HBox>
 
-                <Table
-                    class="sapUiSmallMarginTop"
-                    items="{turfModel>/turfs}"
-                >
-                    <columns>
-                        <Column>
-                            <Title text="Turf Name" />
-                        </Column>
-                        <Column>
-                            <Title text="Turf Location" />
-                        </Column>
-                        <Column>
-                            <Title text="Turf Type" />
-                        </Column>
-                        <Column>
-                            <Title text="Turf Status" />
-                        </Column>
-                        <Column>
-                            <Title text="Actions" />
-                        </Column>
-                    </columns>
+                <smartFilterBar:SmartFilterBar
+                    id="smartFilterBar1"
+                    entitySet="ZIB18_GRP1_OWNERSet"
+                    showGoOnFB="true"
+                    search="onFilterSearch">
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration
+                            key="p_ownerid"
+                            mandatory="notMandatory"
+                            visible="false"/>
+                    </smartFilterBar:controlConfiguration>
+                </smartFilterBar:SmartFilterBar>
 
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text text="{turfModel>Turf_Name}" />
-                                <Text text="{turfModel>Turf_Location}" />
-                                <Text text="{turfModel>Turf_Type_Text}" />
-                                <Text text="{turfModel>Status_turf}" />
+                <smartTable:SmartTable
+                    id="smartTableOwn"
+                    entitySet="ZIB18_GRP1_OWNERSet"
+                    smartFilterId="smartFilterBar1"
+                    tableType="ResponsiveTable"
+                    useVariantManagement="true"
+                    useTablePersonalisation="true"
+                    enableAutoBinding="true"
+                    beforeRebindTable="onBeforeRebind"
+                    header="Turfs"
+                    showRowCount="true">
 
-                                <Button
-                                    icon="sap-icon://edit"
-                                    type="Emphasized"
-                                    press="onEditTurf"
-                                />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-                <Button
-                    text="Add New Turf Here"
-                    type="Emphasized"
-                    press="onAdd"
-                    class="sapUiMediumMarginTop"
-                />
+                    <Table>
+                        <columns>
+                            <Column hAlign="Center" width="8rem">
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey":"Actions","columnIndex":"99"\}'/>
+                                </customData>
+                                <header>
+                                    <Text text="Actions" />
+                                </header>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Button
+                                        text="Edit"
+                                        icon="sap-icon://edit"
+                                        type="Transparent"
+                                        press="onEditTurf"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
             </VBox>
         </content>
     </Page>

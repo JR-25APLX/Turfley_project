@@ -117,9 +117,9 @@ sap.ui.define([
 
             oView.setBusy(true);
             oDataModel.create("/RegistrationSet", oPayload, {
-                success: function () {
+                success: function (data) {
                     oView.setBusy(false);
-                    MessageToast.show("Registration Successful!");
+                    MessageToast.show(data.Message);
                     this.getOwnerComponent().getRouter().navTo("RouteHome");
                 }.bind(this),
                 error: function (oError) {

@@ -1,105 +1,115 @@
-<mvc:View controllerName="com.applexus.mainproject.controller.UserBooking"
+<mvc:View
+    controllerName="com.applexus.mainproject.controller.UserBooking"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 
-    <Page enableScrolling="true" backgroundDesign="List">
+    <Page id="userBooking" enableScrolling="true" backgroundDesign="List">
         <customHeader>
             <Toolbar height="60px">
                 <Title text="TURFLEY" level="H1" titleStyle="H2"/>
                 <ToolbarSpacer/>
-                <Image src="../Images/justlogo.png"
-                       width="50px" height="70px" decorative="true"/>
+                <Image 
+                    src="../Images/justlogo.png"
+                    width="50px" 
+                    height="70px" 
+                    decorative="true"/>
             </Toolbar>
         </customHeader>
 
         <content>
-            <FlexBox width="100%"
-                     alignItems="Center"
-                     justifyContent="Center">
-                <Panel width="620px"
-                       class="sapUiResponsiveMargin"
-                       backgroundDesign="Solid"
-                       expandable="false">
-                    <content>
-                        <VBox class="sapUiMediumMargin">
+            <VBox class="sapUiSmallMargin">
+                <Title 
+                    text="SUMMARY" 
+                    level="H2" 
+                    titleStyle="H3" 
+                    class="sapUiSmallMargin" />
 
-                            <Title text="Booking Summary"
-                                   titleStyle="H2"
-                                   class="sapUiSmallMarginBottom"/>
+                <FlexBox 
+                    width="100%"
+                    alignItems="Center"
+                    justifyContent="Center">
+                    <Panel 
+                        width="620px"
+                        class="sapUiResponsiveMargin"
+                        backgroundDesign="Solid"
+                        expandable="false">
+                        <content>
+                            <VBox class="sapUiMediumMargin">
+                                <Title 
+                                    text="Booking Summary"
+                                    titleStyle="H2"
+                                    class="sapUiSmallMarginBottom"/>
 
-                            <Panel backgroundDesign="Translucent"
-                                   class="sapUiSmallMarginBottom"
-                                   expandable="false">
-                                <content>
-                                    <VBox class="sapUiSmallMargin">
+                                <Panel 
+                                    backgroundDesign="Translucent"
+                                    class="sapUiSmallMarginBottom"
+                                    expandable="false">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="Turf Name" design="Bold"/>
+                                            <Text text="{viewModel>/turfName}" class="sapUiTinyMarginBottom"/>
 
-                                        <Label text="Turf Name" design="Bold"/>
-                                        <Text text="{viewModel>/turfName}"
-                                              class="sapUiTinyMarginBottom"/>
+                                            <Label text="Location" design="Bold"/>
+                                            <Text text="{viewModel>/turfLocation}" class="sapUiTinyMarginBottom"/>
 
-                                        <Label text="Location" design="Bold"/>
-                                        <Text text="{viewModel>/turfLocation}"
-                                              class="sapUiTinyMarginBottom"/>
+                                            <Label text="Booking Date" design="Bold"/>
+                                            <Text text="{viewModel>/bookingDate}" class="sapUiTinyMarginBottom"/>
 
-                                        <Label text="Booking Date" design="Bold"/>
-                                        <Text text="{viewModel>/bookingDate}"
-                                              class="sapUiTinyMarginBottom"/>
+                                            <Label text="Selected Slots" design="Bold"/>
+                                            <HBox 
+                                                wrap="Wrap"
+                                                id="slotTokenBox"
+                                                class="sapUiTinyMarginBottom"/>
+                                        </VBox>
+                                    </content>
+                                </Panel>
 
-                                        <Label text="Selected Slots" design="Bold"/>
-                                        <HBox wrap="Wrap"
-                                              id="slotTokenBox"
-                                              class="sapUiTinyMarginBottom"/>
+                                <Panel 
+                                    id="pricePanel"
+                                    backgroundDesign="Translucent"
+                                    expandable="true"
+                                    expanded="false"
+                                    headerText="Total Amount  ₹ {viewModel>/totalPrice}"
+                                    class="sapUiSmallMarginBottom">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                                <Text text="{viewModel>/slotCount} slot(s) × ₹ {viewModel>/basePrice}"/>
+                                                <Text text="₹ {viewModel>/slotTotal}"/>
+                                            </HBox>
 
-                                    </VBox>
-                                </content>
-                            </Panel>
+                                            <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                                <Text text="Platform Fee ({viewModel>/commissionPercent}%)"/>
+                                                <Text text="₹ {viewModel>/commissionAmount}"/>
+                                            </HBox>
 
-                            <Panel id="pricePanel"
-                                   backgroundDesign="Translucent"
-                                   expandable="true"
-                                   expanded="false"
-                                   headerText="Total Amount  ₹ {viewModel>/totalPrice}"
-                                   class="sapUiSmallMarginBottom">
-                                <content>
-                                    <VBox class="sapUiSmallMargin">
+                                            <core:HTML content="&lt;hr style='border:0;border-top:1px solid #ccc;margin:4px 0'/&gt;"/>
 
-                                        <HBox justifyContent="SpaceBetween"
-                                              class="sapUiTinyMarginBottom">
-                                            <Text text="{viewModel>/slotCount} slot(s) × ₹ {viewModel>/basePrice}"/>
-                                            <Text text="₹ {viewModel>/slotTotal}"/>
-                                        </HBox>
+                                            <HBox justifyContent="SpaceBetween">
+                                                <Text text="Total" class="sapMFontBoldSize"/>
+                                                <Text text="₹ {viewModel>/totalPrice}" class="sapMFontBoldSize"/>
+                                            </HBox>
+                                        </VBox>
+                                    </content>
+                                </Panel>
 
-           <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
-                <Text text="Platform Fee ({viewModel>/commissionPercent}%)"/>
-                <Text text="₹ {viewModel>/commissionAmount}"/>
-            </HBox>  
-                                        <core:HTML content="&lt;hr style='border:0;border-top:1px solid #ccc;margin:4px 0'/&gt;"/>
-
-                                        
-                                        <HBox justifyContent="SpaceBetween">
-                                            <Text text="Total" class="sapMFontBoldSize"/>
-                                            <Text text="₹ {viewModel>/totalPrice}" class="sapMFontBoldSize"/>
-                                        </HBox>
-
-                                    </VBox>
-                                </content>
-                            </Panel>
-
-                            <HBox justifyContent="End" class="sapUiSmallMarginTop">
-                                <Button text="Cancel"
+                                <HBox justifyContent="End" class="sapUiSmallMarginTop">
+                                    <Button 
+                                        text="Cancel"
                                         type="Transparent"
                                         press="onCancelBooking"
                                         class="sapUiSmallMarginEnd"/>
-                                <Button text="Confirm Booking"
+                                    <Button 
+                                        text="Confirm Booking"
                                         type="Emphasized"
                                         press="onConfirmBooking"/>
-                            </HBox>
-
-                        </VBox>
-                    </content>
-                </Panel>
-            </FlexBox>
+                                </HBox>
+                            </VBox>
+                        </content>
+                    </Panel>
+                </FlexBox>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

@@ -1,178 +1,68 @@
-<mvc:View controllerName="com.applexus.mainproject.controller.UserSlotSelection"
+<mvc:View 
+    controllerName="com.applexus.mainproject.controller.UserSlotSelection"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:l="sap.ui.layout">
 
-    <Page enableScrolling="true">
+    <Page id="slotSelection" enableScrolling="true">
         <customHeader>
             <Toolbar height="60px">
-                <Title text="TURFLEY" level="H1"/>
-                <ToolbarSpacer/>
-                <Image src="../Images/justlogo.png" width="70px" height="70px"/>
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <ToolbarSpacer />
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true" />
             </Toolbar>
         </customHeader>
 
-        <ScrollContainer height="100%" width="100%" vertical="true">
-            <FlexBox width="100%" justifyContent="Center" alignItems="Center">
-                <Panel width="750px" class="sapUiResponsiveMargin">
-                    <VBox class="sapUiMediumMargin">
+        <VBox class="sapUiSmallMargin"> 
+            <Title 
+                text="SELECT YOUR SLOTS" 
+                level="H2" 
+                titleStyle="H3" 
+                class="sapUiSmallMargin" />
 
-                        <Label text="Turf Name"/>
-                        <Input value="{viewModel>/turfName}" editable="false"/>
+            <ScrollContainer height="100%" width="100%" vertical="true">
+                <FlexBox width="100%" justifyContent="Center" alignItems="Center">
+                    <Panel width="750px" class="sapUiResponsiveMargin">
+                        <VBox class="sapUiMediumMargin">
 
-                        <Label text="Location"/>
-                        <Input value="{viewModel>/turfLocation}" editable="false"/>
+                            <Label text="Turf Name"/>
+                            <Input value="{viewModel>/turfName}" editable="false"/>
 
-                        <Label text="Price (per slot)"/>
-                        <Input value="₹ {viewModel>/basePrice}" editable="false"/>
+                            <Label text="Location"/>
+                            <Input value="{viewModel>/turfLocation}" editable="false"/>
 
-                        <Label text="Date"/>
-                        <DatePicker id="datePicker"
-                                    change="onDateChange"
-                                    displayFormat="dd/MM/yyyy"
-                                    valueFormat="yyyy-MM-dd"/> <HBox class="sapUiSmallMarginTop">
-                            <Button text="Available" type="Accept" enabled="false" class="sapUiSmallMarginEnd"/>
-                            <Button text="Booked"    type="Reject" enabled="false" class="sapUiSmallMarginEnd"/>
-                            <Button text="Selected"  type="Emphasized" enabled="false"/>
-                        </HBox>
+                            <Label text="Price (per slot)"/>
+                            <Input value="₹ {viewModel>/basePrice}" editable="false"/>
 
-                        <Panel class="sapUiSmallMarginTop">
-                            <l:Grid id="slotGrid" defaultSpan="L3 M4 S6">
+                            <Label text="Date"/>
+                            <DatePicker 
+                                id="datePicker"
+                                change="onDateChange"
+                                displayFormat="dd/MM/yyyy"
+                                valueFormat="yyyy-MM-dd"/> 
 
-                                <Button text="12 - 01 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="0"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="01 - 02 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="1"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="02 - 03 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="2"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="03 - 04 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="3"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="04 - 05 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="4"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="05 - 06 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="5"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="06 - 07 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="6"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="07 - 08 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="7"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="08 - 09 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="8"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="09 - 10 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="9"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="10 - 11 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="10"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="11 - 12 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="11"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="12 - 01 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="12"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="01 - 02 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="13"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="02 - 03 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="14"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="03 - 04 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="15"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="04 - 05 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="16"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="05 - 06 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="17"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="06 - 07 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="18"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="07 - 08 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="19"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="08 - 09 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="20"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="09 - 10 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="21"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="10 - 11 PM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="22"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
-                                <Button text="11 - 12 AM" press="onSlotPress" type="Default" enabled="false">
-                                    <customData><core:CustomData key="startHour" value="23"/></customData>
-                                    <customData><core:CustomData key="status"    value=""/></customData>
-                                    <customData><core:CustomData key="slotId"    value=""/></customData>
-                                </Button>
+                            <HBox class="sapUiSmallMarginTop">
+                                <Button text="Available" type="Accept" enabled="false" class="sapUiSmallMarginEnd"/>
+                                <Button text="Booked" type="Reject" enabled="false" class="sapUiSmallMarginEnd"/>
+                                <Button text="Selected" type="Emphasized" enabled="false"/>
+                            </HBox>
 
-                            </l:Grid>
-                        </Panel>
+                            <core:Fragment 
+                                id="slotfragment"
+                                fragmentName="com.applexus.mainproject.fragments.SlotSelection" 
+                                type="XML" />
 
-
-                        <Button text="BOOK NOW"
+                            <Button 
+                                text="BOOK NOW"
                                 press="onBookNow"
                                 type="Emphasized"
                                 width="100%"
                                 class="sapUiSmallMarginTop"/>
-                    </VBox>
-                </Panel>
-            </FlexBox>
-        </ScrollContainer>
+                        </VBox>
+                    </Panel>
+                </FlexBox>
+            </ScrollContainer>
+        </VBox>
     </Page>
 </mvc:View>

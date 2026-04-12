@@ -9,6 +9,7 @@ sap.ui.define([
     return Controller.extend("com.applexus.mainproject.controller.Login", {
 
         onInit: function () {
+
             var oJson = new JSONModel();
             oJson.setData({
                 user: {
@@ -17,6 +18,14 @@ sap.ui.define([
                 }
             });
             this.getView().setModel(oJson);
+
+            this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onRouteMatched, this);
+        },
+        _onRouteMatched: function () {
+            this.getView().byId("i1").setValue("");
+            this.getView().byId("i2").setValue("");
+            localStorage.clear();
+
         },
 
         onSignup: function () {
@@ -50,11 +59,12 @@ sap.ui.define([
 
                     localStorage.setItem("userId", data.UserId);
                     localStorage.setItem("userRole", data.Role);
+                    localStorage.setItem("password", data.Password);
                     var oAppModel = new JSONModel({
                         userId: data.UserId,
                         role: data.Role
                     });
-                    var oUserModel = new sap.ui.model.json.JSONModel({
+                    var oUserModel = new JSONModel({
                         OwnerId: data.UserId
                     });
 
@@ -62,11 +72,11 @@ sap.ui.define([
 
                     this.getOwnerComponent().setModel(oAppModel, "appModel");
                     if (data.Role === "A") {
-                        this.getOwnerComponent().getRouter().navTo("RouteAdminDash");
+                        this.getOwnerComponent().getRouter().navTo("RouteAdminDash", {}, true);
                     } else if (data.Role === "O") {
-                        this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
+                        this.getOwnerComponent().getRouter().navTo("RouteOwnDash", {}, true);
                     } else if (data.Role === "U") {
-                        this.getOwnerComponent().getRouter().navTo("RouteUserDash");
+                        this.getOwnerComponent().getRouter().navTo("RouteUserDash", {}, true);
                     }
                 }.bind(this),
 

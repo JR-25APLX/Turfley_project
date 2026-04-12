@@ -3,109 +3,48 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessageBox",
-    "sap/m/MessageToast",
-    "sap/m/ColumnListItem",
-    "sap/m/Text",
-    "sap/m/Link",
-    "sap/m/Button",
-    "sap/m/ObjectNumber",
-    "sap/m/ObjectStatus"
-], function (Controller, Filter, FilterOperator, MessageBox, MessageToast, ColumnListItem, Text, Link, Button, ObjectNumber, ObjectStatus) {
+    "sap/m/MessageToast"
+], function (Controller, Filter, FilterOperator, MessageBox, MessageToast) {
     "use strict";
 
     return Controller.extend("com.applexus.mainproject.controller.UserMyBookings", {
-
         onInit: function () {
-            var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute("RouteUserBooking").attachMatched(this._onRouteMatched, this);
+            this.getOwnerComponent().getRouter().getRoute("RouteUserBooking")
+                .attachPatternMatched(this._onRouteMatched, this);
         },
-
         _onRouteMatched: function () {
-            var oAppModel = this.getOwnerComponent().getModel("appModel");
-            var sUserId = oAppModel ? oAppModel.getProperty("/userId") : null;
-
+            var sUserId = localStorage.getItem("userId");
             if (!sUserId) {
+                MessageBox.warning("Session expired. Please login again.");
+                this.getOwnerComponent().getRouter().navTo("RouteHome", {}, true);
                 return;
             }
+            this.byId("myBookingsSmartTable").rebindTable();
+        },
+        onTabSelect: function () {
+            this.byId("myBookingsSmartTable").rebindTable();
+        },
 
+        onRebindTable: function (oEvent) {
+            var sUserId = localStorage.getItem("userId");
             var sPath = "/ZIB18_GRP1_USERBOOKINGS(p_user_id='" + sUserId + "')/Set";
-            var oTable = this.getView().byId("myBookings");
+            oEvent.getSource().setTableBindingPath(sPath);
 
-            oTable.bindItems({
-                path: sPath,
-                template: new ColumnListItem({
-                    cells: [
-                        new Text({ text: "{BookingId}" }),
-                        new Text({ text: "{TurfName}" }),
-                        new Link({
-                            text: "{Location}",
-                            press: this.onLocationPress.bind(this)
-                        }),
-                        new Text({
-                            text: {
-                                path: "BookingDate",
-                                type: "sap.ui.model.type.Date",
-                                formatOptions: { pattern: 'dd/MM/yyyy' }
-                            }
-                        }),
-                        new ObjectNumber({
-                            number: "{AmountPaid}",
-                            unit: "{Currency}"
-                        }),
-                        new ObjectStatus({
-                            text: "{BookingStatus}",
-                            state: {
-                                path: "StatusCriticality",
-                                formatter: this.formatStatusState
-                            }
-                        }),
-                        new Button({
-                            text: "Cancel",
-                            type: "Reject",
-                            press: this.onCancel.bind(this),
-                            enabled: {
-                                path: "BookingStatus",
-                                formatter: this.formatCancelEnabled
-                            }
-                        })
-                    ]
-                })
-            });
-        },
-
-        formatStatusState: function (iCriticality) {
-            switch (iCriticality) {
-                case 3: return "Success"; 
-                case 1: return "Error"; 
-                case 2: return "Warning";
-                default: return "None";
-            }
-        },
-
-        formatCancelEnabled: function (sStatus) {
-            return sStatus === "Confirmed";
-        },
-
-        onTabSelect: function (oEvent) {
-            var sKey = oEvent.getParameter("key");
-            var oTable = this.getView().byId("myBookings");
-            var oBinding = oTable.getBinding("items");
-
-            if (!oBinding) return;
-
+            var mParams = oEvent.getParameter("bindingParams");
+            var sKey = this.getView().byId("bookingTabBar").getSelectedKey();
             var oToday = new Date();
             oToday.setHours(0, 0, 0, 0);
 
-            var aFilters = [];
             if (sKey === "Active") {
-                aFilters.push(new Filter("BookingDate", FilterOperator.GE, oToday));
+                mParams.filters.push(new Filter("BookingDate", FilterOperator.GE, oToday));
             } else if (sKey === "Past") {
-                aFilters.push(new Filter("BookingDate", FilterOperator.LT, oToday));
+                mParams.filters.push(new Filter("BookingDate", FilterOperator.LT, oToday));
             }
-
-            oBinding.filter(aFilters);
         },
 
+        formatCancelEnabled: function (sStatus) {   //disabling cancel button
+            return sStatus === "Confirmed";
+        },
         onCancel: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var sBookingId = oContext.getProperty("BookingId");
@@ -120,7 +59,6 @@ sap.ui.define([
                 }.bind(this)
             });
         },
-
         _processCancellation: function (sBookingId) {
             var oView = this.getView();
             var oModel = this.getOwnerComponent().getModel();

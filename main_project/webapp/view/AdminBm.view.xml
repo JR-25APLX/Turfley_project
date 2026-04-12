@@ -6,7 +6,7 @@
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
     xmlns:smartTable="sap.ui.comp.smarttable">
 
-    <Page backgroundDesign="List">
+    <Page id="adminBm" backgroundDesign="List">
         <customHeader>
             <Toolbar height="60px">
                 <Title text="TURFLEY" level="H1" titleStyle="H2" />
@@ -17,16 +17,32 @@
 
         <content>
             <VBox class="sapUiMediumMargin">
-                <Title text="BOOKINGS MANAGEMENT" level="H2" />
+                <Title 
+                    text="BOOKINGS MANAGEMENT" 
+                    level="H2" 
+                    titleStyle="H3" 
+                    class="sapUiSmallMargin" />
 
                 <smartFilterBar:SmartFilterBar 
-                    id="smartFilterBar" 
-                    entitySet="ZIB18_GRP1_AD_BOOKINGS" />
+                    id="smartFilterBar"
+                    entitySet="ZIB18_GRP1_AD_BOOKINGS"
+                    showGoOnFB="true">
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration key="BookingId" visible="true" index="1" />
+                        <smartFilterBar:ControlConfiguration key="UserId" visible="true" index="2" />
+                        <smartFilterBar:ControlConfiguration key="TurfName" visible="true" index="3" />
+                        <smartFilterBar:ControlConfiguration key="Type" visible="true" index="4" />
+                    </smartFilterBar:controlConfiguration>
+                </smartFilterBar:SmartFilterBar>
 
-                <IconTabBar id="bookingTabBar" select="onTabSelect" selectedKey="Active" class="sapUiSmallMarginTop">
+                <IconTabBar 
+                    id="bookingTabBar" 
+                    select="onTabSelect" 
+                    selectedKey="Active" 
+                    class="sapUiSmallMarginTop">
                     <items>
-                        <IconTabFilter text="Active Bookings" key="Active" icon="sap-icon://accept" />
-                        <IconTabFilter text="Past Bookings" key="Past" icon="sap-icon://history" />
+                        <IconTabFilter text="Active" key="Active" icon="sap-icon://accept" />
+                        <IconTabFilter text="Past" key="Past" icon="sap-icon://history" />
                     </items>
                 </IconTabBar>
 
@@ -39,14 +55,13 @@
                     header="Bookings"
                     showRowCount="true"
                     enableAutoBinding="true"
-                    beforeRebindTable="onBeforeRebindTable"
-                    requestAtLeastFields="BookingId,BookingDate,Status">
+                    beforeRebindTable="onBeforeRebindTable">
 
                     <Table id="innerTable">
                         <columns>
                             <Column id="actionsColumn" hAlign="End">
                                 <customData>
-                                    <core:CustomData key="p13nData" value='\{"columnKey": "Action", "columnIndex": 100\}' />
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "Action", "columnIndex": 100\}'/>
                                 </customData>
                                 <Text text="Actions" />
                             </Column>

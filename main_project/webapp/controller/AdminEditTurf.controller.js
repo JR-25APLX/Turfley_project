@@ -13,47 +13,60 @@ sap.ui.define([
             this._aSelectedSlots = [];
             this._aExistingSlotIds = [];
 
+            this._oTurfModel = new JSONModel({
+                Name: "",
+                Location: "",
+                Locationurl: "",
+                Type: "",
+                Price: "",
+                Cuky: "",
+                Owner: "",
+                Commission_Perc: ""
+            });
+            this.getView().setModel(this._oTurfModel, "turfModel");
+
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute("RouteAdminEditTurf").attachPatternMatched(
-                this._onRouteMatched, this
-            );
+            oRouter.getRoute("RouteAdminEditTurf").attachPatternMatched(this._onRouteMatched, this);
         },
 
         _onRouteMatched: function (oEvent) {
             this._sTurfId = oEvent.getParameter("arguments").turfId;
-            this._aSelectedSlots = [];
-            this._aExistingSlotIds = [];
-            this._oDialog = null;
-
+            var oView = this.getView();
             var oModel = this.getOwnerComponent().getModel();
 
-            // Load turf details
-            oModel.read("/TurfSet('" + this._sTurfId + "')", {
+            oView.setBusy(true);
+            var sTurfPath = "/ZIB18_GRP1_AD_TURF(p_turfid='" + this._sTurfId + "')/Set";
+
+            oModel.read(sTurfPath, {
                 success: function (oData) {
-                    this._oTurfModel = new JSONModel({
-                        Name: oData.Name,
-                        Location: oData.Location,
-                        Locationurl: oData.Locationurl,
-                        Type: oData.Type,
-                        Price: oData.Price,
-                        Cuky: oData.Cuky,
-                        Owner: oData.Owner,
-                        Commission_Perc: oData.CommissionPercent
-                    });
-                    this.getView().setModel(this._oTurfModel, "turfModel");
+                    var oRecord = (oData.results && oData.results.length > 0) ? oData.results[0] : null;
+
+                    if (oRecord) {
+                        this._oTurfModel.setData({
+                            Name: oRecord.Name,
+                            Location: oRecord.Location,
+                            Locationurl: oRecord.LocationUrl,
+                            Price: oRecord.BasePrice,
+                            Cuky: oRecord.cky,
+                            Owner: oRecord.TurfOwner,
+                            Type: this._mapTurfTypeToKey(oRecord.TurfType),
+                            Commission_Perc: ""
+                        });
+                    } else {
+                        MessageBox.warning("No details found for the selected Turf.");
+                    }
+                    oView.setBusy(false);
                 }.bind(this),
                 error: function (oError) {
-                    console.error("Turf load failed:", oError);
-                }
+                    oView.setBusy(false);
+                    console.error("CDS Fetch Error:", oError);
+                    MessageBox.error("Failed to load turf details from CDS. Please check SEGW mappings.");
+                }.bind(this)
             });
 
-            // Load existing slots
-            oModel.read("/SlotSet", {
-                filters: [new Filter("TurfId", "EQ", this._sTurfId)],
+            var sSlotPath = "/ZIB18_GRP1_SLOT_DETAILS(p_turfid='" + this._sTurfId + "')/Set";
+            oModel.read(sSlotPath, {
                 success: function (oData) {
-                    this._aExistingSlotIds = oData.results.map(function (s) {
-                        return s.SlotId;
-                    });
                     this._aSelectedSlots = oData.results.map(function (s) {
                         return {
                             SlotId: s.SlotId,
@@ -61,102 +74,22 @@ sap.ui.define([
                             EndTime: s.EndTime
                         };
                     });
-                }.bind(this),
-                error: function (oError) {
-                    console.error("Slot load failed:", oError);
-                }
+                    this._aExistingSlotIds = this._aSelectedSlots.map(s => s.SlotId);
+                }.bind(this)
             });
         },
 
-        _getGrid: function () {
-            return this._oDialog.getContent()[0].getItems()[1].getContent()[0];
-        },
-
-        onEditSlots: function () {
-            this.loadFragment({
-                name: "com.applexus.mainproject.fragments.EditSlot"
-            }).then(function (oDialog) {
-                this._oDialog = oDialog;
-                this.getView().addDependent(this._oDialog);
-                this._preSelectSlots();
-                this._oDialog.open();
-            }.bind(this));
-        },
-
-        _preSelectSlots: function () {
-            var aExisting = this._aExistingSlotIds || [];
-
-            this._getGrid().getContent().forEach(function (oButton) {
-                var iHour = parseInt(oButton.data("startHour"));
-                var iSlotNum = iHour + 1;
-                var sSlotId = "S" + (iSlotNum < 10 ? "00" + iSlotNum : "0" + iSlotNum);
-
-                oButton.setType(
-                    aExisting.indexOf(sSlotId) !== -1 ? "Emphasized" : "Default"
-                );
-            });
-        },
-
-        onSlotPress: function (oEvent) {
-            var oButton = oEvent.getSource();
-            oButton.setType(
-                oButton.getType() === "Default" ? "Emphasized" : "Default"
-            );
-        },
-
-        onConfirmSlots: function () {
-            var aSelectedSlots = [];
-
-
-            this._getGrid().getContent().forEach(function (oButton) {
-                if (oButton.getType() === "Emphasized") {
-                    var iHour = parseInt(oButton.data("startHour"));
-                    var iEnd = iHour + 1;
-                    var iSlotNum = iHour + 1;
-
-                    aSelectedSlots.push({
-                        SlotId: "S" + (iSlotNum < 10 ? "00" + iSlotNum : "0" + iSlotNum),
-                        StartTime: "PT" + (iHour < 10 ? "0" + iHour : "" + iHour) + "H00M00S",
-                        EndTime: "PT" + (iEnd < 10 ? "0" + iEnd : "" + iEnd) + "H00M00S"
-                    });
-                }
-            });
-
-            if (aSelectedSlots.length === 0) {
-                MessageBox.warning("Please select at least one slot!");
-                return;
-            }
-
-            this._aSelectedSlots = aSelectedSlots;
-            this._aExistingSlotIds = aSelectedSlots.map(function (s) { return s.SlotId; });
-
-            MessageToast.show(aSelectedSlots.length + " slot(s) selected!");
-            this._oDialog.close();
-        },
-
-        onCancelSlots: function () { this._oDialog.close(); },
-
-        onCancel: function () {
-            this.getOwnerComponent().getRouter().navTo("RouteAdminTm");
+        _mapTurfTypeToKey: function (sText) {
+            var oMap = { "Cricket": "C", "Football": "F", "Badminton": "B" };
+            return oMap[sText] || "";
         },
 
         onSave: function () {
             var oData = this._oTurfModel.getData();
 
-            if (!oData.Name || oData.Name.trim() === "") {
-                MessageBox.error("Turf Name cannot be empty!"); return;
-            }
-            if (!oData.Location || oData.Location.trim() === "") {
-                MessageBox.error("Location cannot be empty!"); return;
-            }
-            if (!oData.Locationurl || oData.Locationurl.trim() === "") {
-                MessageBox.error("Location URL cannot be empty!"); return;
-            }
-            if (!oData.Type || oData.Type.trim() === "") {
-                MessageBox.error("Please select Turf Type!"); return;
-            }
-            if (!this._aSelectedSlots || this._aSelectedSlots.length === 0) {
-                MessageBox.error("Please select at least one slot!"); return;
+            if (!oData.Name) {
+                MessageBox.error("Turf Name is required.");
+                return;
             }
 
             var oPayload = {
@@ -174,23 +107,72 @@ sap.ui.define([
 
             this.getOwnerComponent().getModel().create("/TurfEditSet", oPayload, {
                 success: function () {
-                    MessageToast.show("Turf updated successfully!");
-                    setTimeout(function () {
-                        this.getOwnerComponent().getRouter().navTo("RouteAdminTm");
-                    }.bind(this), 2000);
+                    MessageToast.show("Changes saved successfully!");
+                    this.onCancel();
                 }.bind(this),
-
-                error: function (oError) {
-                    var sMessage = "Update failed.";
-                    try {
-                        sMessage = JSON.parse(oError.responseText).error.message.value;
-                    } catch (e) {
-                        sMessage = oError.message || sMessage;
-                    }
-                    MessageBox.error(sMessage);
+                error: function () {
+                    MessageBox.error("Update failed. Please verify technical logs.");
                 }
             });
-        }
+        },
 
+        onCancel: function () {
+            this.getOwnerComponent().getRouter().navTo("RouteAdminTm");
+        },
+
+        onEditSlots: function () {
+            if (!this._pDialog) {
+                this._pDialog = this.loadFragment({
+                    name: "com.applexus.mainproject.fragments.EditSlot"
+                });
+            }
+            this._pDialog.then(function (oDialog) {
+                this._oDialog = oDialog;
+                this.getView().addDependent(oDialog);
+                this._preSelectSlots();
+                oDialog.open();
+            }.bind(this));
+        },
+
+        onConfirmSlots: function () {
+            var aSelected = [];
+            this._getGrid().getContent().forEach(function (oBtn) {
+                if (oBtn.getType() === "Emphasized") {
+                    var iH = parseInt(oBtn.data("startHour"));
+                    var iSlotNum = iH + 1;
+                    aSelected.push({
+                        SlotId: "S" + (iSlotNum < 10 ? "00" + iSlotNum : "0" + iSlotNum),
+                        StartTime: "PT" + (iH < 10 ? "0" + iH : iH) + "H00M00S",
+                        EndTime: "PT" + (iSlotNum < 10 ? "0" + iSlotNum : iSlotNum) + "H00M00S"
+                    });
+                }
+            });
+            this._aSelectedSlots = aSelected;
+            this._aExistingSlotIds = aSelected.map(s => s.SlotId);
+            this._oDialog.close();
+            MessageToast.show(aSelected.length + " slots selected.");
+        },
+
+        onCancelSlots: function () {
+            this._oDialog.close();
+        },
+
+        _preSelectSlots: function () {
+            var aIds = this._aExistingSlotIds || [];
+            this._getGrid().getContent().forEach(function (oBtn) {
+                var iSlot = parseInt(oBtn.data("startHour")) + 1;
+                var sId = "S" + (iSlot < 10 ? "00" + iSlot : "0" + iSlot);
+                oBtn.setType(aIds.indexOf(sId) !== -1 ? "Emphasized" : "Default");
+            });
+        },
+
+        _getGrid: function () {
+            return this._oDialog.getContent()[0].getItems()[1].getContent()[0];
+        },
+
+        onSlotPress: function (oEvent) {
+            var oButton = oEvent.getSource();
+            oButton.setType(oButton.getType() === "Default" ? "Emphasized" : "Default");
+        }
     });
 });

@@ -3,125 +3,70 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:g="sap.ui.layout"
->
-    <Page
-        id="ownerEditTurf"
-        title="{i18n>title}"
-    >
+    xmlns:g="sap.ui.layout">
+
+    <Page id="ownerEditTurf">
         <customHeader>
             <Toolbar height="60px">
-                <Title
-                    text="TURFLEY"
-                    level="H1"
-                    titleStyle="H2"
-                />
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
                 <ToolbarSpacer />
-                <Image
-                    src="../Images/justlogo.png"
-                    width="70px"
-                    height="70px"
-                    decorative="true"
-                />
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true" />
             </Toolbar>
         </customHeader>
 
         <content>
             <VBox class="sapUiMediumMargin">
-                <Title
-                    text="EDIT YOUR TURF HERE"
-                    level="H1"
-                    titleStyle="H3"
-                />
+                <Title text="EDIT YOUR TURF HERE" level="H2" titleStyle="H3" />
 
-                <g:Grid
-                    defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop"
-                >
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Turf Name" />
-                        <Input
-                            value="{turfModel>/Name}"
-                            placeholder="e.g. Green Field"
-                        />
+                        <Input value="{turfModel>/Name}" placeholder="e.g. Green Field" />
                     </VBox>
                     <VBox>
                         <Label text="Turf Location" />
-                        <Input
-                            value="{turfModel>/Location}"
-                            placeholder="e.g. Trivandrum"
-                        />
+                        <Input value="{turfModel>/Location}" placeholder="e.g. Trivandrum" />
                     </VBox>
                     <VBox>
                         <Label text="Turf Type" />
-                        <Select selectedKey="{turfModel>/Type}">
+                        <Select selectedKey="{turfModel>/TypeCode}">
                             <items>
-                                <core:Item
-                                    key=""
-                                    text="-- Select Type --"
-                                />
-                                <core:Item
-                                    key="C"
-                                    text="C - Cricket"
-                                />
-                                <core:Item
-                                    key="B"
-                                    text="B - Badminton"
-                                />
-                                <core:Item
-                                    key="F"
-                                    text="F - Football"
-                                />
+                                <core:Item key="" text="-- Select Type --" />
+                                <core:Item key="C" text="C - Cricket" />
+                                <core:Item key="B" text="B - Badminton" />
+                                <core:Item key="F" text="F - Football" />
                             </items>
                         </Select>
                     </VBox>
                 </g:Grid>
 
-                <g:Grid
-                    defaultSpan="L4 M6 S12"
-                    class="sapUiSmallMarginTop"
-                >
+                <g:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
                     <VBox>
                         <Label text="Turf Location URL" />
-                        <Input
-                            value="{turfModel>/Locationurl}"
-                            placeholder="https://maps.google.com/..."
-                        />
+                        <Input value="{turfModel>/LocationUrl}" placeholder="Maps URL..." />
                     </VBox>
                     <VBox>
                         <Label text="Turf Price" />
-                        <Input
-                            value="{turfModel>/Price}"
-                            type="Number"
-                            placeholder="e.g. 500"
-                        />
+                        <Input value="{turfModel>/BasePrice}" type="Number" placeholder="e.g. 500" />
                     </VBox>
                     <VBox>
                         <Label text="Currency" />
-                        <Input
-                            value="{turfModel>/Cuky}"
-                            enabled="false"
-                        />
+                        <Input value="{turfModel>/cky}" enabled="false" />
                     </VBox>
                 </g:Grid>
 
-                <HBox
-                    class="sapUiSmallMarginTop"
-                    renderType="Bare"
-                >
-                    <Button
-                        text="Edit Slots"
-                        icon="sap-icon://edit"
-                        type="Emphasized"
-                        press="onEditSlots"
-                        class="sapUiSmallMarginEnd"
-                    />
-                    <Button
-                        text="Save"
-                        icon="sap-icon://save"
-                        type="Emphasized"
-                        press="onSave"
-                    />
+                <HBox class="sapUiSmallMarginTop" renderType="Bare">
+                    <Button 
+                        text="Edit Slots" 
+                        icon="sap-icon://edit" 
+                        type="Emphasized" 
+                        press="onEditSlots" 
+                        class="sapUiSmallMarginEnd" />
+                    <Button 
+                        text="Save" 
+                        icon="sap-icon://save" 
+                        type="Emphasized" 
+                        press="onSave" />
                 </HBox>
             </VBox>
         </content>

@@ -6,7 +6,17 @@ sap.ui.define([
     return Controller.extend("com.applexus.mainproject.controller.UserHome", {
 
         onInit: function () {
+            this.getOwnerComponent().getRouter()
+                .getRoute("RouteUserDash")
+                .attachPatternMatched(this._onRouteMatched, this);
+        },
+        _onRouteMatched: function () {
+            var sUserId = localStorage.getItem("userId");
+            var sRole = localStorage.getItem("userRole");
 
+            if (!sUserId || sRole !== "U") {
+                this.getOwnerComponent().getRouter().navTo("RouteHome", {}, true);
+            }
         },
 
         onFilterSearch: function () {
@@ -50,11 +60,12 @@ sap.ui.define([
         },
 
         onLogout: function () {
-            localStorage.clear();
-            this.getOwnerComponent().setModel(null, "appModel");
-            this.getOwnerComponent().getRouter().navTo("RouteHome", {}, true);
-        }
 
+            localStorage.clear();
+            sap.ui.getCore().setModel(null, "user");
+            this.getOwnerComponent().setModel(null, "appModel");
+            this.getOwnerComponent().getRouter().navTo("RouteHome");
+        },
 
     });
 });

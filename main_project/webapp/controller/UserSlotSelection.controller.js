@@ -118,7 +118,7 @@ sap.ui.define([
                 }
             });
 
-            var oGrid = this.getView().byId("slotGrid");
+            var oGrid = this.getView().byId("slotfragment--slotGrid");
             var aButtons = oGrid.getContent();
 
             aButtons.forEach(function (oBtn) {
@@ -141,7 +141,7 @@ sap.ui.define([
             });
         },
         _restoreSelectedSlots: function (aSelectedSlots) {
-            var oGrid = this.getView().byId("slotGrid");
+            var oGrid = this.getView().byId("slotfragment--slotGrid");
             oGrid.getContent().forEach(function (oBtn) {
                 var sSlotId = oBtn.data("slotId");
                 var bWasPicked = aSelectedSlots.some(function (s) {
@@ -155,7 +155,7 @@ sap.ui.define([
         },
 
         _resetAllButtons: function () {
-            var oGrid = this.getView().byId("slotGrid");
+            var oGrid = this.getView().byId("slotfragment--slotGrid");
             if (!oGrid) return;
             oGrid.getContent().forEach(function (oBtn) {
                 oBtn.setType("Default");

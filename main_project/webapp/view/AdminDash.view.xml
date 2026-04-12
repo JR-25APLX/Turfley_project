@@ -1,13 +1,30 @@
-<mvc:View controllerName="com.applexus.mainproject.controller.AdminDash"
+<mvc:View 
+    controllerName="com.applexus.mainproject.controller.AdminDash"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
     <Page id="adminDash">
+        <customHeader>
+            <Toolbar height="60px">
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
+                <ToolbarSpacer />
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true" />
+            </Toolbar>
+        </customHeader>
+
         <content>
             <VBox class="sapUiSmallMargin">
-                <Title text="Welcome, Admin" level="H2"/>
+                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                    <Title text="Welcome, Admin" level="H1" titleStyle="H3"/>
+                    <Button
+                        text="Logout"
+                        icon="sap-icon://log"
+                        press="onLogout"
+                        type="default" />
+                </HBox>
 
                 <HBox justifyContent="SpaceBetween" renderType="Bare" class="tileContainer">
                     <GenericTile class="customTile" header="Active Users">
@@ -25,7 +42,7 @@
                             <NumericContent value="{dashModel>/owners}" />
                         </TileContent>
                     </GenericTile>
-                    <GenericTile class="customTile" header="Number of Active Turfs">
+                    <GenericTile class="customTile" header="Number of Turfs">
                         <TileContent>
                             <NumericContent value="{dashModel>/turfs}" />
                         </TileContent>
@@ -33,47 +50,56 @@
                 </HBox>
 
                 <HBox class="sapUiMediumMarginTop" justifyContent="SpaceBetween">
+                    <VBox width="45%" class="chartBox">
+                        <Title text="Turf Active Status" level="H4"/>
+                        <viz:VizFrame 
+                            id="idStatusChart" 
+                            vizType="donut" 
+                            width="90%" 
+                            height="280px"
+                            vizProperties="{title: {visible: false}}">
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset data="{dashModel>/turfStatus}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="Status" value="{dashModel>type}" />
+                                    </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="Count" value="{dashModel>count}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <viz:feeds>
+                                <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
+                                <viz.feeds:FeedItem uid="color" type="Dimension" values="Status"/>
+                            </viz:feeds>
+                        </viz:VizFrame>
+                    </VBox>
 
-    <VBox width="45%" class="chartBox">
-        <Title text="Turf Active Status" level="H3"/>
-        <viz:VizFrame id="idStatusChart" vizType="donut" width="90%" height="280px">
-            <viz:dataset>
-                <viz.data:FlattenedDataset data="{dashModel>/turfStatus}">
-                    <viz.data:dimensions>
-                        <viz.data:DimensionDefinition name="Status" value="{dashModel>type}" />
-                    </viz.data:dimensions>
-                    <viz.data:measures>
-                        <viz.data:MeasureDefinition name="Count" value="{dashModel>count}" />
-                    </viz.data:measures>
-                </viz.data:FlattenedDataset>
-            </viz:dataset>
-            <viz:feeds>
-                <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
-                <viz.feeds:FeedItem uid="color" type="Dimension" values="Status"/>
-            </viz:feeds>
-        </viz:VizFrame>
-    </VBox>
-    <VBox width="45%" class="chartBox">
-        <Title text="Turf Type Breakdown" level="H3"/>
-        <viz:VizFrame id="idTypeChart" vizType="donut" width="90%" height="280px">
-            <viz:dataset>
-                <viz.data:FlattenedDataset data="{dashModel>/turfType}">
-                    <viz.data:dimensions>
-                        <viz.data:DimensionDefinition name="Type" value="{dashModel>type}" />
-                    </viz.data:dimensions>
-                    <viz.data:measures>
-                        <viz.data:MeasureDefinition name="Count" value="{dashModel>count}" />
-                    </viz.data:measures>
-                </viz.data:FlattenedDataset>
-            </viz:dataset>
-            <viz:feeds>
-                <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
-                <viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>
-            </viz:feeds>
-        </viz:VizFrame>
-    </VBox>
-
-</HBox>
+                    <VBox width="45%" class="chartBox">
+                        <Title text="Turf Types" level="H4"/>
+                        <viz:VizFrame 
+                            id="idTypeChart" 
+                            vizType="donut" 
+                            width="90%" 
+                            height="280px"
+                            vizProperties="{title: {visible: false}}">
+                            <viz:dataset>
+                                <viz.data:FlattenedDataset data="{dashModel>/turfType}">
+                                    <viz.data:dimensions>
+                                        <viz.data:DimensionDefinition name="Type" value="{dashModel>type}" />
+                                    </viz.data:dimensions>
+                                    <viz.data:measures>
+                                        <viz.data:MeasureDefinition name="Count" value="{dashModel>count}" />
+                                    </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                            </viz:dataset>
+                            <viz:feeds>
+                                <viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
+                                <viz.feeds:FeedItem uid="color" type="Dimension" values="Type"/>
+                            </viz:feeds>
+                        </viz:VizFrame>
+                    </VBox>
+                </HBox>
 
                 <HBox class="sapUiLargeMarginTop" justifyContent="SpaceAround">
                     <Button text="TURF MANAGEMENT" press="onTmPress" type="Emphasized"/>

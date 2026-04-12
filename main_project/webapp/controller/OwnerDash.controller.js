@@ -1,72 +1,63 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, JSONModel) {
+    "sap/ui/core/mvc/Controller"
+], function (Controller) {
     "use strict";
 
     return Controller.extend("com.applexus.mainproject.controller.OwnerDash", {
 
         onInit: function () {
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.getRoute("RouteOwnDash").attachPatternMatched(
-                this._onRouteMatched, this
-            );
+            oRouter.getRoute("RouteOwnDash").attachPatternMatched(this._onRouteMatched, this);
         },
 
         _onRouteMatched: function () {
-
-            var oUserModel = sap.ui.getCore().getModel("user");
-
-            var sOwnerId = oUserModel.getProperty("/OwnerId");
-
-            if (!sOwnerId) {
-                console.error("OwnerId is empty!");
-                return;
+            var sUserId = localStorage.getItem("userId");
+            var sRole = localStorage.getItem("userRole");
+            if (!sUserId || sRole !== "O") {
+                this.getOwnerComponent().getRouter().navTo("RouteHome", {}, true);
             }
-
-            this._sOwnerId = sOwnerId;
-
-            this._loadTurfs(sOwnerId);
+            var oSmartTable = this.getView().byId("smartTableOwn");
+            if (oSmartTable) {
+                oSmartTable.rebindTable();
+            }
         },
 
-        _loadTurfs: function (sOwnerId) {
-
-            var oDataModel = this.getOwnerComponent().getModel();
+        onBeforeRebind: function (oEvent) {
+            var sOwnerId = localStorage.getItem('userId')
+            var oSmartTable = oEvent.getSource();
             var sPath = "/ZIB18_GRP1_OWNER(p_ownerid='" + sOwnerId + "')/Set";
+            oSmartTable.setTableBindingPath(sPath);
+        },
 
+        onEditTurf: function (oEvent) {
+            var oContext = oEvent.getSource().getParent().getBindingContext();
 
-            oDataModel.read(sPath, {
-                success: function (oData) {
-
-                    var oTurfModel = new JSONModel({ turfs: oData.results });
-                    this.getView().setModel(oTurfModel, "turfModel");
-                }.bind(this),
-                error: function (oError) {
-                    console.error("Error fetching turfs:", oError);
+            if (oContext) {
+                var sPath = oContext.getPath();
+                var oMatch = sPath.match(/Turf_Id='([^']+)'/);
+                if (oMatch && oMatch[1]) {
+                    var sTurfId = oMatch[1];
+                    this.getOwnerComponent().getRouter().navTo("RouteOwnEditTurf", {
+                        turfId: sTurfId
+                    });
                 }
-            });
+            }
         },
 
         onAdd: function () {
             this.getOwnerComponent().getRouter().navTo("RouteOwnAddTurf");
         },
 
-
-        onEditTurf: function (oEvent) { 
-            var oContext = oEvent.getSource().getBindingContext("turfModel");
-
-            var sTurfId = oContext.getProperty("Turf_Id");
-            console.log("Navigating to edit turf:", sTurfId);
-
-            this.getOwnerComponent().getRouter().navTo("RouteOwnEditTurf", {
-                turfId: sTurfId
-            });
-        },
-
-
         onViewMyBookings: function () {
             this.getOwnerComponent().getRouter().navTo("RouteOwnTurfBooking");
-        }
+        },
+
+        onLogout: function () {
+            localStorage.clear();
+            sap.ui.getCore().setModel(null, "user");
+            this.getOwnerComponent().setModel(null, "appModel");
+            this.getOwnerComponent().getRouter().navTo("RouteHome");
+        },
 
     });
 });

@@ -4,60 +4,50 @@
     xmlns="sap.m"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
- 
-    <Page title="Owner Booking History">
-    
-            <customHeader>
+
+    <Page id="ownerBooking">
+        <customHeader>
             <Toolbar height="60px">
-                <Title
-                    text="TURFLEY"
-                    level="H1"
-                    titleStyle="H2"
-                />
+                <Title text="TURFLEY" level="H1" titleStyle="H2" />
                 <ToolbarSpacer />
-                <Image
-                    src="../Images/justlogo.png"
-                    width="70px"
-                    height="70px"
-                    decorative="true"
-                />
+                <Image src="../Images/justlogo.png" width="70px" height="70px" decorative="true" />
             </Toolbar>
         </customHeader>
- 
- 
-        <smartFilterBar:SmartFilterBar
-            id="ownerBookingFilterBar"
-            entitySet="ZIB18_GRP1_OWNER_BOOKINGSet"
-            showGoOnFB="true"
-            search="onFilterSearch">
- 
-            <smartFilterBar:controlConfiguration>
-                <smartFilterBar:ControlConfiguration
-                    key="p_ownerid"
-                    mandatory="notMandatory"
-                    visible="false"/>
-            </smartFilterBar:controlConfiguration>
- 
-        </smartFilterBar:SmartFilterBar>
- 
-  
-        <smartTable:SmartTable
-            id="OwnerBookingSmartTable"
-            entitySet="ZIB18_GRP1_OWNER_BOOKINGSet"
-            smartFilterId="ownerBookingFilterBar"
-            tableType="ResponsiveTable"
-            useVariantManagement="true"
-            useTablePersonalisation="true"
-            enableAutoBinding="true"
-            initialise="onSmartTableInit"
-            beforeRebindTable="onBeforeRebindTable"
-            header="Booking History"
-            showRowCount="true"
-            >
- 
-        </smartTable:SmartTable>
- 
-    </Page>
- 
-</mvc:View>
 
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Title 
+                    text="BOOKING MANAGEMENT"
+                    level="H2"
+                    titleStyle="H3"/>
+
+                <smartFilterBar:SmartFilterBar
+                    id="ownerBookingFilterBar"
+                    entitySet="ZIB18_GRP1_OWNER_BOOKINGSet"
+                    showGoOnFB="true"
+                    search="onFilterSearch">
+
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration
+                            key="p_ownerid"
+                            mandatory="notMandatory"
+                            visible="false"/>
+                    </smartFilterBar:controlConfiguration>
+                </smartFilterBar:SmartFilterBar>
+
+                <smartTable:SmartTable
+                    id="OwnerBookingSmartTable"
+                    entitySet="ZIB18_GRP1_OWNER_BOOKINGSet"
+                    smartFilterId="ownerBookingFilterBar"
+                    tableType="ResponsiveTable"
+                    useVariantManagement="true"
+                    useTablePersonalisation="true"
+                    enableAutoBinding="true"
+                    initialise="onSmartTableInit"
+                    beforeRebindTable="onBeforeRebindTable"
+                    header="Bookings"
+                    showRowCount="true"/>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

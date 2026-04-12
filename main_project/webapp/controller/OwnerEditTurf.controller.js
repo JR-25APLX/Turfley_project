@@ -25,27 +25,44 @@ sap.ui.define([
             this._oDialog = null;
 
             var oModel = this.getOwnerComponent().getModel();
+            var oView = this.getView();
+            oView.setBusy(true);
 
-            // Load turf details
-            oModel.read("/TurfSet('" + this._sTurfId + "')", {
+            var sTurfPath = "/ZIB18_GRP1_AD_TURF(p_turfid='" + this._sTurfId + "')/Set";
+
+            oModel.read(sTurfPath, {
                 success: function (oData) {
-                    this._oTurfModel = new JSONModel({
-                        Name: oData.Name,
-                        Location: oData.Location,
-                        Locationurl: oData.Locationurl,
-                        Type: oData.Type,
-                        Price: oData.Price,
-                        Cuky: oData.Cuky,
-                        Owner: oData.Owner
-                    });
-                    this.getView().setModel(this._oTurfModel, "turfModel");
+                    var oTurf = oData.results[0];
+                    if (oTurf) {
+                        var sTypeCode = "";
+                        switch (oTurf.TurfType) {
+                            case "Cricket": sTypeCode = "C"; break;
+                            case "Badminton": sTypeCode = "B"; break;
+                            case "Football": sTypeCode = "F"; break;
+                        }
+
+                        this._oTurfModel = new JSONModel({
+                            Name: oTurf.Name,
+                            Location: oTurf.Location,
+                            LocationUrl: oTurf.LocationUrl,
+                            BasePrice: oTurf.BasePrice,
+                            cky: oTurf.cky,
+                            TurfOwner: oTurf.TurfOwner,
+                            TypeCode: sTypeCode
+                        });
+                        oView.setModel(this._oTurfModel, "turfModel");
+                    }
+                    oView.setBusy(false);
                 }.bind(this),
-                error: function () { console.error("Turf load failed"); }
+                error: function () {
+                    oView.setBusy(false);
+                    MessageBox.error("Failed to load turf details.");
+                }
             });
 
-            // Load existing slots
-            oModel.read("/SlotSet", {
-                filters: [new Filter("TurfId", "EQ", this._sTurfId)],
+            var sSlotPath = "/ZIB18_GRP1_SLOT_DETAILS(p_turfid='" + this._sTurfId + "')/Set";
+
+            oModel.read(sSlotPath, {
                 success: function (oData) {
                     this._aExistingSlotIds = oData.results.map(function (s) { return s.SlotId; });
                     this._aSelectedSlots = oData.results.map(function (s) {
@@ -55,6 +72,7 @@ sap.ui.define([
                 error: function () { console.error("Slot load failed"); }
             });
         },
+
         _getGrid: function () {
             return this._oDialog.getContent()[0].getItems()[1].getContent()[0];
         },
@@ -71,23 +89,19 @@ sap.ui.define([
 
         _preSelectSlots: function () {
             var aExisting = this._aExistingSlotIds || [];
-
             this._getGrid().getContent().forEach(function (oButton) {
                 var sSlotId = "S" + ("00" + (parseInt(oButton.data("startHour")) + 1)).slice(-3);
-                oButton.setType(
-                    aExisting.indexOf(sSlotId) !== -1 ? "Emphasized" : "Default"
-                );
+                oButton.setType(aExisting.indexOf(sSlotId) !== -1 ? "Emphasized" : "Default");
             });
         },
+
         onSlotPress: function (oEvent) {
             var oButton = oEvent.getSource();
             oButton.setType(oButton.getType() === "Default" ? "Emphasized" : "Default");
         },
 
-        // CONFIRM SLOTS
         onConfirmSlots: function () {
             var aSlots = [];
-
             this._getGrid().getContent().forEach(function (oButton) {
                 if (oButton.getType() === "Emphasized") {
                     var i = parseInt(oButton.data("startHour"));
@@ -106,59 +120,52 @@ sap.ui.define([
 
             this._aSelectedSlots = aSlots;
             this._aExistingSlotIds = aSlots.map(function (s) { return s.SlotId; });
-
             MessageToast.show(aSlots.length + " slot(s) selected!");
             this._oDialog.close();
         },
 
-        // CANCEL SLOTS
         onCancelSlots: function () { this._oDialog.close(); },
 
-        // SAVE
         onSave: function () {
             var oData = this._oTurfModel.getData();
 
-            if (!oData.Name) { MessageBox.error("Turf Name cannot be empty!"); return; }
-            if (!oData.Location) { MessageBox.error("Location cannot be empty!"); return; }
-            if (!oData.Locationurl) { MessageBox.error("Location URL cannot be empty!"); return; }
-            if (!oData.Type) { MessageBox.error("Please select Turf Type!"); return; }
-            if (!oData.Price) { MessageBox.error("Price cannot be empty!"); return; }
+            // Validation
+            if (!oData.Name || !oData.Location || !oData.LocationUrl || !oData.TypeCode || !oData.BasePrice) {
+                MessageBox.error("Please fill in all required fields.");
+                return;
+            }
             if (!this._aSelectedSlots.length) {
-                MessageBox.error("Please select at least one slot!"); return;
+                MessageBox.error("Please select at least one slot!");
+                return;
             }
 
             var oPayload = {
                 Id: this._sTurfId,
                 Name: oData.Name,
                 Location: oData.Location,
-                Locationurl: oData.Locationurl,
-                Type: oData.Type,
-                Price: parseFloat(oData.Price).toFixed(2),
-                Cuky: "INR",
-                Owner: oData.Owner,
+                Locationurl: oData.LocationUrl,
+                Type: oData.TypeCode,
+                Price: parseFloat(oData.BasePrice).toFixed(2),
+                Cuky: oData.cky || "INR",
+                Owner: oData.TurfOwner,
                 turfedit_slot_nav: this._aSelectedSlots
             };
 
             this.getOwnerComponent().getModel().create("/TurfEditSet", oPayload, {
-                success: function (oResponse) {
+                success: function () {
                     MessageToast.show("Turf updated successfully!");
-
                     setTimeout(function () {
                         this.getOwnerComponent().getRouter().navTo("RouteOwnDash");
                     }.bind(this), 2000);
                 }.bind(this),
-
-
-
                 error: function (oError) {
                     try {
                         MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                     } catch (e) {
-                        MessageBox.error(oError.message || "Update failed.");
+                        MessageBox.error("Update failed.");
                     }
                 }
             });
         }
-
     });
 });

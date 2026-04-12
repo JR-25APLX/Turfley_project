@@ -26,11 +26,13 @@ sap.ui.define([
         },
 
         _onRouteMatched: function () {
-            if (this.byId("turfEditSmartTable")) { this.byId("turfEditSmartTable").rebindTable(); }
+            if (this.byId("turfEditSmartTable")) {
+                this.byId("turfEditSmartTable").rebindTable();
+            }
         },
 
         formatStatusSwitch: function (sStatus) {
-            return sStatus === "A";
+            return sStatus === "Active" || sStatus === "A";
         },
 
         onTabSelect: function (oEvent) {
@@ -43,7 +45,7 @@ sap.ui.define([
             var oSwitch = oEvent.getSource();
             var bState = oEvent.getParameter("state");
             var sNewStatus = bState ? "A" : "D";
-            var sTurfId = oSwitch.getBindingContext().getProperty("Id");
+            var sTurfId = oSwitch.getBindingContext().getProperty("TurfId");
             var sPath = "/TurfSet('" + sTurfId + "')";
             var oModel = this.getOwnerComponent().getModel();
 
@@ -52,19 +54,24 @@ sap.ui.define([
                     if (sAction === MessageBox.Action.OK) {
                         oModel.update(sPath, { Status: sNewStatus }, {
                             merge: true,
-                            success: function () { MessageToast.show("Status Updated!"); },
+                            success: function () {
+                                MessageToast.show("Status Updated!");
+                                this.byId("turfEditSmartTable").rebindTable();
+                            }.bind(this),
                             error: function () {
                                 oSwitch.setState(!bState);
                                 MessageToast.show("Update Failed!");
                             }
                         });
-                    } else { oSwitch.setState(!bState); }
+                    } else {
+                        oSwitch.setState(!bState);
+                    }
                 }.bind(this)
             });
         },
 
         onEditTurf: function (oEvent) {
-            var sTurfId = oEvent.getSource().getBindingContext().getProperty("Id");
+            var sTurfId = oEvent.getSource().getBindingContext().getProperty("TurfId");
             this.getOwnerComponent().getRouter().navTo("RouteAdminEditTurf", { turfId: sTurfId });
         },
 
@@ -111,12 +118,95 @@ sap.ui.define([
                     MessageToast.show("Approved!");
                     this._oApprovalDialog.close();
                     this.byId("approvalsSmartTable").rebindTable();
+                    this.byId("turfEditSmartTable").rebindTable();
                 }.bind(this)
             });
         },
 
+        onAdd: function () {
+            var oData = this._oTurfModel.getData();
+            var oEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var oUrlRegex = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
 
-        _getGrid: function () { return this._oDialog.getContent()[0].getItems()[1].getContent()[0]; },
+            if (!oData.Name || oData.Name.trim() === "") {
+                MessageBox.error("Please enter the Turf Name!");
+                return;
+            }
+            if (!oData.Location || oData.Location.trim() === "") {
+                MessageBox.error("Please enter the Location!");
+                return;
+            }
+            if (!oData.Locationurl || oData.Locationurl.trim() === "") {
+                MessageBox.error("Please enter the Location URL!");
+                return;
+            }
+            if (!oUrlRegex.test(oData.Locationurl.trim())) {
+                MessageBox.error("Please enter a valid Location URL (e.g. https://maps.google.com/...)!");
+                return;
+            }
+            if (!oData.Type || oData.Type.trim() === "") {
+                MessageBox.error("Please select the Turf Type!");
+                return;
+            }
+            if (!oData.Price || oData.Price === "") {
+                MessageBox.error("Please enter the Price!");
+                return;
+            }
+            if (isNaN(oData.Price) || parseFloat(oData.Price) < 250 || parseFloat(oData.Price) > 10000) {
+                MessageBox.error("Price must be between ₹200 and ₹10000!");
+                return;
+            }
+            if (isNaN(oData.Price) || parseFloat(oData.Price) <= 0) {
+                MessageBox.error("Please enter a valid Price greater than 0!");
+                return;
+            }
+            if (!oData.Owner || oData.Owner.trim() === "") {
+                MessageBox.error("Please enter the Owner Email ID!");
+                return;
+            }
+            if (!oEmailRegex.test(oData.Owner.trim())) {
+                MessageBox.error("Please enter a valid Owner Email ID (e.g. owner@example.com)!");
+                return;
+            }
+            if (!oData.Commission_Perc || oData.Commission_Perc === "") {
+                MessageBox.error("Please enter the Commission Percentage!");
+                return;
+            }
+            if (isNaN(oData.Commission_Perc) || parseFloat(oData.Commission_Perc) < 0) {
+                MessageBox.error("Please enter a valid Commission Percentage!");
+                return;
+            }
+
+            if (!this._aSelectedSlots || this._aSelectedSlots.length === 0) {
+                MessageBox.error("Please add at least one time slot before adding the turf!");
+                return;
+            }
+
+            var oPayload = {
+                Name: oData.Name.trim(),
+                Location: oData.Location.trim(),
+                Locationurl: oData.Locationurl.trim(),
+                Type: oData.Type.trim(),
+                Owner: oData.Owner.trim(),
+                Price: parseFloat(oData.Price).toFixed(2),
+                Cuky: "INR",
+                CommissionPercent: parseFloat(oData.Commission_Perc).toFixed(2),
+                Status: "A",
+                turf_slot_nav: this._aSelectedSlots
+            };
+
+            this.getOwnerComponent().getModel().create("/TurfSet", oPayload, {
+                success: function () {
+                    MessageToast.show("Turf added successfully!");
+                    this._oTurfModel.setData({
+                        Name: "", Location: "", Locationurl: "", Type: "",
+                        Owner: "", Price: "", Cuky: "INR", Commission_Perc: ""
+                    });
+                    this._aSelectedSlots = [];
+                }.bind(this),
+                error: function (oError) { MessageBox.error("Error creating turf."); }
+            });
+        },
 
         onAddSlots: function () {
             if (!this._oDialog) {
@@ -127,22 +217,10 @@ sap.ui.define([
                     this._restoreSelectedSlots();
                     this._oDialog.open();
                 }.bind(this));
-            } else { this._restoreSelectedSlots(); this._oDialog.open(); }
-        },
-
-        _attachSlotToggleHandlers: function () {
-            this._getGrid().getContent().forEach(function (oBtn) {
-                oBtn.attachPress(function () { oBtn.setType(oBtn.getType() === "Emphasized" ? "Default" : "Emphasized"); });
-            });
-        },
-
-        _restoreSelectedSlots: function () {
-            var aIds = (this._aSelectedSlots || []).map(function (s) { return s.SlotId; });
-            this._getGrid().getContent().forEach(function (oBtn) {
-                var iSlot = parseInt(oBtn.data("startHour")) + 1;
-                var sId = "S" + (iSlot < 10 ? "00" + iSlot : "0" + iSlot);
-                oBtn.setType(aIds.indexOf(sId) !== -1 ? "Emphasized" : "Default");
-            });
+            } else {
+                this._restoreSelectedSlots();
+                this._oDialog.open();
+            }
         },
 
         onConfirmSlots: function () {
@@ -157,97 +235,34 @@ sap.ui.define([
                     });
                 }
             });
-            if (aSel.length === 0) { MessageBox.warning("Select a slot!"); return; }
             this._aSelectedSlots = aSel;
             this._oDialog.close();
+
+            if (aSel.length > 0) {
+                MessageToast.show(aSel.length + " slot(s) selected successfully!");
+            } else {
+                MessageToast.show("No slots selected. Please select at least one slot before adding the turf.");
+            }
         },
 
         onCancelSlots: function () { this._oDialog.close(); },
 
-        onAdd: function () {
-            var oData = this._oTurfModel.getData();
+        _getGrid: function () { return this._oDialog.getContent()[0].getItems()[1].getContent()[0]; },
 
-            if (!oData.Name || oData.Name.trim() === "") {
-                MessageBox.error("Turf Name cannot be empty!");
-                return;
-            }
-            if (!oData.Location || oData.Location.trim() === "") {
-                MessageBox.error("Location cannot be empty!");
-                return;
-            }
-            if (!oData.Locationurl || oData.Locationurl.trim() === "") {
-                MessageBox.error("Location URL cannot be empty!");
-                return;
-            }
-            if (!oData.Type || oData.Type.trim() === "") {
-                MessageBox.error("Turf Type cannot be empty!");
-                return;
-            }
-            if (oData.Type !== "C" && oData.Type !== "B" && oData.Type !== "F") {
-                MessageBox.error("Type must be C, B or F!");
-                return;
-            }
-            if (!oData.Price || isNaN(oData.Price)) {
-                MessageBox.error("Price cannot be empty!");
-                return;
-            }
-            if (!oData.Commission_Perc || isNaN(oData.Commission_Perc)) {
-                MessageBox.error("Commission cannot be empty!");
-                return;
-            }
-            var rEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!oData.Owner || !rEmail.test(oData.Owner)) {
-                MessageBox.error("Owner ID must be a valid email!");
-                return;
-            }
-            if (!this._aSelectedSlots || this._aSelectedSlots.length === 0) {
-                MessageBox.error("Please select at least one slot!");
-                return;
-            }
+        _attachSlotToggleHandlers: function () {
+            this._getGrid().getContent().forEach(function (oBtn) {
+                oBtn.attachPress(function () {
+                    oBtn.setType(oBtn.getType() === "Emphasized" ? "Default" : "Emphasized");
+                });
+            });
+        },
 
-            var oPayload = {
-                Name: oData.Name,
-                Location: oData.Location,
-                Locationurl: oData.Locationurl,
-                Type: oData.Type,
-                Owner: oData.Owner,
-                Price: parseFloat(oData.Price).toFixed(2),
-                Cuky: "INR",
-                CommissionPercent: parseFloat(oData.Commission_Perc).toFixed(2),
-                Status: "A",
-                turf_slot_nav: this._aSelectedSlots
-            };
-
-            console.log("Add Payload:", JSON.stringify(oPayload));
-
-            this.getOwnerComponent().getModel().create("/TurfSet", oPayload, {
-                success: function () {
-                    MessageToast.show("Turf added successfully!");
-
-                    this._oTurfModel.setData({
-                        Name: "",
-                        Location: "",
-                        Locationurl: "",
-                        Type: "",
-                        Owner: "",
-                        Price: "",
-                        Cuky: "INR",
-                        Commission_Perc: ""
-                    });
-
-                    this._aSelectedSlots = [];
-
-                }.bind(this),
-
-                error: function (oError) {
-                    var sMessage = "An error occurred.";
-                    try {
-                        sMessage = JSON.parse(oError.responseText).error.message.value;
-                    } catch (e) {
-                        sMessage = oError.message || sMessage;
-                    }
-                    MessageBox.error(sMessage);
-                }
+        _restoreSelectedSlots: function () {
+            var aIds = (this._aSelectedSlots || []).map(function (s) { return s.SlotId; });
+            this._getGrid().getContent().forEach(function (oBtn) {
+                var iSlot = parseInt(oBtn.data("startHour")) + 1;
+                var sId = "S" + (iSlot < 10 ? "00" + iSlot : "0" + iSlot);
+                oBtn.setType(aIds.indexOf(sId) !== -1 ? "Emphasized" : "Default");
             });
         }
     });
