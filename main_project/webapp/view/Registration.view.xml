@@ -76,11 +76,23 @@
                                 class="sapUiSmallMarginBottom"/>
 
                             <Label text="Enter your Phone Number" required="true"/>
-                            <Input 
+                            <MaskInput
+                                    id="i7"
+                                    mask="9999999999"
+                                    placeholder="10-digit number"
+                                    class="sapUiSmallMarginBottom"
+                                    change="onPhoneChange"
+                            />
+
+
+                            <!-- <Input 
                                 id="i7" 
                                 placeholder="10-digit number"
                                 change="onPhoneChange"
-                                class="sapUiSmallMarginBottom"/>
+                                type="tel"
+                                maxlength="10"
+                                class="sapUiSmallMarginBottom"
+                            /> -->
 
                             <Label text="Select Role" required="true"/>
                             <Select id="i8" width="100%" class="sapUiSmallMarginBottom">

@@ -130,8 +130,8 @@ sap.ui.define([
                 MessageBox.error("Please enter the Price!");
                 return;
             }
-            if (isNaN(oData.Price) || parseFloat(oData.Price) < 250 || parseFloat(oData.Price) > 10000) {
-                MessageBox.error("Price must be between ₹200 and ₹10000!");
+            if (isNaN(oData.Price) || parseFloat(oData.Price) < 50 || parseFloat(oData.Price) > 10000) {
+                MessageBox.error("Price must be between ₹50 and ₹10000!");
                 return;
             }
             if (isNaN(oData.Price) || parseFloat(oData.Price) <= 0) {

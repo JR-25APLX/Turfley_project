@@ -50,6 +50,7 @@ sap.ui.define([
                             TurfOwner: oTurf.TurfOwner,
                             TypeCode: sTypeCode
                         });
+                         this._oTurfModel.setDefaultBindingMode("TwoWay");
                         oView.setModel(this._oTurfModel, "turfModel");
                     }
                     oView.setBusy(false);
@@ -127,7 +128,10 @@ sap.ui.define([
         onCancelSlots: function () { this._oDialog.close(); },
 
         onSave: function () {
+            debugger; 
+             
             var oData = this._oTurfModel.getData();
+            console.log("Full Data:", JSON.stringify(oData));
 
             // Validation
             if (!oData.Name || !oData.Location || !oData.LocationUrl || !oData.TypeCode || !oData.BasePrice) {
@@ -138,13 +142,43 @@ sap.ui.define([
                 MessageBox.error("Please select at least one slot!");
                 return;
             }
+            var oUrlRegex = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+
+            if (!oData.Name || oData.Name.trim() === "") {
+                MessageBox.error("Turf Name cannot be empty!"); return;
+            }
+            if (!oData.Location || oData.Location.trim() === "") {
+                MessageBox.error("Location cannot be empty!"); return;
+            }
+            if (!oUrlRegex.test(oData.LocationUrl.trim())) {
+                MessageBox.error("Please enter a valid Location URL (e.g. https://maps.google.com/...)!");
+                return;
+            }
+            if (!oData.TypeCode || oData.TypeCode.trim() === "") {
+                MessageBox.error("Please select a Turf Type!"); return;
+            }
+            if (oData.TypeCode !== "C" && oData.TypeCode !== "B" && oData.TypeCode !== "F") {
+                MessageBox.error("Turf Type must be Cricket, Badminton, or Football!"); return;
+            }
+            if (!oData.BasePrice || oData.BasePrice === "") {
+                MessageBox.error("Please enter the Price!");
+                return;
+            }
+            if (isNaN(oData.BasePrice) || parseFloat(oData.BasePrice) < 50 || parseFloat(oData.BasePrice) > 10000) {
+                MessageBox.error("Price must be between ₹50 and ₹10000!");
+                return;
+            }
+            if (isNaN(oData.BasePrice) || parseFloat(oData.BasePrice) <= 0) {
+                MessageBox.error("Please enter a valid Price greater than 0!");
+                return;
+            }
 
             var oPayload = {
                 Id: this._sTurfId,
                 Name: oData.Name,
                 Location: oData.Location,
                 Locationurl: oData.LocationUrl,
-                Type: oData.TypeCode,
+                Type: oData.TypeCode, 
                 Price: parseFloat(oData.BasePrice).toFixed(2),
                 Cuky: oData.cky || "INR",
                 Owner: oData.TurfOwner,

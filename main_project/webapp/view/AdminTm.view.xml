@@ -89,6 +89,7 @@
                                         <smartFilterBar:ControlConfiguration key="Name" visible="true" index="1" />
                                         <smartFilterBar:ControlConfiguration key="Location" visible="true" index="2" />
                                         <smartFilterBar:ControlConfiguration key="TurfType" visible="true" index="3" />
+                                        <smartFilterBar:ControlConfiguration key="Status" visible="true" index="4" />
                                     </smartFilterBar:controlConfiguration>
                                 </smartFilterBar:SmartFilterBar>
 
@@ -101,7 +102,7 @@
                                     header="All Turfs"
                                     showRowCount="true"
                                     enableAutoBinding="true"
-                                    requestAtLeastFields="TurfId,Status"
+                                    requestAtLeastFields="TurfId,commission_percent,Status"
                                     initiallyVisibleFields="Name,Location,TurfType,TurfOwner,BasePrice,Status">
                                     <Table id="turfEditTable">
                                         <columns>
@@ -156,6 +157,7 @@
                                     showRowCount="true"
                                     enableAutoBinding="true"
                                     smartFilterId="turfapprovalFilterBar"
+                                    requestAtLeastFields="TurfId"
                                     initiallyVisibleFields="Name,Location,Type,Owner,Price">
                                     <Table id="approvalsInnerTable">
                                         <columns>
@@ -169,7 +171,7 @@
                                         <items>
                                             <ColumnListItem>
                                                 <cells>
-                                                    <Button text="Approve" icon="sap-icon://accept" type="Accept" press="onApproveTurf" />
+                                                    <Button text="Approve" icon="sap-icon://accept" type="Accept" press="onApprove" />
                                                 </cells>
                                             </ColumnListItem>
                                         </items>

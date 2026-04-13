@@ -44,7 +44,7 @@
                                 <customData>
                                     <core:CustomData 
                                         key="p13nData" 
-                                        value='\{"columnKey": "Action", "leadingProperty": "Status", "columnIndex": 100\}' />
+                                        value='\{"columnKey": "StatusSwitchCol", "leadingProperty": "Status", "columnIndex": 100\}' />
                                 </customData>
                                 <Text text="Action" />
                             </Column>
@@ -52,10 +52,13 @@
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <Button
-                                        text="{= ${Status} === 'B' ? 'Unblock' : 'Block'}"
-                                        type="{= ${Status} === 'B' ? 'Accept' : 'Reject'}"
-                                        press="onBlockUnblock"/>
+                                <Switch
+                                    type="AcceptReject"
+                                    state="{
+                                        path: 'Status',
+                                        formatter: '.formatStatusSwitch'
+                                    }"
+                                    change="onBlockUnblock"/>
                                 </cells>
                             </ColumnListItem>
                         </items>

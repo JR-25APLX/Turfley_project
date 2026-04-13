@@ -6,9 +6,7 @@ sap.ui.define([
     return Controller.extend("com.applexus.mainproject.controller.UserHome", {
 
         onInit: function () {
-            this.getOwnerComponent().getRouter()
-                .getRoute("RouteUserDash")
-                .attachPatternMatched(this._onRouteMatched, this);
+            this.getOwnerComponent().getRouter().getRoute("RouteUserDash").attachPatternMatched(this._onRouteMatched, this);
         },
         _onRouteMatched: function () {
             var sUserId = localStorage.getItem("userId");
@@ -16,7 +14,18 @@ sap.ui.define([
 
             if (!sUserId || sRole !== "U") {
                 this.getOwnerComponent().getRouter().navTo("RouteHome", {}, true);
+                return;
             }
+
+            // Replace current history entry 
+            window.history.replaceState(null, "", window.location.href);
+
+            // Listen for back button
+            this._onPopState = function () {
+                this.onLogout();
+            }.bind(this);
+
+            window.addEventListener("popstate", this._onPopState);
         },
 
         onFilterSearch: function () {
@@ -60,11 +69,15 @@ sap.ui.define([
         },
 
         onLogout: function () {
-
+            if (this._onPopState) {
+                window.removeEventListener("popstate", this._onPopState);
+                this._onPopState = null;
+            }
             localStorage.clear();
             sap.ui.getCore().setModel(null, "user");
             this.getOwnerComponent().setModel(null, "appModel");
-            this.getOwnerComponent().getRouter().navTo("RouteHome");
+            window.history.replaceState(null, "", window.location.href);
+            this.getOwnerComponent().getRouter().navTo("RouteHome", {}, true);
         },
 
     });

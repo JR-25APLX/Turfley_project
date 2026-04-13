@@ -37,8 +37,12 @@ sap.ui.define([
             this.getView().byId("bookingsSmartTable").rebindTable();
         },
 
-        formatCancelEnabled: function (sStatus) {
-            return sStatus === "Active";
+        formatCancelEnabled: function (sStatus, sBookingDate) {
+            var oToday = new Date();
+            oToday.setHours(0, 0, 0, 0);
+            var oBookingDate = new Date(sBookingDate);
+            oBookingDate.setHours(0, 0, 0, 0);
+            return sStatus === "Active" && oBookingDate >= oToday;
         },
 
         onCancelBooking: function (oEvent) {

@@ -41,10 +41,15 @@ sap.ui.define([
                 mParams.filters.push(new Filter("BookingDate", FilterOperator.LT, oToday));
             }
         },
-
-        formatCancelEnabled: function (sStatus) {   //disabling cancel button
-            return sStatus === "Confirmed";
+        
+        formatCancelEnabled: function (sStatus, sBookingDate) {   //disabling cancel button
+            var oToday = new Date();
+            oToday.setHours(0, 0, 0, 0);
+            var oBookingDate = new Date(sBookingDate);
+            oBookingDate.setHours(0, 0, 0, 0);
+            return sStatus === "Confirmed" && oBookingDate >= oToday;
         },
+
         onCancel: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var sBookingId = oContext.getProperty("BookingId");

@@ -17,6 +17,7 @@ sap.ui.define([
         },
 
         _onRouteMatched: function () {
+            this._sOwnerId = localStorage.getItem('userId');
             this.byId("OwnerBookingSmartTable").rebindTable();
         },
 
@@ -34,8 +35,7 @@ sap.ui.define([
         },
 
         onBeforeRebindTable: function (oEvent) {
-
-            var sOwnerId = localStorage.getItem('userId')
+            var sOwnerId = this._sOwnerId || localStorage.getItem('userId');
             var oSmartTable = oEvent.getSource();
             var sPath = "/ZIB18_GRP1_OWNER_BOOKING(p_ownerid='" + sOwnerId + "')/Set";
             oSmartTable.setTableBindingPath(sPath);

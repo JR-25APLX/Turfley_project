@@ -54,7 +54,7 @@
                     useTablePersonalisation="true"
                     header="Bookings"
                     showRowCount="true"
-                    enableAutoBinding="true"
+                    enableAutoBinding="true"  
                     beforeRebindTable="onBeforeRebindTable">
 
                     <Table id="innerTable">
@@ -73,7 +73,7 @@
                                         text="Cancel" 
                                         type="Reject" 
                                         press="onCancelBooking" 
-                                        enabled="{path: 'Status', formatter: '.formatCancelEnabled'}" />
+                                        enabled="{parts: [{path: 'Status'}, {path: 'BookingDate'}], formatter: '.formatCancelEnabled'}" />
                                 </cells>
                             </ColumnListItem>
                         </items>

@@ -75,15 +75,14 @@ sap.ui.define([
             this.getOwnerComponent().getRouter().navTo("RouteAdminEditTurf", { turfId: sTurfId });
         },
 
-        onApproveTurf: function (oEvent) {
+        onApprove: function (oEvent) {
             var sTurfId = oEvent.getSource().getBindingContext().getProperty("TurfId");
             this._sPendingApproveTurfId = sTurfId;
             var oDialog = this._getApprovalDialog();
-            this._oCommissionInput.setValue("");
+            this._oCommissionInput.setValue(" ");
             this._oApproveBtn.setEnabled(false);
             oDialog.open();
         },
-
         _getApprovalDialog: function () {
             if (this._oApprovalDialog) { return this._oApprovalDialog; }
             this._oCommissionInput = new Input({
@@ -152,8 +151,8 @@ sap.ui.define([
                 MessageBox.error("Please enter the Price!");
                 return;
             }
-            if (isNaN(oData.Price) || parseFloat(oData.Price) < 250 || parseFloat(oData.Price) > 10000) {
-                MessageBox.error("Price must be between ₹200 and ₹10000!");
+            if (isNaN(oData.Price) || parseFloat(oData.Price) < 50 || parseFloat(oData.Price) > 10000) {
+                MessageBox.error("Price must be between ₹50 and ₹10000!");
                 return;
             }
             if (isNaN(oData.Price) || parseFloat(oData.Price) <= 0) {
@@ -172,7 +171,7 @@ sap.ui.define([
                 MessageBox.error("Please enter the Commission Percentage!");
                 return;
             }
-            if (isNaN(oData.Commission_Perc) || parseFloat(oData.Commission_Perc) < 0) {
+            if (isNaN(oData.Commission_Perc) || parseFloat(oData.Commission_Perc) < 0 || parseFloat(oData.Commission_Perc) > 25) {
                 MessageBox.error("Please enter a valid Commission Percentage!");
                 return;
             }
@@ -204,7 +203,7 @@ sap.ui.define([
                     });
                     this._aSelectedSlots = [];
                 }.bind(this),
-                error: function (oError) { MessageBox.error("Error creating turf."); }
+                error: function () { MessageBox.error("Error creating turf."); }
             });
         },
 

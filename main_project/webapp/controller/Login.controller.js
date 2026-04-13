@@ -21,16 +21,25 @@ sap.ui.define([
 
             this.getOwnerComponent().getRouter().getRoute("RouteHome").attachPatternMatched(this._onRouteMatched, this);
         },
+
         _onRouteMatched: function () {
             this.getView().byId("i1").setValue("");
             this.getView().byId("i2").setValue("");
             localStorage.clear();
-
         },
 
         onSignup: function () {
             this.getOwnerComponent().getRouter().navTo("RouteReg");
         },
+
+        onPasswordChange: function(oEvent) {
+        var input = oEvent.getSource();
+        var value = oEvent.getParameter("value");
+
+        if (value.length > 15) {
+            input.setValue(value.substring(0, 15));
+        }
+        }, 
 
         onLogin: function () {
             var oJson = this.getView().getModel();
@@ -50,8 +59,12 @@ sap.ui.define([
                 return;
             }
 
+            // truncate password to match DDIC field length
+            // var Password = Password.substring(0, 15);
+
             oJson.setProperty("/user/UserId", UserId);
             oJson.setProperty("/user/Password", Password);
+            
 
             oDataModel.create("/LoginSet", oJson.getProperty("/user"), {
                 success: function (data) {
@@ -60,6 +73,7 @@ sap.ui.define([
                     localStorage.setItem("userId", data.UserId);
                     localStorage.setItem("userRole", data.Role);
                     localStorage.setItem("password", data.Password);
+
                     var oAppModel = new JSONModel({
                         userId: data.UserId,
                         role: data.Role
@@ -71,6 +85,7 @@ sap.ui.define([
                     sap.ui.getCore().setModel(oUserModel, "user");
 
                     this.getOwnerComponent().setModel(oAppModel, "appModel");
+
                     if (data.Role === "A") {
                         this.getOwnerComponent().getRouter().navTo("RouteAdminDash", {}, true);
                     } else if (data.Role === "O") {

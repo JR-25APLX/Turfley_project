@@ -45,12 +45,15 @@
                                 id="i1"
                                 placeholder="Enter email"
                                 class="sapUiSmallMarginBottom"/>
+
  
                             <Label text="Enter your password" required="true"/>
                             <Input 
                                 id="i2"
                                 type="Password"
                                 placeholder="Enter your password"
+                                liveChange="onPasswordChange"
+                                maxlength="15"                       
                                 class="sapUiSmallMarginBottom"/>  
 
                             <Button

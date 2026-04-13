@@ -28,7 +28,8 @@ sap.ui.define([
         onEmailChange: function (oEvent) {
             var oInput = oEvent.getSource();
             var sValue = oInput.getValue();
-            var emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org|net|co\.in)$/;
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z]+\.(com|in|org|net|co\.in)$/;
+            // var emailRegex = /^[^\s@]+@[^\s@]+\.(com|in|org|net|co\.in)$/;
 
             if (!emailRegex.test(sValue)) {
                 oInput.setValueState("Error");
@@ -67,19 +68,34 @@ sap.ui.define([
                 oConf.setValueState("Success");
             }
         },
+            onPhoneChange: function (oEvent) {
+                var oInput = oEvent.getSource();
+                var sValue = oInput.getValue().replace(/_/g, ""); // remove unfilled mask slots
 
-        onPhoneChange: function (oEvent) {
-            var oInput = oEvent.getSource();
-            var sValue = oInput.getValue();
-            var phoneRegex = /^[0-9]{10,10}$/;
+                if (sValue.length < 10) {
+                    oInput.setValueState("Error");
+                    oInput.setValueStateText("Please enter all 10 digits");
+                } else if (!/^[6-9]/.test(sValue)) {
+                    oInput.setValueState("Error");
+                    oInput.setValueStateText("Mobile number must start with 6, 7, 8 or 9");
+                } else {
+                    oInput.setValueState("None");
+                }
+            },
 
-            if (!phoneRegex.test(sValue)) {
-                oInput.setValueState("Error");
-                oInput.setValueStateText("Phone number must be exactly 10 digits");
-            } else {
-                oInput.setValueState("None");
-            }
-        },
+
+        // onPhoneChange: function (oEvent) {
+        //     var oInput = oEvent.getSource();
+        //     var sValue = oInput.getValue();
+        //     var phoneRegex = /^[0-9]{10,10}$/;
+
+        //     if (!phoneRegex.test(sValue)) {
+        //         oInput.setValueState("Error");
+        //         oInput.setValueStateText("Phone number must be exactly 10 digits");
+        //     } else {
+        //         oInput.setValueState("None");
+        //     }
+        // },
 
         onRegister: function () {
             var oView = this.getView();
